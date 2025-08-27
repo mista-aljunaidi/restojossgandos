@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,89 +8,88 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Resto Joss Gandos</title>
     <link rel="icon" type="image/jpeg" href="img/logo-joss-gandos.png">
+    
+    <!-- Tailwind & Library -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-  </head>
-
-  <body class="h-full bg-[url('img/backgroundbatik.png')] bg-repeat bg-center">
-
-  <!-- Floating Order Buttons -->
-  <div class="fixed top-1/3 right-4 z-50 flex flex-col items-center space-y-4">
-  <!-- Title -->
-  <p class="text-red-600 font-bold text-sm">ORDER NOW</p>
-
-  <!-- GoFood -->
-  <a href="https://gofood.co.id/surabaya/restaurant/bebek-joss-gandos-jemursari-8571aff2-33b6-4f54-9fd9-a132a900eb17" target="_blank" 
-     class="bg-white p-2 rounded-lg shadow-md hover:scale-105 transition">
-    <img src="img/gofood.jpg" alt="GoFood" class="w-14 h-14 object-contain">
-  </a>
-
-  <!-- GrabFood -->
-  <a href="https://grabfood.link/your-link" target="_blank" 
-     class="bg-white p-2 rounded-lg shadow-md hover:scale-105 transition">
-    <img src="img/grabfood.png" alt="GrabFood" class="w-14 h-14 object-contain">
-  </a>
-
-  <!-- ShopeeFood -->
-  <a href="https://grabfood.link/your-link" target="_blank" 
-     class="bg-white p-2 rounded-lg shadow-md hover:scale-105 transition">
-    <img src="img/shopeefood.png" alt="GrabFood" class="w-14 h-14 object-contain">
-  </a>
-
-  <!-- WhatsApp -->
-  <a href="https://api.whatsapp.com/send/?phone=62895326824595&text&type=phone_number&app_absent=0" target="_blank" 
-     class="bg-white p-2 rounded-lg shadow-md hover:scale-105 transition">
-    <img src="img/whatsapp.png" alt="WhatsApp" class="w-14 h-14 object-contain">
-  </a>
-</div>
     
     <style>
-  .fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-  }
-  .fade-in.show {
-    opacity: 1;
-    transform: translateY(0);
-  }
+      .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
+      .fade-in.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
     </style>
+  </head>
 
-    <div class="min-h-full">
-      <x-navbar></x-navbar>
+  <body class="relative z-20 bg-[url('img/backgroundbatik.png')] bg-cover bg-fixed bg-center">
+
       @if(request()->is('/'))
-    <x-header></x-header>
-@endif
+        <x-header></x-header>
+      @endif
 
-    <main class="fade-in">
-      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-        {{ $slot }}
+      <!-- Floating Order Buttons -->
+      <div class="fixed right-4 top-1/2 z-50 flex flex-col items-center space-y-2 transform -translate-y-1/2 sm:top-1/2 sm:-translate-y-1/2">
+        <!-- Title -->
+        <p class="text-red-600 font-bold text-sm">ORDER NOW</p>
+
+        <!-- GoFood -->
+        <a href="https://gofood.co.id/surabaya/restaurant/bebek-joss-gandos-jemursari-8571aff2-33b6-4f54-9fd9-a132a900eb17" 
+          target="_blank" 
+          class="bg-white p-2 rounded-lg shadow-md hover:scale-105 transition">
+          <img src="img/gofood.jpg" alt="GoFood" class="w-14 h-14 object-contain">
+        </a>
+
+        <!-- GrabFood -->
+        <a href="https://food.grab.com/id/id/restaurant/bebek-joss-gandos-jl-raya-jemursari-delivery/IDGFSTI00002n8d?" 
+          target="_blank" 
+          class="bg-white p-2 rounded-lg shadow-md hover:scale-105 transition">
+          <img src="img/grabfood.png" alt="GrabFood" class="w-14 h-14 object-contain">
+        </a>
+
+        <!-- WhatsApp -->
+        <a href="https://api.whatsapp.com/send/?phone=62895326824595&text&type=phone_number&app_absent=0" 
+          target="_blank" 
+          class="bg-white p-2 rounded-lg shadow-md hover:scale-105 transition">
+          <img src="img/whatsapp.png" alt="WhatsApp" class="w-14 h-14 object-contain">
+        </a>
       </div>
-    </main>
+
+      <div class="min-h-full">
+        <x-navbar></x-navbar>
+
+        <main class="fade-in">
+          <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            {{ $slot }}
+          </div>
+        </main>
+      </div>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const elements = document.querySelectorAll(".fade-in");
+
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("show");
+              }
+            });
+          }, { threshold: 0.1 });
+
+          elements.forEach(el => observer.observe(el));
+        });
+      </script>
     
-    </div>
-
-    <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const elements = document.querySelectorAll(".fade-in");
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-        }
-      });
-    }, { threshold: 0.1 });
-
-    elements.forEach(el => observer.observe(el));
-  });
-    </script>
-
   </body>
 
-  <footer class="bg-gradient-to-r from-gray-50 via-gray-100 to-gray-200 shadow-lg text-black">
+  <footer class="bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 shadow-lg text-black">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-16 lg:gap-32">
 

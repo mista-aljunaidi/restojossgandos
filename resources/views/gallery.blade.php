@@ -34,7 +34,7 @@
             <div class="pointer-events-none absolute top-4 left-4 opacity-0 translate-y-4 transition-all duration-500
                         group-hover/card:opacity-100 group-hover/card:translate-y-0">
             <span class="block text-gray-200/90 text-xs tracking-widest uppercase">Food</span>
-            <h3 class="text-white font-extrabold text-2xl leading-tight drop-shadow">Bebek Goreng</h3>
+            <h3 class="text-gray-200 font-extrabold text-2xl leading-tight drop-shadow">Bebek Goreng</h3>
             </div>
         </div>
 
@@ -46,7 +46,7 @@
             <div class="pointer-events-none absolute top-4 left-4 opacity-0 translate-y-4 transition-all duration-500
                         group-hover/card:opacity-100 group-hover/card:translate-y-0">
             <span class="block text-gray-200/90 text-xs tracking-widest uppercase">Food</span>
-            <h3 class="text-white font-extrabold text-2xl leading-tight drop-shadow">Gulai Kepala Salmon</h3>
+            <h3 class="text-gray-200 font-extrabold text-2xl leading-tight drop-shadow">Gulai Kepala Salmon</h3>
             </div>
         </div>
 
@@ -58,7 +58,7 @@
             <div class="pointer-events-none absolute top-4 left-4 opacity-0 translate-y-4 transition-all duration-500
                         group-hover/card:opacity-100 group-hover/card:translate-y-0">
             <span class="block text-gray-200/90 text-xs tracking-widest uppercase">Food</span>
-            <h3 class="text-white font-extrabold text-2xl leading-tight drop-shadow">Ayam Mozarella</h3>
+            <h3 class="text-gray-200 font-extrabold text-2xl leading-tight drop-shadow">Ayam Mozarella</h3>
             </div>
         </div>
 
@@ -70,7 +70,7 @@
             <div class="pointer-events-none absolute top-4 left-4 opacity-0 translate-y-4 transition-all duration-500
                         group-hover/card:opacity-100 group-hover/card:translate-y-0">
             <span class="block text-gray-200/90 text-xs tracking-widest uppercase">Customer</span>
-            <h3 class="text-white font-extrabold text-2xl leading-tight drop-shadow">Customer</h3>
+            <h3 class="text-gray-200 font-extrabold text-2xl leading-tight drop-shadow">Guest</h3>
             </div>
         </div>
 
@@ -82,7 +82,7 @@
             <div class="pointer-events-none absolute top-4 left-4 opacity-0 translate-y-4 transition-all duration-500
                         group-hover/card:opacity-100 group-hover/card:translate-y-0">
             <span class="block text-gray-200/90 text-xs tracking-widest uppercase">Customer</span>
-            <h3 class="text-white font-extrabold text-2xl leading-tight drop-shadow">Customer</h3>
+            <h3 class="text-gray-200 font-extrabold text-2xl leading-tight drop-shadow">Guest</h3>
             </div>
         </div>
 
@@ -94,7 +94,7 @@
             <div class="pointer-events-none absolute top-4 left-4 opacity-0 translate-y-4 transition-all duration-500
                         group-hover/card:opacity-100 group-hover/card:translate-y-0">
             <span class="block text-gray-200/90 text-xs tracking-widest uppercase">Customer</span>
-            <h3 class="text-white font-extrabold text-2xl leading-tight drop-shadow">Customer</h3>
+            <h3 class="text-gray-200 font-extrabold text-2xl leading-tight drop-shadow">Guest</h3>
             </div>
         </div>
 
@@ -106,7 +106,7 @@
             <div class="pointer-events-none absolute top-4 left-4 opacity-0 translate-y-4 transition-all duration-500
                         group-hover/card:opacity-100 group-hover/card:translate-y-0">
             <span class="block text-gray-200/90 text-xs tracking-widest uppercase">Customer</span>
-            <h3 class="text-white font-extrabold text-2xl leading-tight drop-shadow">Customer</h3>
+            <h3 class="text-gray-200 font-extrabold text-2xl leading-tight drop-shadow">Guest</h3>
             </div>
         </div>
 
@@ -119,7 +119,7 @@
             <div class="pointer-events-none absolute top-4 left-4 opacity-0 translate-y-4 transition-all duration-500
                         group-hover/card:opacity-100 group-hover/card:translate-y-0">
             <span class="block text-gray-200/90 text-xs tracking-widest uppercase">Event</span>
-            <h3 class="text-white font-extrabold text-2xl leading-tight drop-shadow">Birthday</h3>
+            <h3 class="text-gray-200 font-extrabold text-2xl leading-tight drop-shadow">Birthday</h3>
             </div>
         </div>
 
@@ -131,7 +131,7 @@
             <div class="pointer-events-none absolute top-4 left-4 opacity-0 translate-y-4 transition-all duration-500
                         group-hover/card:opacity-100 group-hover/card:translate-y-0">
             <span class="block text-gray-200/90 text-xs tracking-widest uppercase">Event</span>
-            <h3 class="text-white font-extrabold text-2xl leading-tight drop-shadow">Birthday</h3>
+            <h3 class="text-gray-200 font-extrabold text-2xl leading-tight drop-shadow">Birthday</h3>
             </div>
         </div>
 
@@ -143,7 +143,7 @@
             <div class="pointer-events-none absolute top-4 left-4 opacity-0 translate-y-4 transition-all duration-500
                         group-hover/card:opacity-100 group-hover/card:translate-y-0">
             <span class="block text-gray-200/90 text-xs tracking-widest uppercase">Event</span>
-            <h3 class="text-white font-extrabold text-2xl leading-tight drop-shadow">Live Music</h3>
+            <h3 class="text-gray-200 font-extrabold text-2xl leading-tight drop-shadow">Live Music</h3>
             </div>
         </div>
 
@@ -155,7 +155,7 @@
             <div class="pointer-events-none absolute top-4 left-4 opacity-0 translate-y-4 transition-all duration-500
                         group-hover/card:opacity-100 group-hover/card:translate-y-0">
             <span class="block text-gray-200/90 text-xs tracking-widest uppercase">Event</span>
-            <h3 class="text-white font-extrabold text-2xl leading-tight drop-shadow">Birthday</h3>
+            <h3 class="text-gray-200 font-extrabold text-2xl leading-tight drop-shadow">Birthday</h3>
             </div>
         </div>
     </div>
