@@ -1,0 +1,46 @@
+name: Deploy static to GitHub Pages
+on:
+  push:
+    branches: [ "main" ]
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install Composer deps (no dev)
+        run: composer install --no-dev --prefer-dist --no-interaction
+
+      - name: App key & cache (optional kalau perlu)
+        run:
+          php artisan key:generate --force || true
+          php artisan config:cache || true
+
+      - name: Export static
+        run: php artisan export --output=dist
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
