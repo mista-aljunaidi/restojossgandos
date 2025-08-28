@@ -46,6 +46,12 @@
           <img src="img/gofood.jpg" alt="GoFood" class="w-14 h-14 object-contain">
         </a>
 
+        <a href="https://shopee.co.id/universal-link/now-food/shop/21737525?deep_and_deferred=1&shareChannel=copy_link" 
+          target="_blank" 
+          class="bg-white p-2 rounded-lg shadow-md hover:scale-105 transition block sm:hidden">
+          <img src="img/shopeefood.png" alt="ShopeeFood" class="w-14 h-14 object-contain">
+        </a>
+
         <!-- GrabFood -->
         <a href="https://food.grab.com/id/id/restaurant/bebek-joss-gandos-jl-raya-jemursari-delivery/IDGFSTI00002n8d?" 
           target="_blank" 
