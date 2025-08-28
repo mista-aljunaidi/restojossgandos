@@ -4,6 +4,17 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
+    base: '/restojossgandos/',
+    server: {
+        hmr: {
+            host: 'localhost',
+        },
+    },
+    css: {
+        postcss: {
+            plugins: [tailwindcss],
+        },
+    },
     plugins: [
         laravel({
             input: [
