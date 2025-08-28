@@ -2,6 +2,7 @@ name: Deploy static to GitHub Pages
 on:
   push:
     branches: [ "main" ]
+
 permissions:
   contents: read
   pages: write
@@ -13,34 +14,44 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Setup PHP & Composer jika diperlukan
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
 
-      - name: Install Composer deps (no dev)
+      - name: Install Composer dependencies
         run: composer install --no-dev --prefer-dist --no-interaction
 
-      - name: App key & cache (optional kalau perlu)
-        run:
-          php artisan key:generate --force || true
-          php artisan config:cache || true
-
-      - name: Export static
-        run: php artisan export --output=dist
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      # Setup Node untuk Vite build
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          path: dist
+          node-version: 18
+
+      - name: Install npm & build
+        run: |
+          npm install
+          npm run build
+
+      # Upload folder statis hasil build
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: public/dist
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+
 
