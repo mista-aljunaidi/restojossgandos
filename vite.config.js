@@ -5,6 +5,9 @@ import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
     base: '/restojossgandos/',
+    build: {
+        outDir: 'public/build',
+    },
     server: {
         hmr: {
             host: 'localhost',
