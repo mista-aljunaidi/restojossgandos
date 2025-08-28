@@ -4,27 +4,21 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 
 export default defineConfig({
-    base: '/restojossgandos/',
-    build: {
-        outDir: 'public/build',
-    },
-    server: {
-        hmr: {
-            host: 'localhost',
-        },
-    },
-    css: {
+    base: '/restojossgandos/', 
+    plugins: [
+        laravel({
+            input: ['resources/css/app.css', 'resources/js/app.js'],
+            refresh: true,
+        }),
+    ],
+
+	css: {
         postcss: {
             plugins: [tailwindcss],
         },
     },
-    plugins: [
-        laravel({
-            input: [
-                'resources/css/app.css',
-                'resources/js/app.js'
-            ],
-            refresh: true,
-        }),
-    ],
+    build: {
+        outDir: 'public/build',
+        emptyOutDir: true,
+    },
 });
