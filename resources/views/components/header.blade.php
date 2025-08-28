@@ -6,7 +6,7 @@
     <div class="absolute inset-0 z-0 flex justify-center">
       <video
         id="bg-video"
-        class="w-full h-full object-cover rounded-xl" 
+        class="w-full h-full object-cover rounded-7xl" 
         src="vid/phonk.mp4"
         autoplay
         muted
@@ -16,7 +16,7 @@
       </video>
     </div>
     <!-- Overlay -->
-    <div class="absolute inset-0 bg-black bg-opacity-70 z-10 rounded-xl"></div>
+    <div class="absolute inset-0 bg-black bg-opacity-70 z-10 rounded-7xl"></div>
 
   <!-- Konten Hero -->
   <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">

@@ -46,9 +46,10 @@
           <img src="img/gofood.jpg" alt="GoFood" class="w-14 h-14 object-contain">
         </a>
 
+        <!-- ShopeeFood -->
         <a href="https://shopee.co.id/universal-link/now-food/shop/21737525?deep_and_deferred=1&shareChannel=copy_link" 
           target="_blank" 
-          class="bg-white p-2 rounded-lg shadow-md hover:scale-105 transition block sm:hidden">
+          class="bg-white p-2 rounded-lg shadow-md hover:scale-105 transition block md:hidden">
           <img src="img/shopeefood.png" alt="ShopeeFood" class="w-14 h-14 object-contain">
         </a>
 
@@ -161,7 +162,7 @@
         </div>
 
         <!-- Copyright -->
-        <div class="border-t border-gray-700/20 mt-8 pt-6 text-center text-sm text-black">
+        <div class="border-t border-gray-900/20 mt-8 pt-6 text-center text-sm text-black">
             &copy; 2025 Resto Joss Gandos. Hak Cipta Dilindungi.
         </div>
     </div>
