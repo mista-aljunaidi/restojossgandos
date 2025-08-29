@@ -3,7 +3,7 @@
     <main class="pt-16 min-h-screen">
     <!-- About Page -->
         <div id="about-page" class="page-content">
-            <section class="py-8">
+            <section class="py-8 fade-section opacity-0 translate-y-10 transition-all duration-1000">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-12">
                         <h1 class="text-4xl font-bold text-gray-600 mb-4">Tentang Kami</h1>
@@ -54,7 +54,7 @@
             </section>
 
             <!-- Founder Section -->
-            <section class="py-12">
+            <section class="py-12 fade-section opacity-0 translate-y-10 transition-all duration-1000">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="grid md:grid-cols-2 gap-12 items-center">
                     
@@ -96,7 +96,7 @@
             </section>
 
             <!-- Team Section -->
-            <section class="pt-16 bg-secondary">
+            <section class="pt-16 bg-secondary fade-section opacity-0 translate-y-10 transition-all duration-1000">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-12">
                         <h2 class="text-3xl font-bold text-gray-600 mb-4">Tim Kami</h2>
@@ -134,5 +134,27 @@
                 </div>
             </section>
         </div>
+    </main>
+
+    <script>
+      // Fade In Animation
+      document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll(".fade-section");
+
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.remove("opacity-0", "translate-y-10");
+              entry.target.classList.add("opacity-100", "translate-y-0");
+              obs.unobserve(entry.target); // hanya animasi sekali
+            }
+          });
+        }, { threshold: 0.2 });
+
+        sections.forEach(section => {
+          observer.observe(section);
+        });
+      });
+    </script>
 
 </x-layout>

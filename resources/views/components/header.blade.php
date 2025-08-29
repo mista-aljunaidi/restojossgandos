@@ -1,5 +1,5 @@
 <!-- Hero Section -->
-<section class="relative overflow-hidden">
+<section class="relative overflow-hidden fade-section opacity-0 translate-y-10 transition-all duration-1000">
   <div class="max-w-7xl mx-auto relative flex items-center justify-center h-[800px] sm:h-[800px] md:h-[800px]">
     
     <!-- Video Background -->
@@ -32,34 +32,55 @@
     </div>
   </div>
 
-  <!-- Preload video agar cepat siap -->
-<link rel="preload" as="video" href="vid/phonk.mp4" type="video/mp4">
+    <!-- Preload video agar cepat siap -->
+  <link rel="preload" as="video" href="vid/phonk.mp4" type="video/mp4">
 
-<script>
-  const video = document.getElementById('bg-video');
-  
-  // Paksa play segera tanpa menunggu buffering penuh
-  video.addEventListener('canplay', () => {
-    video.play().catch(err => console.log(err));
-  });
+  <script>
+    const video = document.getElementById('bg-video');
+    
+    // Paksa play segera tanpa menunggu buffering penuh
+    video.addEventListener('canplay', () => {
+      video.play().catch(err => console.log(err));
+    });
 
-  // Lazy load untuk optimasi (opsional)
-  document.addEventListener('DOMContentLoaded', () => {
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            video.load();
-            observer.unobserve(video);
-          }
+    // Lazy load untuk optimasi (opsional)
+    document.addEventListener('DOMContentLoaded', () => {
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              video.load();
+              observer.unobserve(video);
+            }
+          });
+        });
+        observer.observe(video);
+      } else {
+        // Fallback jika browser tidak mendukung IntersectionObserver
+        video.load();
+      }
+    });
+  </script>
+
+  <script>
+      // Fade In Animation
+      document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll(".fade-section");
+
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.remove("opacity-0", "translate-y-10");
+              entry.target.classList.add("opacity-100", "translate-y-0");
+              obs.unobserve(entry.target); // hanya animasi sekali
+            }
+          });
+        }, { threshold: 0.2 });
+
+        sections.forEach(section => {
+          observer.observe(section);
         });
       });
-      observer.observe(video);
-    } else {
-      // Fallback jika browser tidak mendukung IntersectionObserver
-      video.load();
-    }
-  });
-</script>
+    </script>
 
 </section>

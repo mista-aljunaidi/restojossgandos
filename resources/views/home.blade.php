@@ -2,7 +2,7 @@
   
   <main class="pt-20">
     <!-- Features Section -->
-    <section id="features" class="relative">
+    <section id="features" class="relative fade-section opacity-0 translate-y-10 transition-all duration-1000">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Main Feature - Text Left, Image Right -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20">
@@ -38,7 +38,7 @@
     </section>
 
     <!-- Testimonials Section -->
-    <section id="testimonials" class="relative py-6">
+    <section id="testimonials" class="relative py-6 fade-section opacity-0 translate-y-10 transition-all duration-1000">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-4xl md:text-5xl font-bold text-yellow-600 mb-12">
           Ulasan Pelanggan
@@ -189,7 +189,7 @@
     </section>
 
     <!-- CTA Section -->
-    <section id="cta" class="relative py-24">
+    <section id="cta" class="relative py-24 fade-section opacity-0 translate-y-10 transition-all duration-1000">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">  
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div class="max-w-4xl mx-auto">
@@ -211,14 +211,15 @@
       </div>
     </section>
 
+  </main>
+
     <!-- SwiperJS CDN -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-    <!-- Swiper Init -->
-    <script>
+  <script>
       var swiper = new Swiper(".testimonialSwiper", {
         loop: true,
         autoplay: {
@@ -237,7 +238,25 @@
           clickable: true,
         },
       });
+
+      // Fade In Animation
+      document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll(".fade-section");
+
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.remove("opacity-0", "translate-y-10");
+              entry.target.classList.add("opacity-100", "translate-y-0");
+              obs.unobserve(entry.target); // hanya animasi sekali
+            }
+          });
+        }, { threshold: 0.2 });
+
+        sections.forEach(section => {
+          observer.observe(section);
+        });
+      });
     </script>
-  </main>
 
 </x-layout>
