@@ -120,7 +120,7 @@
           <h3 class="text-xl font-bold bg-gradient-to-l from-red-900 to-orange-600 bg-clip-text text-transparent mb-4">
             Resto Joss Gandos
           </h3>
-          <p class="mb-4 leading-relaxed">Menghadirkan cita rasa terbaik dengan pelayanan terdepan untuk keluarga Indonesia.</p>
+          <p class="mb-4 leading-relaxed">Apapun acaranya, Joss Gandos tempatnya.</p>
           <div class="flex space-x-4 text-lg">
               <a href="https://www.facebook.com/RestoJossGandos" class="hover:text-red-400 transition"><span class="[&>svg]:h-5 [&>svg]:w-5">
               <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 320 512">

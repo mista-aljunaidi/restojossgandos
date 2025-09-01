@@ -1,8 +1,8 @@
 <x-layout>
 <main class="pt-16 min-h-screen">
-  <!-- About Page -->
-  <div id="about-page" class="page-content">
-  <section class="py-1">
+  <!-- MENU PAGE -->
+  <div id="menu-page" class="page-content">
+  <section class="py-4">
       <div class="mx-auto max-w-6xl px-4 py-8 font-sans">
         <div class="text-center mb-12">
           <h1 class="text-4xl font-bold text-gray-600 mb-4">Menu Kami</h1>
@@ -123,10 +123,10 @@
         }
       </script>
 
-  <!-- Section Menu Spesial -->
-    <section class="py-20 fade-section opacity-0 translate-y-10 transition-all duration-1000">
+    <!-- Section Menu Spesial -->
+    <section class="pt-12 pb-16 fade-section opacity-0 translate-y-10 transition-all duration-1000">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl font-bold text-gray-600 mb-12">Menu Spesial Kami</h2>
+        <h2 class="text-3xl font-bold text-gray-600 mb-8">Menu Spesial Kami</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div class="bg-gray-100 rounded-2xl shadow-md hover:shadow-xl transition p-6">
@@ -147,6 +147,7 @@
             <p class="text-gray-800 text-sm">Cumi segar dimasak dengan tinta hitam alami, rasa gurih khas laut yang unik dan menggoda.</p>
           </div>
         </div>
+
       </div>
     </section>
 

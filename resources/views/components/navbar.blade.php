@@ -5,7 +5,7 @@
       <!-- Logo + Nama -->
       <a href="/">
       <div class="flex items-center space-x-3">
-        <img src="/img/logo-joss-gandos.png" alt="Resto Joss Gandos" class="h-12 w-auto transform transition-transform duration-500 hover:scale-110">
+        <img src="/img/logo-joss-gandos.png" alt="Resto Joss Gandos" class="h-12 w-auto transform transition-transform duration-500">
         <span class="text-xl font-bold bg-gradient-to-l from-red-900 to-orange-600 bg-clip-text text-transparent">
           Resto Joss Gandos
         </span>

@@ -3,60 +3,56 @@
     <main class="pt-16 min-h-screen">
     <!-- About Page -->
         <div id="about-page" class="page-content">
-            <section class="py-8 fade-section opacity-0 translate-y-10 transition-all duration-1000">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="text-center mb-12">
-                        <h1 class="text-4xl font-bold text-gray-600 mb-4">Tentang Kami</h1>
-                        <p class="text-gray-900 max-w-3xl mx-auto">Perjalanan kami dalam menghadirkan cita rasa terbaik untuk Anda</p>
-                    </div>
-
-                    <div class="grid md:grid-cols-2 gap-12 items-center">
-                        <div class="text-center bg-gray-100 p-6 rounded-lg shadow-md  hover:shadow-xl transition-shadow duration-300">
-                        <div>
-                            <h2 class="text-2xl font-bold text-dark mb-4">Sejarah Kami</h2>
-                            <p class="text-gray-900 mb-4">
-                                Resto Joss Gandos didirikan pada tahun 2015 dengan visi menghadirkan pengalaman kuliner yang tak terlupakan. 
-                                Dimulai dari sebuah warung kecil, kini kami telah berkembang menjadi restoran yang dikenal luas di kota.
-                            </p>
-                            <p class="text-gray-900 mb-6">
-                                Dengan komitmen pada kualitas dan inovasi, kami terus mengembangkan resep-resep autentik yang 
-                                memadukan cita rasa tradisional dengan sentuhan modern.
-                            </p>
-                            
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="text-center p-4 bg-secondary rounded-lg">
-                                </div>
-                                <div class="text-center p-4 bg-secondary rounded-lg">
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                        
-                        <div class="bg-accent p-8 rounded-lg">
-                            <div class="text-center bg-gray-100 p-6 rounded-lg shadow-md  hover:shadow-xl transition-shadow duration-300">
-                            <h3 class="text-2xl font-bold text-dark mb-4">Visi & Misi</h3>
-                            <div class="mb-6">
-                                <h4 class="font-semibold text-dark mb-2">Visi</h4>
-                                <p class="text-gray-900">Menjadi restoran pilihan utama yang menghadirkan pengalaman kuliner berkualitas tinggi dengan suasana yang nyaman dan ramah.</p>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-dark mb-2">Misi</h4>
-                                <ul class="text-gray-900 space-y-2">
-                                    <li>• Menyajikan makanan berkualitas dengan bahan-bahan segar</li>
-                                    <li>• Memberikan pelayanan terbaik kepada setiap pelanggan</li>
-                                    <li>• Menciptakan suasana yang nyaman untuk berkumpul</li>
-                                    <li>• Terus berinovasi dalam menu dan pelayanan</li>
-                                </ul>
-                            </div>
-                        </div>
-                        </div>
+            <section class="py-6 md:py-10 fade-section opacity-0 translate-y-10 transition-all duration-1000">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-6 md:mb-8">
+                    <h1 class="text-4xl font-bold text-gray-600 mb-4">Tentang Kami</h1>
+                    <p class="text-gray-900 max-w-3xl mx-auto">
+                    Perjalanan kami dalam menghadirkan cita rasa terbaik untuk Anda
+                    </p>
                 </div>
+
+                <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-start">
+                <!-- Sejarah Kami -->
+                <div class="bg-gray-100 p-6 md:p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <h2 class="text-2xl font-bold text-dark mb-3">Sejarah Kami</h2>
+                    <p class="text-gray-900 mb-4">
+                    Resto Joss Gandos didirikan pada tahun 2015 dengan visi menghadirkan pengalaman kuliner yang tak terlupakan. 
+                    Dimulai dari sebuah warung kecil, kini kami telah berkembang menjadi restoran yang dikenal luas di kota.
+                    </p>
+                    <p class="text-gray-900">
+                    Dengan komitmen pada kualitas dan inovasi, kami terus mengembangkan resep-resep autentik yang 
+                    memadukan cita rasa tradisional dengan sentuhan modern.
+                    </p>
+                </div>
+
+                <!-- Visi & Misi -->
+                <div class="bg-gray-100 p-6 md:p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                    <h3 class="text-2xl font-bold text-dark mb-3">Visi & Misi</h3>
+                    <div class="mb-4 md:mb-5">
+                    <h4 class="font-semibold text-dark mb-2">Visi</h4>
+                    <p class="text-gray-900">
+                        Menjadi restoran pilihan utama yang menghadirkan pengalaman kuliner berkualitas tinggi dengan suasana yang nyaman dan ramah.
+                    </p>
+                    </div>
+                    <div>
+                    <h4 class="font-semibold text-dark mb-2">Misi</h4>
+                    <ul class="text-gray-900 space-y-1.5 md:space-y-2">
+                        <li>• Menyajikan makanan berkualitas dengan bahan-bahan segar</li>
+                        <li>• Memberikan pelayanan terbaik kepada setiap pelanggan</li>
+                        <li>• Menciptakan suasana yang nyaman untuk berkumpul</li>
+                        <li>• Terus berinovasi dalam menu dan pelayanan</li>
+                    </ul>
+                    </div>
+                </div>
+                </div>
+            </div>
             </section>
 
             <!-- Founder Section -->
-            <section class="py-12 fade-section opacity-0 translate-y-10 transition-all duration-1000">
+            <section class="py-6 md:py-10 fade-section opacity-0 translate-y-10 transition-all duration-1000">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
                     
                     <!-- Bagian Gambar dengan Dekorasi -->
                     <div class="relative flex items-center justify-center">
@@ -70,7 +66,7 @@
                             <div class="absolute bottom-6 left-10 w-8 h-8 bg-green-300 rounded-full"></div>
                             <div class="absolute top-1/2 -left-6 w-4 h-4 bg-blue-300 rounded-full"></div>
                         </div>
-                    <!-- Gambar Founder dengan efek hover normal -->
+                    <!-- Gambar Founder -->
                             <img src="img/founder.jpg" alt="Founder Resto Joss Gandos" 
                             class="relative z-10 rounded-lg shadow-xl w-full max-w-md object-cover transform transition-transform duration-500 hover:rotate-y-12 hover:-rotate-x-6 hover:scale-105">
                     </div>
@@ -96,14 +92,14 @@
             </section>
 
             <!-- Team Section -->
-            <section class="pt-16 bg-secondary fade-section opacity-0 translate-y-10 transition-all duration-1000">
+            <section class="py-6 md:py-10 bg-secondary fade-section opacity-0 translate-y-10 transition-all duration-1000">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="text-center mb-12">
-                        <h2 class="text-3xl font-bold text-gray-600 mb-4">Tim Kami</h2>
+                    <div class="text-center mb-6 md:mb-8">
+                    <h2 class="text-3xl font-bold text-gray-600 mb-4">Tim Kami</h2>
                         <p class="text-gray-900">Berkenalan dengan orang-orang dibalik kesuksesan Resto Joss Gandos</p>
                     </div>
                     
-                    <div class="grid md:grid-cols-3 gap-8">
+                    <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
                         <div class="text-center bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
                         <div class="w-32 h-32 mx-auto mb-4 flex items-center justify-center perspective">
                             <img src="img/mista.jpg" alt="Founder Resto Joss Gandos"
