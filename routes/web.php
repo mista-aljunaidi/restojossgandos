@@ -19,5 +19,13 @@ Route::get('gallery', function () {
 });
 
 Route::get('location', function () {
-    return view('lokasi');
+    return view('location');
+});
+
+Route::get('login', function () {
+    return view('login');
+});
+
+Route::get('dashboard', function () {
+    return view('dashboard');
 });

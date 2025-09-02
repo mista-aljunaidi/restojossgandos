@@ -21,7 +21,7 @@
   <!-- Konten Hero -->
   <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">
     <h1 class="text-3xl font-bold tracking-tight text-red-600 sm:text-6xl">Resto Joss Gandos</h1>
-    <p class="mt-8 text-lg font-medium text-pretty text-white sm:text-xl/8 animate-bounce">
+    <p class="mt-8 text-lg font-medium text-pretty text-white sm:text-xl/8">
       Pelopor No. 1 Resto dan Cafe
     </p>
     <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 text-base font-semibold text-yellow-300 sm:grid-cols-2 md:flex lg:gap-x-10">

@@ -14,12 +14,18 @@
 
       <!-- Menu Navigasi (Desktop) -->
       <div class="hidden md:flex items-center space-x-3">
-        <x-nav-link href="/" class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">Home</x-nav-link>
-        <x-nav-link href="/about" class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">About</x-nav-link>
-        <x-nav-link href="/menu" class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">Menu</x-nav-link>
-        <x-nav-link href="/gallery" class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">Gallery</x-nav-link>
-        <x-nav-link href="/location" class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">Location</x-nav-link>
-        
+        <x-nav-link href="/" 
+        class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">Home</x-nav-link>
+        <x-nav-link href="/about" 
+        class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">About</x-nav-link>
+        <x-nav-link href="/menu" 
+        class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">Menu</x-nav-link>
+        <x-nav-link href="/gallery" 
+        class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">Gallery</x-nav-link>
+        <x-nav-link href="/location" 
+        class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">Location</x-nav-link>
+        <a href="/login" class="fixed bottom-4 right-4 bg-white p-3 rounded-full shadow-md hover:scale-110 transition"><i class="uil uil-lock text-red-700 text-xl"></i></a>
+
         <!-- Search Desktop -->
         <div class="relative group ml-4">
           <svg class="w-5 h-5 absolute left-3 top-2 text-black pointer-events-none transition-all duration-300 group-hover:text-red-500"
