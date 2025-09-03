@@ -71,8 +71,10 @@
       </div>
 
       <a href="/login" 
-        class="fixed bottom-4 right-4 z-50 bg-white p-3 rounded-full shadow-md hover:scale-110 transition block md:hidden"><i class="uil uil-lock text-red-700 text-xl"></i>
+        class="fixed bottom-4 right-4 z-50 bg-white p-3 rounded-full shadow-md hover:scale-110 transition">
+        <i class="uil uil-lock text-red-700 text-xl"></i>
       </a>
+
 
       <script>
         document.addEventListener("DOMContentLoaded", () => {
