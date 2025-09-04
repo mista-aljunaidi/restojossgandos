@@ -25,6 +25,20 @@
 
         {{-- Gallery Grid --}}
         <div id="gallery-grid" class="group/gallery grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            @forelse ($photos as $photo)
+                <div class="card group/card relative overflow-hidden rounded-2xl category-{{ strtolower($photo->category) }}">
+                    <img src="{{ asset($photo->image_path) }}" alt="{{ $photo->title }}"
+                        class="w-full h-64 object-cover transition duration-500
+                                group-has-[.card:hover]/gallery:blur-[2px] group-has-[.card:hover]/gallery:brightness-75 group-has-[.card:hover]/gallery:scale-[.98]
+                                group-hover/card:!blur-0 group-hover/card:!brightness-100 group-hover/card:!scale-100">
+                    <div class="pointer-events-none absolute top-4 left-4 opacity-0 translate-y-4 transition-all duration-500
+                                group-hover/card:opacity-100 group-hover/card:translate-y-0">
+                        <span class="block text-gray-200/90 text-xs tracking-widest uppercase">{{ $photo->category }}</span>
+                        <h3 class="text-gray-200 font-extrabold text-2xl leading-tight drop-shadow">{{ $photo->title }}</h3>
+                    </div>
+                </div>
+            @empty
+            @endforelse
             {{-- ===== Food ===== --}}
             <div class="card group/card relative overflow-hidden rounded-2xl category-food">
                 <img src="{{ asset('img/bebekgoreng.jpg') }}" alt="Bebek Goreng"
