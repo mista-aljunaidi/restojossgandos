@@ -17,16 +17,14 @@
 
   <div class="max-w-6xl mx-auto p-6 pt-24 fade-section opacity-0 translate-y-10 transition-all duration-1000">
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-3xl font-bold text-gray-700">Dashboard - Kelola Foto</h1>
+      <h1 class="text-3xl font-bold text-gray-700">Dashboard</h1>
 
-      @auth
       <form action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center gap-2">
-          <i class="uil uil-signout-alt"></i> Logout
-        </button>
+          @csrf
+          <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center gap-2">
+              <i class="uil uil-signout-alt"></i> Logout
+          </button>
       </form>
-      @endauth
     </div>
 
     <!-- Flash success -->
@@ -114,6 +112,7 @@
             <option value="food">Food</option>
             <option value="customer">Customer</option>
             <option value="event">Event</option>
+            <option value="ambience">Ambience</option>
         </select>
 
         <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>

@@ -5,12 +5,16 @@
     <section class="py-8 fade-section opacity-100 translate-y-10 transition-all duration-1000">
     <h2 class="text-4xl font-bold text-center text-gray-600 mb-8">Galeri Kami</h2>
 
-    {{-- Ambience Slider --}}
+    {{-- Slider khusus ambience --}}
     <section class="relative w-full h-[600px] overflow-hidden">
-        <div class="absolute inset-0 flex transition-transform duration-700" id="slider">
-            <img src="{{ asset('img/ambience1.jpg') }}" class="w-full object-cover flex-shrink-0" alt="Ambience 1">
-            <img src="{{ asset('img/ambience2.jpg') }}" class="w-full object-cover flex-shrink-0" alt="Ambience 2">
-            <img src="{{ asset('img/ambience3.jpg') }}" class="w-full object-cover flex-shrink-0" alt="Ambience 3">
+        <div id="slider" class="flex w-full h-full transition-transform duration-700">
+            @foreach ($ambiencePhotos as $photo)
+                <div class="w-full h-full flex-shrink-0">
+                    <img src="{{ asset($photo->image_path) }}" 
+                        class="w-full h-full object-cover" 
+                        alt="{{ $photo->title }}">
+                </div>
+            @endforeach
         </div>
     </section>
 
@@ -179,13 +183,21 @@
 
     {{-- Filter Script --}}
     <script>
-    // Simple Slider
-        const slider = document.getElementById('slider');
-        let slideIndex = 0;
-        setInterval(() => {
-            slideIndex = (slideIndex + 1) % slider.children.length;
-            slider.style.transform = `translateX(-${slideIndex * 100}%)`;
-        }, 3000);	
+        // Simple Slider
+            document.addEventListener("DOMContentLoaded", function () {
+            const slider = document.getElementById("slider");
+            const slides = slider.children;
+            let index = 0;
+
+            function showSlide(i) {
+                slider.style.transform = `translateX(-${i * 100}%)`;
+            }
+
+            setInterval(() => {
+                index = (index + 1) % slides.length;
+                showSlide(index);
+            }, 3000);
+        });	
 
         const buttons = document.querySelectorAll('.filter-btn');
         const items = document.querySelectorAll('#gallery-grid > div');

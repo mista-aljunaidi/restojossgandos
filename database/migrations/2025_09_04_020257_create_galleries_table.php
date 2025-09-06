@@ -10,7 +10,7 @@ return new class extends Migration {
         $table->id();
         $table->string('title');
         $table->string('image_path');
-        $table->enum('category', ['food', 'customer', 'event']);
+        $table->enum('category', ['food', 'customer', 'event', 'ambience']);
         $table->timestamps();
 });
     }
