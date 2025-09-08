@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountAuthController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Auth;
 
 // FRONTEND (publik)
@@ -17,6 +18,12 @@ Route::prefix('dashboard')->middleware([])->group(function () {
     Route::post('/gallery', [GalleryController::class, 'store'])->name('gallery.store');
     Route::put('/gallery/{id}', [GalleryController::class, 'update'])->name('gallery.update');
     Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
+
+    // MENU CRUD
+    Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+    Route::post('/menu', [MenuController::class, 'store'])->name('menu.store');
+    Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
+    Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
 });
 
 // Login

@@ -46,13 +46,13 @@
     </div>
     @endif
 
-    <!-- Button Tambah Foto -->
-    <button onclick="openTambahModal()" class="mb-6 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+    <!-- Button Tambah -->
+    <button onclick="openChooseModal()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
       + Tambah Foto
     </button>
 
     <!-- Tabel Foto -->
-    <div class="bg-white shadow-md rounded-xl overflow-hidden">
+    <div class="bg-white shadow-md rounded-xl overflow-hidden mt-6">
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
@@ -100,59 +100,73 @@
     </div>
   </div>
 
-  <!-- Modal Tambah -->
+  <!-- Modal Pilih -->
+  <div id="modalChoose" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative">
+      <button type="button" onclick="closeChooseModal()" 
+        class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
+      <h2 class="text-xl font-bold mb-4">Tambah Foto Baru</h2>
+      <div class="flex flex-col gap-3">
+        <button onclick="openTambahGallery()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Gallery</button>
+        <button onclick="openTambahMenu()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Tambah Gallery -->
   <div id="modalTambah" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
+      <button type="button" onclick="closeTambahModal()" 
+        class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
       <h2 class="text-xl font-bold mb-4">Tambah Foto Baru</h2>
       <form action="{{ route('gallery.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="text" name="title" placeholder="Judul Foto" class="border p-2 rounded mb-3 w-full">
-
         <select name="category" class="border p-2 rounded mb-3 w-full" required>
             <option value="food">Food</option>
             <option value="customer">Customer</option>
             <option value="event">Event</option>
             <option value="ambience">Ambience</option>
         </select>
-
         <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
-        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Upload</button>
+        <div class="flex justify-end">
+          <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+            Upload
+          </button>
+        </div>
       </form>
     </div>
   </div>
 
-  <!-- Modal Tambah -->
-<div id="modalTambah" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
-  <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
-    
-    <!-- Tombol Close -->
-    <button type="button" onclick="closeTambahModal()" 
-      class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-      <i class="uil uil-times text-2xl"></i>
-    </button>
-
-    <h2 class="text-xl font-bold mb-4">Tambah Foto Baru</h2>
-    <form action="{{ route('gallery.store') }}" method="POST" enctype="multipart/form-data">
-      @csrf
-      <input type="text" name="title" placeholder="Judul Foto" 
-        class="border p-2 rounded mb-3 w-full">
-
-      <select name="category" class="border p-2 rounded mb-3 w-full" required>
-        <option value="food">Food</option>
-        <option value="customer">Customer</option>
-        <option value="event">Event</option>
-      </select>
-
-      <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
-
-      <div class="flex justify-end">
-        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-          Upload
-        </button>
-      </div>
-    </form>
+  <!-- Modal Tambah Menu -->
+  <div id="modalTambahMenu" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
+      <button type="button" onclick="closeTambahMenu()" 
+        class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
+      <h2 class="text-xl font-bold mb-4">Tambah Menu Baru</h2>
+      <form action="{{ route('menu.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="text" name="title" placeholder="Nama Menu" class="border p-2 rounded mb-3 w-full">
+        <textarea name="description" placeholder="Deskripsi Menu" class="border p-2 rounded mb-3 w-full"></textarea>
+        <select name="type" class="border p-2 rounded mb-3 w-full" required>
+          <option value="carousel">Carousel</option>
+          <option value="special">Menu Spesial</option>
+        </select>
+        <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
+        <div class="flex justify-end">
+          <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+            Simpan
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
 
   <!-- Scripts -->
   <script>
@@ -182,6 +196,23 @@
     });
 
     // Modal functions
+    function openChooseModal() {
+      document.getElementById('modalChoose').classList.remove('hidden');
+      document.getElementById('modalChoose').classList.add('flex');
+    }
+    function closeChooseModal() {
+      document.getElementById('modalChoose').classList.add('hidden');
+      document.getElementById('modalChoose').classList.remove('flex');
+    }
+    function openTambahGallery() {
+      closeChooseModal();
+      openTambahModal();
+    }
+    function openTambahMenu() {
+      closeChooseModal();
+      document.getElementById('modalTambahMenu').classList.remove('hidden');
+      document.getElementById('modalTambahMenu').classList.add('flex');
+    }
     function openTambahModal() {
       document.getElementById('modalTambah').classList.remove('hidden');
       document.getElementById('modalTambah').classList.add('flex');
@@ -190,20 +221,9 @@
       document.getElementById('modalTambah').classList.add('hidden');
       document.getElementById('modalTambah').classList.remove('flex');
     }
-
-    function openEditModal({ id, title, category, image }) {
-      document.getElementById('modalEdit').classList.remove('hidden');
-      document.getElementById('modalEdit').classList.add('flex');
-      document.getElementById('edit_title').value = title;
-      document.getElementById('edit_category').value = category;
-      document.getElementById('edit_preview').src = image;
-
-      // set form action
-      document.getElementById('formEdit').action = `{{ url('dashboard') }}/${id}`;
-    }
-    function closeEditModal() {
-      document.getElementById('modalEdit').classList.add('hidden');
-      document.getElementById('modalEdit').classList.remove('flex');
+    function closeTambahMenu() {
+      document.getElementById('modalTambahMenu').classList.add('hidden');
+      document.getElementById('modalTambahMenu').classList.remove('flex');
     }
   </script>
 

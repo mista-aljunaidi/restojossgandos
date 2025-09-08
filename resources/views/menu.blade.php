@@ -12,6 +12,7 @@
       <div class="relative w-full max-w-4xl mx-auto overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
       <!-- Wrapper Slide -->
       <div id="carousel" class="flex transition-transform duration-500" class="fade-section opacity-0 translate-y-10 transition-all duration-1000">
+        
       <!-- Slide 1 -->
         <div class="relative min-w-full group">
           <img src="img/bebekgoreng.jpg"
@@ -92,6 +93,19 @@
               Hangatkan harimu.</p>
           </div>
         </div>
+
+        @forelse($carouselMenus as $menu)
+              <div class="relative min-w-full group">
+                <img src="{{ asset('img/' . $menu->image_path) }}" alt="{{ $menu->title }}" class="w-full h-[600px] object-cover">
+                <div class="absolute bottom-0 left-0 w-full bg-gray-100 bg-opacity-95 p-4 h-1/5 flex flex-col justify-center 
+                            opacity-0 translate-y-full transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                  <h3 class="text-xl font-bold text-center">{{ $menu->title }}</h3>
+                  <p class="text-gray-800 text-sm text-center">{{ $menu->description }}</p>
+                </div>
+              </div>
+            @empty
+              {{-- Kosong, tidak ditampilkan --}}
+            @endforelse
       </div>
 
         <!-- Tombol Navigasi -->
@@ -129,6 +143,20 @@
         <h2 class="text-3xl font-bold text-gray-600 mb-8">Menu Spesial Kami</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+          @forelse($specialMenus as $menu)
+            <div class="bg-gray-100 rounded-2xl shadow-md hover:shadow-xl transition p-6">
+              <img src="{{ asset($menu->image_path) }}" 
+                  alt="{{ $menu->title }}" 
+                  class="rounded-lg shadow-lg w-full object-cover aspect-[4/3]">
+              <h3 class="text-xl font-semibold mb-2">{{ $menu->title }}</h3>
+              <p class="text-gray-800 text-sm">{{ $menu->description }}</p>
+            </div>
+          @empty
+            <p class="text-center text-gray-500">Belum ada menu spesial.</p>
+          @endforelse
+
+
           <div class="bg-gray-100 rounded-2xl shadow-md hover:shadow-xl transition p-6">
             <img src="img/bebekgoreng.jpg" alt="Sate Ayam Joss" class="rounded-lg shadow-lg w-full object-cover transform transition-transform duration-500 hover:rotate-y-12 hover:-rotate-x-6 hover:scale-105 aspect-[4/3]">
             <h3 class="text-xl font-semibold mb-2">Sate Ayam Joss</h3>
