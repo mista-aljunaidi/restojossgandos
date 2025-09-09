@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Login Menu</title>
+  <link rel="icon" type="image/jpeg" href="img/logo-joss-gandos.png">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="flex items-center justify-center h-screen bg-gray-100">

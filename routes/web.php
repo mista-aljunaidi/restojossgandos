@@ -8,19 +8,23 @@ use Illuminate\Support\Facades\Auth;
 
 // FRONTEND (publik)
 Route::get('/gallery', [GalleryController::class, 'publicIndex'])->name('gallery.front');
+Route::get('/menu', [MenuController::class, 'publicIndex'])->name('menu.front');
 
 // ADMIN (dashboard)
-Route::prefix('dashboard')->middleware([])->group(function () {
-    // halaman utama dashboard = kelola foto
-    Route::get('/', [GalleryController::class, 'index'])->name('dashboard');
+Route::prefix('dashboard')->group(function () {
+    // Dashboard utama -> tampilkan semua (gallery + menu)
+    Route::get('/', function () {
+        $photos = \App\Models\Gallery::latest()->get();
+        $menus  = \App\Models\Menu::latest()->get();
+        return view('dashboard', compact('photos', 'menus'));
+    })->name('dashboard');
 
-    // aksi CRUD
+    // GALLERY CRUD
     Route::post('/gallery', [GalleryController::class, 'store'])->name('gallery.store');
     Route::put('/gallery/{id}', [GalleryController::class, 'update'])->name('gallery.update');
     Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
 
     // MENU CRUD
-    Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
     Route::post('/menu', [MenuController::class, 'store'])->name('menu.store');
     Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
     Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
@@ -32,17 +36,13 @@ Route::post('/login', [AccountAuthController::class, 'login'])->name('login');
 
 // Logout
 Route::post('/logout', function () {
-    Auth::logout(); 
+    Auth::logout();
     request()->session()->invalidate();
     request()->session()->regenerateToken();
     return redirect('/login')->with('success', 'Berhasil logout');
 })->name('logout');
 
-
 // HOME
-Route::get('/', function () {
-    return view('home');
-});
-Route::get('/about', fn() => view('about'));
-Route::get('/menu', fn() => view('menu'));
-Route::get('/location', fn() => view('location'));
+Route::view('/', 'home');
+Route::view('/about', 'about');
+Route::view('/location', 'location');

@@ -16,98 +16,110 @@
   <x-navbar></x-navbar>
 
   <div class="max-w-6xl mx-auto p-6 pt-24 fade-section opacity-0 translate-y-10 transition-all duration-1000">
+    
+    <!-- Header Dashboard -->
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-3xl font-bold text-gray-700">Dashboard</h1>
-
       <form action="{{ route('logout') }}" method="POST">
-          @csrf
-          <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center gap-2">
-              <i class="uil uil-signout-alt"></i> Logout
-          </button>
+        @csrf
+        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center gap-2">
+          <i class="uil uil-signout-alt"></i> Logout
+        </button>
       </form>
     </div>
 
-    <!-- Flash success -->
+    <!-- Flash Success -->
     @if(session('success'))
-    <div id="success-alert"
-      class="mb-4 p-3 bg-green-100 text-green-700 rounded transition-all duration-500 ease-in-out">
-      {{ session('success') }}
-    </div>
+      <div id="success-alert" class="mb-4 p-3 bg-green-100 text-green-700 rounded transition-all duration-500 ease-in-out">
+        {{ session('success') }}
+      </div>
     @endif
 
-    <!-- Validasi error -->
+    <!-- Validasi Error -->
     @if ($errors->any())
-    <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
-      <ul class="list-disc list-inside text-sm">
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
+      <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
+        <ul class="list-disc list-inside text-sm">
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
     @endif
 
     <!-- Button Tambah -->
     <button onclick="openChooseModal()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-      + Tambah Foto
+      + Tambah Data
     </button>
 
-    <!-- Tabel Foto -->
+    <!-- Tabel Data -->
     <div class="bg-white shadow-md rounded-xl overflow-hidden mt-6">
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Judul</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Deskripsi</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Foto</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kategori</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
-          @forelse($photos as $photo)
-          <tr>
-            <td class="px-6 py-4 text-sm text-gray-700">{{ $photo->id }}</td>
-            <td class="px-6 py-4 text-sm text-gray-700">{{ $photo->title }}</td>
-            <td class="px-6 py-4">
-              <img src="{{ asset($photo->image_path) }}" class="h-12 w-12 rounded-lg object-cover">
-            </td>
-            <td class="px-6 py-4 text-sm text-gray-700">{{ $photo->category }}</td>
-            <td class="px-6 py-4 flex gap-2">
-              <button onclick="openEditModal({ 
-                  id: '{{ $photo->id }}', 
-                  title: @js($photo->title), 
-                  category: @js($photo->category), 
-                  image: '{{ asset($photo->image_path) }}' 
-              })"
-                class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
-                Edit
-              </button>
-              <form action="{{ route('gallery.destroy',$photo->id) }}" method="POST"
-                onsubmit="return confirm('Yakin hapus foto ini?')">
-                @csrf @method('DELETE')
-                <button type="submit"
-                  class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Hapus</button>
-              </form>
-            </td>
-          </tr>
-          @empty
-          <tr>
-            <td colspan="5" class="px-6 py-6 text-center text-gray-500">Belum ada data.</td>
-          </tr>
-          @endforelse
+          @if(isset($photos))
+            @forelse($photos as $photo)
+              <tr>
+                <td class="px-6 py-4 text-sm text-gray-700">{{ $photo->id }}</td>
+                <td class="px-6 py-4 text-sm text-gray-700">{{ $photo->title }}</td>
+                <td class="px-6 py-4 text-sm text-gray-700">-</td>
+                <td class="px-6 py-4">
+                  <img src="{{ asset($photo->image_path) }}" class="h-12 w-12 rounded-lg object-cover">
+                </td>
+                <td class="px-6 py-4 text-sm text-gray-700">{{ $photo->category }}</td>
+                <td class="px-6 py-4 flex gap-2">
+                  <button onclick="openUpdatePhoto({{ $photo->id }}, '{{ $photo->title }}', '{{ $photo->category }}')" 
+                          class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">Edit</button>
+                  <button onclick="openDeletePhoto({{ $photo->id }})" 
+                          class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Hapus</button>
+                </td>
+              </tr>
+            @empty
+              <tr><td colspan="6" class="text-center py-4">Belum ada foto.</td></tr>
+            @endforelse
+          @elseif(isset($menus))
+            @forelse($menus as $menu)
+              <tr>
+                <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->id }}</td>
+                <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->title }}</td>
+                <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->description }}</td>
+                <td class="px-6 py-4">
+                  <img src="{{ asset($menu->image_path) }}" class="h-12 w-12 rounded-lg object-cover">
+                </td>
+                <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->type }}</td>
+                <td class="px-6 py-4 flex gap-2">
+                  <button onclick="openUpdateMenu({{ $menu->id }}, '{{ $menu->title }}', '{{ $menu->description }}', '{{ $menu->type }}')" 
+                          class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">Edit</button>
+                  <button onclick="openDeleteMenu({{ $menu->id }})" 
+                          class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Hapus</button>
+                </td>
+              </tr>
+            @empty
+              <tr><td colspan="6" class="text-center py-4">Belum ada menu.</td></tr>
+            @endforelse
+          @endif
         </tbody>
       </table>
     </div>
   </div>
 
-  <!-- Modal Pilih -->
+  <!-- ================== MODAL ================== -->
+
+  <!-- Modal Pilih Tambah -->
   <div id="modalChoose" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
     <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative">
-      <button type="button" onclick="closeChooseModal()" 
-        class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+      <button type="button" onclick="closeChooseModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
       </button>
-      <h2 class="text-xl font-bold mb-4">Tambah Foto Baru</h2>
+      <h2 class="text-xl font-bold mb-4">Tambah Foto</h2>
       <div class="flex flex-col gap-3">
         <button onclick="openTambahGallery()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Gallery</button>
         <button onclick="openTambahMenu()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Menu</button>
@@ -115,28 +127,69 @@
     </div>
   </div>
 
-  <!-- Modal Tambah Gallery -->
+  <!-- Tambah Photo -->
   <div id="modalTambah" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
     <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
-      <button type="button" onclick="closeTambahModal()" 
-        class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+      <button type="button" onclick="closeTambahModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
       </button>
       <h2 class="text-xl font-bold mb-4">Tambah Foto Baru</h2>
       <form action="{{ route('gallery.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <input type="text" name="title" placeholder="Judul Foto" class="border p-2 rounded mb-3 w-full">
+        <input type="text" name="title" placeholder="Judul Foto" class="border p-2 rounded mb-3 w-full" required>
         <select name="category" class="border p-2 rounded mb-3 w-full" required>
-            <option value="food">Food</option>
-            <option value="customer">Customer</option>
-            <option value="event">Event</option>
-            <option value="ambience">Ambience</option>
+          <option value="food">Food</option>
+          <option value="customer">Customer</option>
+          <option value="event">Event</option>
+          <option value="ambience">Ambience</option>
         </select>
         <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
         <div class="flex justify-end">
-          <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-            Upload
-          </button>
+          <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Update Photo -->
+  <div id="modalUpdatePhoto" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
+      <button type="button" onclick="closeUpdatePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
+      <h2 class="text-xl font-bold mb-4">Update Foto</h2>
+      <form id="formUpdatePhoto" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <input type="text" id="updatePhotoTitle" name="title" placeholder="Judul Foto" class="border p-2 rounded mb-3 w-full" required>
+        <select id="updatePhotoCategory" name="category" class="border p-2 rounded mb-3 w-full" required>
+          <option value="food">Food</option>
+          <option value="customer">Customer</option>
+          <option value="event">Event</option>
+          <option value="ambience">Ambience</option>
+        </select>
+        <input type="file" name="image" class="border p-2 rounded mb-3 w-full">
+        <div class="flex justify-end">
+          <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Photo -->
+  <div id="modalDeletePhoto" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative">
+      <button type="button" onclick="closeDeletePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
+      <h2 class="text-xl font-bold mb-4">Hapus Foto</h2>
+      <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus foto ini?</p>
+      <form id="formDeletePhoto" method="POST">
+        @csrf
+        @method('DELETE')
+        <div class="flex justify-center gap-3">
+          <button type="button" onclick="closeDeletePhoto()" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Batal</button>
+          <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Hapus</button>
         </div>
       </form>
     </div>
@@ -145,32 +198,74 @@
   <!-- Modal Tambah Menu -->
   <div id="modalTambahMenu" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
     <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
-      <button type="button" onclick="closeTambahMenu()" 
-        class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+      <button type="button" onclick="closeTambahMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
       </button>
       <h2 class="text-xl font-bold mb-4">Tambah Menu Baru</h2>
       <form action="{{ route('menu.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <input type="text" name="title" placeholder="Nama Menu" class="border p-2 rounded mb-3 w-full">
-        <textarea name="description" placeholder="Deskripsi Menu" class="border p-2 rounded mb-3 w-full"></textarea>
+        <input type="text" name="title" placeholder="Nama Menu" class="border p-2 rounded mb-3 w-full" required>
+        <textarea name="description" placeholder="Deskripsi Menu" class="border p-2 rounded mb-3 w-full" required></textarea>
         <select name="type" class="border p-2 rounded mb-3 w-full" required>
           <option value="carousel">Carousel</option>
           <option value="special">Menu Spesial</option>
         </select>
         <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
         <div class="flex justify-end">
-          <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-            Simpan
-          </button>
+          <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Simpan</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Scripts -->
+  <!-- Modal Update Menu -->
+  <div id="modalUpdateMenu" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
+      <button type="button" onclick="closeUpdateMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
+      <h2 class="text-xl font-bold mb-4">Update Menu</h2>
+      <form id="formUpdateMenu" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <input type="text" id="updateTitle" name="title" placeholder="Nama Menu" class="border p-2 rounded mb-3 w-full" required>
+        <textarea id="updateDescription" name="description" placeholder="Deskripsi Menu" class="border p-2 rounded mb-3 w-full" required></textarea>
+        <select id="updateType" name="type" class="border p-2 rounded mb-3 w-full" required>
+          <option value="carousel">Carousel</option>
+          <option value="special">Menu Spesial</option>
+        </select>
+        <input type="file" name="image" class="border p-2 rounded mb-3 w-full">
+        <div class="flex justify-end">
+          <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Delete Menu -->
+  <div id="modalDeleteMenu" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative">
+      <button type="button" onclick="closeDeleteMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
+      <h2 class="text-xl font-bold mb-4">Hapus Menu</h2>
+      <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus menu ini?</p>
+      <form id="formDeleteMenu" method="POST">
+        @csrf
+        @method('DELETE')
+        <div class="flex justify-center gap-3">
+          <button type="button" onclick="closeDeleteMenu()" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Batal</button>
+          <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Hapus</button>
+        </div>
+      </form>
+    </div>
+  </div> 
+
+  <!-- Script -->
   <script>
-    // auto hide success
+    // ================================
+    // Auto hide success alert
+    // ================================
     setTimeout(() => {
       const alertBox = document.getElementById('success-alert');
       if (alertBox) {
@@ -180,7 +275,9 @@
       }
     }, 2000);
 
-    // fade in
+    // ================================
+    // Fade in effect
+    // ================================
     document.addEventListener("DOMContentLoaded", () => {
       const sections = document.querySelectorAll(".fade-section");
       const observer = new IntersectionObserver((entries, obs) => {
@@ -192,40 +289,100 @@
           }
         });
       }, { threshold: 0.2 });
+
       sections.forEach(section => observer.observe(section));
     });
 
-    // Modal functions
+    // ================================
+    // Helper Modal
+    // ================================
+    function showModal(id) {
+      document.getElementById(id).classList.replace('hidden', 'flex');
+    }
+
+    function hideModal(id) {
+      document.getElementById(id).classList.replace('flex', 'hidden');
+    }
+
+    // ================================
+    // Photo CRUD
+    // ================================
+    function openUpdatePhoto(id, title, category) {
+      const form = document.getElementById('formUpdatePhoto');
+      form.action = `/gallery/${id}`;
+      document.getElementById('updatePhotoTitle').value = title;
+      document.getElementById('updatePhotoCategory').value = category;
+      showModal('modalUpdatePhoto');
+    }
+
+    function closeUpdatePhoto() {
+      hideModal('modalUpdatePhoto');
+    }
+
+    function openDeletePhoto(id) {
+      const form = document.getElementById('formDeletePhoto');
+      form.action = `/gallery/${id}`;
+      showModal('modalDeletePhoto');
+    }
+
+    function closeDeletePhoto() {
+      hideModal('modalDeletePhoto');
+    }
+
+    // ================================
+    // Menu CRUD
+    // ================================
+    function openUpdateMenu(id, title, description, type) {
+      const form = document.getElementById('formUpdateMenu');
+      form.action = `/menu/${id}`;
+      document.getElementById('updateTitle').value = title;
+      document.getElementById('updateDescription').value = description;
+      document.getElementById('updateType').value = type;
+      showModal('modalUpdateMenu');
+    }
+
+    function closeUpdateMenu() {
+      hideModal('modalUpdateMenu');
+    }
+
+    function openDeleteMenu(id) {
+      const form = document.getElementById('formDeleteMenu');
+      form.action = `/menu/${id}`;
+      showModal('modalDeleteMenu');
+    }
+
+    function closeDeleteMenu() {
+      hideModal('modalDeleteMenu');
+    }
+
+    // ================================
+    // Modal pilih tambah
+    // ================================
     function openChooseModal() {
-      document.getElementById('modalChoose').classList.remove('hidden');
-      document.getElementById('modalChoose').classList.add('flex');
+      showModal('modalChoose');
     }
+
     function closeChooseModal() {
-      document.getElementById('modalChoose').classList.add('hidden');
-      document.getElementById('modalChoose').classList.remove('flex');
+      hideModal('modalChoose');
     }
+
     function openTambahGallery() {
       closeChooseModal();
-      openTambahModal();
+      showModal('modalTambah');
     }
+
+    function closeTambahModal() {
+      hideModal('modalTambah');
+    }
+
     function openTambahMenu() {
       closeChooseModal();
-      document.getElementById('modalTambahMenu').classList.remove('hidden');
-      document.getElementById('modalTambahMenu').classList.add('flex');
+      showModal('modalTambahMenu');
     }
-    function openTambahModal() {
-      document.getElementById('modalTambah').classList.remove('hidden');
-      document.getElementById('modalTambah').classList.add('flex');
-    }
-    function closeTambahModal() {
-      document.getElementById('modalTambah').classList.add('hidden');
-      document.getElementById('modalTambah').classList.remove('flex');
-    }
+
     function closeTambahMenu() {
-      document.getElementById('modalTambahMenu').classList.add('hidden');
-      document.getElementById('modalTambahMenu').classList.remove('flex');
+      hideModal('modalTambahMenu');
     }
   </script>
-
 </body>
 </html>
