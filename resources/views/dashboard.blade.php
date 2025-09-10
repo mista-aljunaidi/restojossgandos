@@ -76,10 +76,22 @@
                 </td>
                 <td class="px-6 py-4 text-sm text-gray-700">{{ $photo->category }}</td>
                 <td class="px-6 py-4 flex gap-2">
-                  <button onclick="openUpdatePhoto({{ $photo->id }}, '{{ $photo->title }}', '{{ $photo->category }}')" 
-                          class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">Edit</button>
-                  <button onclick="openDeletePhoto({{ $photo->id }})" 
-                          class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Hapus</button>
+                  <!-- gunakan data-* agar aman dari quoting issues -->
+                  <button
+                    class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                    data-id="{{ $photo->id }}"
+                    data-title="{{ $photo->title }}"
+                    data-category="{{ $photo->category }}"
+                    onclick="openUpdatePhotoFromBtn(this)">
+                    Edit
+                  </button>
+
+                  <button
+                    class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                    data-id="{{ $photo->id }}"
+                    onclick="openDeletePhotoFromBtn(this)">
+                    Hapus
+                  </button>
                 </td>
               </tr>
             @empty
@@ -96,10 +108,22 @@
                 </td>
                 <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->type }}</td>
                 <td class="px-6 py-4 flex gap-2">
-                  <button onclick="openUpdateMenu({{ $menu->id }}, '{{ $menu->title }}', '{{ $menu->description }}', '{{ $menu->type }}')" 
-                          class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">Edit</button>
-                  <button onclick="openDeleteMenu({{ $menu->id }})" 
-                          class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Hapus</button>
+                  <button
+                    class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                    data-id="{{ $menu->id }}"
+                    data-title="{{ $menu->title }}"
+                    data-description="{{ $menu->description }}"
+                    data-type="{{ $menu->type }}"
+                    onclick="openUpdateMenuFromBtn(this)">
+                    Edit
+                  </button>
+
+                  <button
+                    class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                    data-id="{{ $menu->id }}"
+                    onclick="openDeleteMenuFromBtn(this)">
+                    Hapus
+                  </button>
                 </td>
               </tr>
             @empty
@@ -112,9 +136,8 @@
   </div>
 
   <!-- ================== MODAL ================== -->
-
   <!-- Modal Pilih Tambah -->
-  <div id="modalChoose" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div id="modalChoose" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeChooseModal()">
     <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative">
       <button type="button" onclick="closeChooseModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
@@ -128,7 +151,7 @@
   </div>
 
   <!-- Tambah Photo -->
-  <div id="modalTambah" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div id="modalTambah" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeTambahModal()">
     <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
       <button type="button" onclick="closeTambahModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
@@ -152,13 +175,13 @@
   </div>
 
   <!-- Update Photo -->
-  <div id="modalUpdatePhoto" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div id="modalUpdatePhoto" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeUpdatePhoto()">
     <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
       <button type="button" onclick="closeUpdatePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
       </button>
       <h2 class="text-xl font-bold mb-4">Update Foto</h2>
-      <form id="formUpdatePhoto" method="POST" enctype="multipart/form-data">
+      <form id="formUpdatePhoto" method="POST" enctype="multipart/form-data" data-action="{{ route('gallery.update', ':id') }}">
         @csrf
         @method('PUT')
         <input type="text" id="updatePhotoTitle" name="title" placeholder="Judul Foto" class="border p-2 rounded mb-3 w-full" required>
@@ -177,14 +200,14 @@
   </div>
 
   <!-- Delete Photo -->
-  <div id="modalDeletePhoto" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div id="modalDeletePhoto" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeDeletePhoto()">
     <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative">
       <button type="button" onclick="closeDeletePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
       </button>
       <h2 class="text-xl font-bold mb-4">Hapus Foto</h2>
       <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus foto ini?</p>
-      <form id="formDeletePhoto" method="POST">
+      <form id="formDeletePhoto" method="POST" data-action="{{ route('gallery.destroy', ':id') }}">
         @csrf
         @method('DELETE')
         <div class="flex justify-center gap-3">
@@ -196,7 +219,7 @@
   </div>
 
   <!-- Modal Tambah Menu -->
-  <div id="modalTambahMenu" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div id="modalTambahMenu" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeTambahMenu()">
     <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
       <button type="button" onclick="closeTambahMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
@@ -219,13 +242,13 @@
   </div>
 
   <!-- Modal Update Menu -->
-  <div id="modalUpdateMenu" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div id="modalUpdateMenu" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeUpdateMenu()">
     <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
       <button type="button" onclick="closeUpdateMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
       </button>
       <h2 class="text-xl font-bold mb-4">Update Menu</h2>
-      <form id="formUpdateMenu" method="POST" enctype="multipart/form-data">
+      <form id="formUpdateMenu" method="POST" enctype="multipart/form-data" data-action="{{ route('menu.update', ':id') }}">
         @csrf
         @method('PUT')
         <input type="text" id="updateTitle" name="title" placeholder="Nama Menu" class="border p-2 rounded mb-3 w-full" required>
@@ -243,14 +266,14 @@
   </div>
 
   <!-- Modal Delete Menu -->
-  <div id="modalDeleteMenu" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+  <div id="modalDeleteMenu" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeDeleteMenu()">
     <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative">
       <button type="button" onclick="closeDeleteMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
       </button>
       <h2 class="text-xl font-bold mb-4">Hapus Menu</h2>
       <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus menu ini?</p>
-      <form id="formDeleteMenu" method="POST">
+      <form id="formDeleteMenu" method="POST" data-action="{{ route('menu.destroy', ':id') }}">
         @csrf
         @method('DELETE')
         <div class="flex justify-center gap-3">
@@ -294,47 +317,73 @@
     });
 
     // ================================
-    // Helper Modal
+    // Helper Modal (robust)
     // ================================
     function showModal(id) {
-      document.getElementById(id).classList.replace('hidden', 'flex');
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      // disable page scroll when modal open
+      document.body.style.overflow = 'hidden';
     }
 
     function hideModal(id) {
-      document.getElementById(id).classList.replace('flex', 'hidden');
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+      // restore page scroll
+      document.body.style.overflow = '';
     }
 
     // ================================
-    // Photo CRUD
+    // Gallery (Photo) CRUD: using data-action placeholders
     // ================================
-    function openUpdatePhoto(id, title, category) {
+    function openUpdatePhotoFromBtn(btn) {
+      const id = btn.dataset.id;
+      const title = btn.dataset.title || '';
+      const category = btn.dataset.category || '';
       const form = document.getElementById('formUpdatePhoto');
-      form.action = `/gallery/${id}`;
+      const actionTemplate = form.getAttribute('data-action');
+      if (actionTemplate) form.action = actionTemplate.replace(':id', id);
       document.getElementById('updatePhotoTitle').value = title;
       document.getElementById('updatePhotoCategory').value = category;
       showModal('modalUpdatePhoto');
     }
 
     function closeUpdatePhoto() {
+      const form = document.getElementById('formUpdatePhoto');
+      // clear form action to be safe (optional)
+      // form.action = '';
       hideModal('modalUpdatePhoto');
     }
 
-    function openDeletePhoto(id) {
+    function openDeletePhotoFromBtn(btn) {
+      const id = btn.dataset.id;
       const form = document.getElementById('formDeletePhoto');
-      form.action = `/gallery/${id}`;
+      const actionTemplate = form.getAttribute('data-action');
+      if (actionTemplate) form.action = actionTemplate.replace(':id', id);
       showModal('modalDeletePhoto');
     }
 
     function closeDeletePhoto() {
+      // clear action if you want
+      // document.getElementById('formDeletePhoto').action = '';
       hideModal('modalDeletePhoto');
     }
 
     // ================================
-    // Menu CRUD
+    // Menu CRUD: use data-action placeholders
     // ================================
-    function openUpdateMenu(id, title, description, type) {
+    function openUpdateMenuFromBtn(btn) {
+      const id = btn.dataset.id;
+      const title = btn.dataset.title || '';
+      const description = btn.dataset.description || '';
+      const type = btn.dataset.type || '';
       const form = document.getElementById('formUpdateMenu');
-      form.action = `/menu/${id}`;
+      const actionTemplate = form.getAttribute('data-action');
+      if (actionTemplate) form.action = actionTemplate.replace(':id', id);
       document.getElementById('updateTitle').value = title;
       document.getElementById('updateDescription').value = description;
       document.getElementById('updateType').value = type;
@@ -345,9 +394,11 @@
       hideModal('modalUpdateMenu');
     }
 
-    function openDeleteMenu(id) {
+    function openDeleteMenuFromBtn(btn) {
+      const id = btn.dataset.id;
       const form = document.getElementById('formDeleteMenu');
-      form.action = `/menu/${id}`;
+      const actionTemplate = form.getAttribute('data-action');
+      if (actionTemplate) form.action = actionTemplate.replace(':id', id);
       showModal('modalDeleteMenu');
     }
 
@@ -356,33 +407,22 @@
     }
 
     // ================================
-    // Modal pilih tambah
+    // Modal pilih tambah / tambah menu
     // ================================
-    function openChooseModal() {
-      showModal('modalChoose');
-    }
-
-    function closeChooseModal() {
-      hideModal('modalChoose');
-    }
+    function openChooseModal() { showModal('modalChoose'); }
+    function closeChooseModal() { hideModal('modalChoose'); }
 
     function openTambahGallery() {
       closeChooseModal();
       showModal('modalTambah');
     }
-
-    function closeTambahModal() {
-      hideModal('modalTambah');
-    }
+    function closeTambahModal() { hideModal('modalTambah'); }
 
     function openTambahMenu() {
       closeChooseModal();
       showModal('modalTambahMenu');
     }
-
-    function closeTambahMenu() {
-      hideModal('modalTambahMenu');
-    }
+    function closeTambahMenu() { hideModal('modalTambahMenu'); }
   </script>
 </body>
 </html>

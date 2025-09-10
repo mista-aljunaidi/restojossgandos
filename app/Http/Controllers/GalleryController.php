@@ -12,8 +12,14 @@ class GalleryController extends Controller
     /** FRONTEND: tampilkan galeri publik */
     public function publicIndex()
     {
-        $photos = Gallery::where('category', '!=', 'ambience')->latest()->get();
-        $ambiencePhotos = Gallery::where('category', 'ambience')->latest()->get();
+        $photos = Gallery::where('category', '!=', 'ambience')
+                        ->orderBy('created_at', 'asc')
+                        ->get();
+
+        $ambiencePhotos = Gallery::where('category', 'ambience')
+                        ->orderBy('created_at', 'asc')
+                        ->get();
+
         return view('gallery', compact('photos', 'ambiencePhotos'));
     }
 
