@@ -48,7 +48,7 @@ class GalleryController extends Controller
             'image_path' => 'img/gallery/' . $safeName,
         ]);
 
-        return back()->with('success', '📸 Foto berhasil diupload!');
+        return back()->with('success', 'Foto berhasil diupload!');
     }
 
     /** ADMIN: update foto */
@@ -83,7 +83,7 @@ class GalleryController extends Controller
         }
 
         $photo->update($data);
-        return back()->with('success', '✅ Foto berhasil diperbarui.');
+        return back()->with('success', 'Foto berhasil diperbarui.');
     }
 
     /** ADMIN: hapus foto */
@@ -96,6 +96,6 @@ class GalleryController extends Controller
         }
 
         $photo->delete();
-        return back()->with('success', '🗑️ Foto berhasil dihapus.');
+        return back()->with('success', 'Foto berhasil dihapus.');
     }
 }
