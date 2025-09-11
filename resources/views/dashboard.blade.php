@@ -65,8 +65,10 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
+
+          {{-- Gallery --}}
           @if(isset($photos))
-            @forelse($photos as $photo)
+            @foreach($photos as $photo)
               <tr>
                 <td class="px-6 py-4 text-sm text-gray-700">{{ $photo->id }}</td>
                 <td class="px-6 py-4 text-sm text-gray-700">{{ $photo->title }}</td>
@@ -76,60 +78,50 @@
                 </td>
                 <td class="px-6 py-4 text-sm text-gray-700">{{ $photo->category }}</td>
                 <td class="px-6 py-4 flex gap-2">
-                  <!-- gunakan data-* agar aman dari quoting issues -->
-                  <button
-                    class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-                    data-id="{{ $photo->id }}"
-                    data-title="{{ $photo->title }}"
-                    data-category="{{ $photo->category }}"
-                    onclick="openUpdatePhotoFromBtn(this)">
+                  <button class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                          data-id="{{ $photo->id }}"
+                          data-title="{{ $photo->title }}"
+                          data-category="{{ $photo->category }}"
+                          onclick="openUpdatePhotoFromBtn(this)">
                     Edit
                   </button>
-
-                  <button
-                    class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                    data-id="{{ $photo->id }}"
-                    onclick="openDeletePhotoFromBtn(this)">
+                  <button class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                          data-id="{{ $photo->id }}"
+                          onclick="openDeletePhotoFromBtn(this)">
                     Hapus
                   </button>
                 </td>
               </tr>
-            @empty
-              <tr><td colspan="6" class="text-center py-4">Belum ada foto.</td></tr>
-            @endforelse
-          @elseif(isset($menus))
-            @forelse($menus as $menu)
+            @endforeach
+
+            @foreach($menus as $menu)
               <tr>
-                <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->id }}</td>
-                <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->title }}</td>
-                <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->description }}</td>
-                <td class="px-6 py-4">
-                  <img src="{{ asset($menu->image_path) }}" class="h-12 w-12 rounded-lg object-cover">
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->type }}</td>
-                <td class="px-6 py-4 flex gap-2">
-                  <button
-                    class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-                    data-id="{{ $menu->id }}"
-                    data-title="{{ $menu->title }}"
-                    data-description="{{ $menu->description }}"
-                    data-type="{{ $menu->type }}"
-                    onclick="openUpdateMenuFromBtn(this)">
-                    Edit
-                  </button>
-
-                  <button
-                    class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                    data-id="{{ $menu->id }}"
-                    onclick="openDeleteMenuFromBtn(this)">
-                    Hapus
-                  </button>
-                </td>
+                  <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->id }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->title }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->description }}</td>
+                  <td class="px-6 py-4">
+                      <img src="{{ asset($menu->image_path) }}" class="h-12 w-12 rounded-lg object-cover">
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->type }}</td>
+                  <td class="px-6 py-4 flex gap-2">
+                      <button class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                              data-id="{{ $menu->id }}"
+                              data-title="{{ $menu->title }}"
+                              data-description="{{ $menu->description }}"
+                              data-type="{{ $menu->type }}"
+                              onclick="openUpdateMenuFromBtn(this)">
+                          Edit
+                      </button>
+                      <button class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                              data-id="{{ $menu->id }}"
+                              onclick="openDeleteMenuFromBtn(this)">
+                          Hapus
+                      </button>
+                  </td>
               </tr>
-            @empty
-              <tr><td colspan="6" class="text-center py-4">Belum ada menu.</td></tr>
-            @endforelse
+              @endforeach
           @endif
+          
         </tbody>
       </table>
     </div>

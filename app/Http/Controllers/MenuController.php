@@ -12,8 +12,14 @@ class MenuController extends Controller
     /** FRONTEND: tampilkan menu publik */
     public function publicIndex()
     {
-        $carouselMenus = Menu::where('type', 'carousel')->latest()->get();
-        $specialMenus  = Menu::where('type', 'special')->latest()->get();
+        $carouselMenus = Menu::where('type', 'carousel')
+                            ->orderBy('created_at', 'asc')
+                            ->get();
+
+        $specialMenus  = Menu::where('type', 'special')
+                            ->orderBy('created_at', 'asc')
+                            ->get();
+
         return view('menu', compact('carouselMenus', 'specialMenus'));
     }
 
@@ -33,7 +39,7 @@ class MenuController extends Controller
         }
 
         Menu::create($data);
-        return back()->with('success', '✅ Menu berhasil ditambahkan!');
+        return back()->with('success', 'Menu berhasil ditambahkan!');
     }
 
     /** ADMIN: update menu */
@@ -58,7 +64,7 @@ class MenuController extends Controller
         }
 
         $menu->update($data);
-        return back()->with('success', '✅ Menu berhasil diperbarui.');
+        return back()->with('success', 'Menu berhasil diperbarui.');
     }
 
     /** ADMIN: hapus menu */
@@ -71,7 +77,7 @@ class MenuController extends Controller
         }
 
         $menu->delete();
-        return back()->with('success', '🗑️ Menu berhasil dihapus.');
+        return back()->with('success', 'Menu berhasil dihapus.');
     }
 
     /** Fungsi bantu upload gambar */
