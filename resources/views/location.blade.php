@@ -6,19 +6,22 @@
         <h2 class="text-4xl font-bold text-center text-gray-600 mb-8">Lokasi Outlet</h2>
 
         <!-- Slider -->
-        <div class="relative w-full h-100 overflow-hidden mb-12">
+        <div class="relative w-full h-[500px] overflow-hidden mb-12 rounded-3xl">
+          <!-- Tombol kiri -->
           <button onclick="prevImage()" 
-                  class="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75">
+                  class="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 z-10">
             &#10094;
           </button>
 
+          <!-- Gambar -->
           <img id="sliderImage" 
               src="img/download.jpeg" 
               alt="Outlet Location" 
-              class="w-full object-cover flex-shrink-0 transition-opacity duration-700 ease-in-out opacity-100">
+              class="w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-100">
 
+          <!-- Tombol kanan -->
           <button onclick="nextImage()" 
-                  class="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75">
+                  class="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 z-10">
             &#10095;
           </button>
         </div>

@@ -39,7 +39,7 @@ class MenuController extends Controller
         }
 
         Menu::create($data);
-        return back()->with('success', 'Menu berhasil ditambahkan!');
+        return back()->with('success', 'Menu berhasil ditambahkan.');
     }
 
     /** ADMIN: update menu */

@@ -2,9 +2,9 @@
 <main class="pt-16 min-h-screen">
   <!-- MENU PAGE -->
   <div id="menu-page" class="page-content">
-  <section class="py-4">
+  <section>
       <div class="mx-auto max-w-6xl px-4 py-8 font-sans">
-        <div class="text-center mb-12">
+        <div class="text-center mb-6">
           <h1 class="text-4xl font-bold text-gray-600 mb-4">Menu Kami</h1>
         </div>
 

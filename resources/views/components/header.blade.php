@@ -1,12 +1,12 @@
 <!-- Hero Section -->
-<section class="relative overflow-hidden fade-section opacity-0 translate-y-10 transition-all duration-1000">
-  <div class="max-w-7xl mx-auto relative flex items-center justify-center h-[800px] sm:h-[800px] md:h-[800px]">
+<section class="relative overflow-hidden fade-section opacity-0 translate-y-10 transition-all duration-1000 pt-20 md:pt-24">
+  <div class="max-w-7xl mx-auto relative flex items-center justify-center h-[600px] sm:h-[600px] md:h-[600px]">
     
     <!-- Video Background -->
     <div class="absolute inset-0 z-0 flex justify-center">
       <video
         id="bg-video"
-        class="w-full h-full object-cover rounded-7xl" 
+        class="w-full h-full object-cover rounded-3xl" 
         src="vid/phonk.mp4"
         autoplay
         muted
@@ -16,19 +16,20 @@
       </video>
     </div>
     <!-- Overlay -->
-    <div class="absolute inset-0 bg-black bg-opacity-70 z-10 rounded-7xl"></div>
+    <div class="absolute inset-0 bg-black bg-opacity-70 z-10 rounded-3xl"></div>
 
-  <!-- Konten Hero -->
-  <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">
-    <h1 class="text-3xl font-bold tracking-tight text-red-600 sm:text-6xl">Resto Joss Gandos</h1>
-    <p class="mt-8 text-lg font-medium text-pretty text-white sm:text-xl/8">
-      Pelopor No. 1 Resto dan Cafe
-    </p>
-    <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 text-base font-semibold text-yellow-300 sm:grid-cols-2 md:flex lg:gap-x-10">
-      <a href="about" class="hover:text-white">Tentang Kami<span aria-hidden="true">&rarr;</span></a>
-      <a href="menu" class="hover:text-white">Menu Kami<span aria-hidden="true">&rarr;</span></a>
-      <a href="gallery" class="hover:text-white">Galeri Kami<span aria-hidden="true">&rarr;</span></a>
-      <a href="location" class="hover:text-white">Lokasi Kami<span aria-hidden="true">&rarr;</span></a>
+    <!-- Konten Hero -->
+    <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">
+      <h1 class="text-3xl font-bold tracking-tight text-red-600 sm:text-6xl">Resto Joss Gandos</h1>
+      <p class="mt-8 text-lg font-medium text-pretty text-white sm:text-xl/8">
+        Pelopor No. 1 Resto dan Cafe
+      </p>
+      <div class="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 text-base font-semibold text-yellow-300 sm:grid-cols-2 md:flex lg:gap-x-10">
+        <a href="about" class="hover:text-white">Tentang Kami<span aria-hidden="true">&rarr;</span></a>
+        <a href="menu" class="hover:text-white">Menu Kami<span aria-hidden="true">&rarr;</span></a>
+        <a href="gallery" class="hover:text-white">Galeri Kami<span aria-hidden="true">&rarr;</span></a>
+        <a href="location" class="hover:text-white">Lokasi Kami<span aria-hidden="true">&rarr;</span></a>
+      </div>
     </div>
   </div>
 

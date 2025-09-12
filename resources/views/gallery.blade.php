@@ -6,7 +6,7 @@
     <h2 class="text-4xl font-bold text-center text-gray-600 mb-8">Galeri Kami</h2>
 
     {{-- Slider khusus ambience --}}
-    <section class="relative w-full h-[600px] overflow-hidden">
+    <section class="relative w-full h-[500px] rounded-3xl overflow-hidden">
         <div id="slider" class="flex w-full h-full transition-transform duration-700">
             @foreach ($ambiencePhotos as $photo)
                 <div class="w-full h-full flex-shrink-0">

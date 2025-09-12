@@ -116,7 +116,8 @@
       about: "/about", tentang: "/about",
       menu: "/menu", makanan: "/menu", minuman: "/menu",
       gallery: "/gallery", galeri: "/gallery",
-      location: "/location", lokasi: "/location"
+      location: "/location", lokasi: "/location",
+      dashboard: "/login", dasbor: "/login"
     };
 
     function handleSearch(inputElement) {

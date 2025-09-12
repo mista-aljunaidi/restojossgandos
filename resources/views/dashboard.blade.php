@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard - Kelola Foto</title>
+  <title>Dashboard</title>
   <link rel="icon" type="image/png" href="{{ asset('img/logo-joss-gandos.png') }}">
   @vite(['resources/css/app.css','resources/js/app.js'])
   <script src="https://cdn.tailwindcss.com"></script>
@@ -15,117 +15,133 @@
   <!-- Navbar -->
   <x-navbar></x-navbar>
 
-  <div class="max-w-6xl mx-auto p-6 pt-24 fade-section opacity-0 translate-y-10 transition-all duration-1000">
-    
-    <!-- Header Dashboard -->
-    <div class="flex items-center justify-between mb-6">
-      <h1 class="text-3xl font-bold text-gray-700">Dashboard</h1>
-      <form action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 flex items-center gap-2">
-          <i class="uil uil-signout-alt"></i> Logout
-        </button>
-      </form>
-    </div>
+  <!-- Wrapper Dashboard -->
+<div class="max-w-6xl mx-auto p-6 pt-24 fade-section opacity-0 translate-y-10 transition-all duration-1000">
 
-    <!-- Flash Success -->
-    @if(session('success'))
-      <div id="success-alert" class="mb-4 p-3 bg-green-100 text-green-700 rounded transition-all duration-500 ease-in-out">
-        {{ session('success') }}
-      </div>
-    @endif
-
-    <!-- Validasi Error -->
-    @if ($errors->any())
-      <div class="mb-4 p-3 bg-red-100 text-red-700 rounded">
-        <ul class="list-disc list-inside text-sm">
-          @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-    @endif
-
-    <!-- Button Tambah -->
-    <button onclick="openChooseModal()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-      + Tambah Data
-    </button>
-
-    <!-- Tabel Data -->
-    <div class="bg-white shadow-md rounded-xl overflow-hidden mt-6">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Judul</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Deskripsi</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Foto</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Kategori</th>
-            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-
-          {{-- Gallery --}}
-          @if(isset($photos))
-            @foreach($photos as $photo)
-              <tr>
-                <td class="px-6 py-4 text-sm text-gray-700">{{ $photo->id }}</td>
-                <td class="px-6 py-4 text-sm text-gray-700">{{ $photo->title }}</td>
-                <td class="px-6 py-4 text-sm text-gray-700">-</td>
-                <td class="px-6 py-4">
-                  <img src="{{ asset($photo->image_path) }}" class="h-12 w-12 rounded-lg object-cover">
-                </td>
-                <td class="px-6 py-4 text-sm text-gray-700">{{ $photo->category }}</td>
-                <td class="px-6 py-4 flex gap-2">
-                  <button class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-                          data-id="{{ $photo->id }}"
-                          data-title="{{ $photo->title }}"
-                          data-category="{{ $photo->category }}"
-                          onclick="openUpdatePhotoFromBtn(this)">
-                    Edit
-                  </button>
-                  <button class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                          data-id="{{ $photo->id }}"
-                          onclick="openDeletePhotoFromBtn(this)">
-                    Hapus
-                  </button>
-                </td>
-              </tr>
-            @endforeach
-
-            @foreach($menus as $menu)
-              <tr>
-                  <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->id }}</td>
-                  <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->title }}</td>
-                  <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->description }}</td>
-                  <td class="px-6 py-4">
-                      <img src="{{ asset($menu->image_path) }}" class="h-12 w-12 rounded-lg object-cover">
-                  </td>
-                  <td class="px-6 py-4 text-sm text-gray-700">{{ $menu->type }}</td>
-                  <td class="px-6 py-4 flex gap-2">
-                      <button class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
-                              data-id="{{ $menu->id }}"
-                              data-title="{{ $menu->title }}"
-                              data-description="{{ $menu->description }}"
-                              data-type="{{ $menu->type }}"
-                              onclick="openUpdateMenuFromBtn(this)">
-                          Edit
-                      </button>
-                      <button class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                              data-id="{{ $menu->id }}"
-                              onclick="openDeleteMenuFromBtn(this)">
-                          Hapus
-                      </button>
-                  </td>
-              </tr>
-              @endforeach
-          @endif
-          
-        </tbody>
-      </table>
-    </div>
+  <!-- Header Dashboard -->
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-3xl font-bold text-black tracking-wide">Dashboard</h1>
+    <form action="{{ route('logout') }}" method="POST">
+      @csrf
+      <button type="submit"
+        class="flex items-center gap-2 bg-gradient-to-r from-red-500 to-red-700 text-white px-5 py-2 rounded-lg shadow hover:opacity-90 transition">
+        <i class="uil uil-signout-alt"></i> Logout
+      </button>
+    </form>
   </div>
+
+  <!-- Flash Success -->
+  @if(session('success'))
+    <div id="success-alert"
+      class="mb-4 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 rounded-lg shadow transition-all duration-500 ease-in-out">
+      {{ session('success') }}
+    </div>
+  @endif
+
+  <!-- Validasi Error -->
+  @if ($errors->any())
+    <div class="mb-4 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg shadow">
+      <ul class="list-disc list-inside text-sm space-y-1">
+        @foreach ($errors->all() as $error)
+          <li>⚠️ {{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
+
+  <!-- Button Tambah -->
+  <button onclick="openChooseModal()"
+    class="bg-gradient-to-r from-rose-500 to-pink-600 text-white px-6 py-2 rounded-lg shadow hover:opacity-90 transition">
+    + Tambah Data
+  </button>
+
+  <!-- Tabel Data -->
+  <div class="bg-white shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-100">
+    <table class="min-w-full text-sm text-gray-700">
+      <thead class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+        <tr>
+          <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">ID</th>
+          <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Judul</th>
+          <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Deskripsi</th>
+          <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Foto</th>
+          <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Kategori</th>
+          <th class="px-6 py-3 text-center font-semibold uppercase tracking-wider">Aksi</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        {{-- Gallery --}}
+        @if(isset($photos))
+          @foreach($photos as $photo)
+            <tr class="hover:bg-gray-50 transition">
+              <td class="px-6 py-4">{{ $photo->id }}</td>
+              <td class="px-6 py-4 font-medium">{{ $photo->title }}</td>
+              <td class="px-6 py-4 text-gray-500 italic">-</td>
+              <td class="px-6 py-4">
+                <img src="{{ asset($photo->image_path) }}" class="h-14 w-14 rounded-xl object-cover shadow">
+              </td>
+              <td class="px-6 py-4">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold 
+                  {{ $photo->category === 'food' ? 'bg-red-100 text-red-700' :
+                     ($photo->category === 'customer' ? 'bg-blue-100 text-blue-700' :
+                     ($photo->category === 'event' ? 'bg-green-100 text-green-700' :
+                     'bg-yellow-100 text-yellow-700')) }}">
+                  {{ ucfirst($photo->category) }}
+                </span>
+              </td>
+              <td class="px-6 py-4 flex gap-2 justify-center">
+                <button class="bg-blue-600 text-white px-4 py-1.5 rounded-lg shadow hover:bg-blue-700 transition"
+                        data-id="{{ $photo->id }}"
+                        data-title="{{ $photo->title }}"
+                        data-category="{{ $photo->category }}"
+                        onclick="openUpdatePhotoFromBtn(this)">
+                  Edit
+                </button>
+                <button class="bg-red-600 text-white px-4 py-1.5 rounded-lg shadow hover:bg-red-700 transition"
+                        data-id="{{ $photo->id }}"
+                        onclick="openDeletePhotoFromBtn(this)">
+                  Hapus
+                </button>
+              </td>
+            </tr>
+          @endforeach
+
+          {{-- Menu --}}
+          @foreach($menus as $menu)
+            <tr class="hover:bg-gray-50 transition">
+              <td class="px-6 py-4">{{ $menu->id }}</td>
+              <td class="px-6 py-4 font-medium">{{ $menu->title }}</td>
+              <td class="px-6 py-4 text-gray-600">{{ $menu->description }}</td>
+              <td class="px-6 py-4">
+                <img src="{{ asset($menu->image_path) }}" class="h-14 w-14 rounded-xl object-cover shadow">
+              </td>
+              <td class="px-6 py-4">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold 
+                  {{ $menu->type === 'carousel' ? 'bg-purple-100 text-purple-700' : 'bg-orange-100 text-orange-500' }}">
+                  {{ ucfirst($menu->type) }}
+                </span>
+              </td>
+              <td class="px-6 py-4 flex gap-2 justify-center">
+                <button class="bg-blue-600 text-white px-4 py-1.5 rounded-lg shadow hover:bg-blue-700 transition"
+                        data-id="{{ $menu->id }}"
+                        data-title="{{ $menu->title }}"
+                        data-description="{{ $menu->description }}"
+                        data-type="{{ $menu->type }}"
+                        onclick="openUpdateMenuFromBtn(this)">
+                  Edit
+                </button>
+                <button class="bg-red-600 text-white px-4 py-1.5 rounded-lg shadow hover:bg-red-700 transition"
+                        data-id="{{ $menu->id }}"
+                        onclick="openDeleteMenuFromBtn(this)">
+                  Hapus
+                </button>
+              </td>
+            </tr>
+          @endforeach
+        @endif
+      </tbody>
+    </table>
+  </div>
+</div>
 
   <!-- ================== MODAL ================== -->
   <!-- Modal Pilih Tambah -->
