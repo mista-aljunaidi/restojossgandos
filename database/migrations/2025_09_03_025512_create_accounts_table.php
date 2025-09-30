@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('username')->unique()->after('name'); // tambah kolom username
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();

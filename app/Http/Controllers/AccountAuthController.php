@@ -10,32 +10,32 @@ class AccountAuthController extends Controller
 {
     public function showLoginForm()
     {
-        return view('login'); // view login.blade.php
+        return view('login');
     }
 
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            'username' => ['required', 'string'],
             'password' => ['required'],
         ]);
 
-        // cari user di database sqlite
-        $account = Account::where('email', $credentials['email'])->first();
+        // cari user berdasarkan username
+        $account = Account::where('username', $credentials['username'])->first();
 
         if ($account && Hash::check($credentials['password'], $account->password)) {
             // Simpan session manual
             session([
                 'account_id' => $account->id,
                 'account_name' => $account->name,
-                'account_email' => $account->email,
+                'account_username' => $account->username,
             ]);
             return redirect('/dashboard')->with('success', 'Login berhasil!');
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+            'username' => 'Username atau password salah.',
+        ])->onlyInput('username');
     }
 
     public function logout(Request $request)
@@ -43,4 +43,5 @@ class AccountAuthController extends Controller
         $request->session()->flush(); // hapus semua session
         return redirect()->route('login.form')->with('success', 'Logout berhasil.');
     }
+
 }

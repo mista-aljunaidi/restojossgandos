@@ -22,11 +22,11 @@
       @csrf
 
       <div class="mb-4">
-        <label class="block text-sm mb-1">Email</label>
+        <label class="block text-sm mb-1">Username</label>
         <input 
-          type="email" 
-          name="email" 
-          value="{{ old('email') }}" 
+          type="text" 
+          name="username" 
+          value="{{ old('username') }}" 
           class="w-full border px-3 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" 
           required
         >

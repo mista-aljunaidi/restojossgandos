@@ -9,11 +9,11 @@ class Account extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'accounts'; // pastikan ke tabel accounts
+    protected $table = 'accounts';
 
     protected $fillable = [
         'name',
-        'email',
+        'username',
         'password',
     ];
 
@@ -22,3 +22,4 @@ class Account extends Authenticatable
         'remember_token',
     ];
 }
+
