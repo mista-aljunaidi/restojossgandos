@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountAuthController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MenuController;
-use Illuminate\Support\Facades\Auth;
 
 // FRONTEND (publik)
 Route::get('/gallery', [GalleryController::class, 'publicIndex'])->name('gallery.front');
@@ -14,9 +13,21 @@ Route::get('/menu', [MenuController::class, 'publicIndex'])->name('menu.front');
 Route::prefix('dashboard')->group(function () {
     // Dashboard utama -> tampilkan semua (gallery + menu)
     Route::get('/', function () {
+        // cek apakah session login masih ada
+        if (!session()->has('account_id')) {
+            return redirect()->route('login.form')
+                             ->with('error', 'Session anda telah habis, silakan login ulang.');
+        }
+
         $photos = \App\Models\Gallery::latest()->get();
         $menus  = \App\Models\Menu::latest()->get();
-        return view('dashboard', compact('photos', 'menus'));
+
+        // tambahkan no-cache agar browser tidak simpan halaman lama
+        return response()
+            ->view('dashboard', compact('photos', 'menus'))
+            ->header('Cache-Control','no-cache, no-store, must-revalidate')
+            ->header('Pragma','no-cache')
+            ->header('Expires','0');
     })->name('dashboard');
 
     // GALLERY CRUD
@@ -35,12 +46,7 @@ Route::get('/login', [AccountAuthController::class, 'showLoginForm'])->name('log
 Route::post('/login', [AccountAuthController::class, 'login'])->name('login');
 
 // Logout
-Route::post('/logout', function () {
-    Auth::logout();
-    request()->session()->invalidate();
-    request()->session()->regenerateToken();
-    return redirect('/login')->with('success', 'Berhasil logout');
-})->name('logout');
+Route::post('/logout', [AccountAuthController::class, 'logout'])->name('logout');
 
 // HOME
 Route::view('/', 'home');

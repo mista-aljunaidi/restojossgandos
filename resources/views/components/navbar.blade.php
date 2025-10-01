@@ -90,9 +90,7 @@
     const search = document.getElementById("mobile-search");
 
     document.getElementById("mobile-menu-btn").addEventListener("click", function () {
-      // toggle menu tanpa memengaruhi search
       menu.classList.toggle("hidden");
-
       setTimeout(() => {
         menu.classList.toggle("opacity-0");
         menu.classList.toggle("scale-95");
@@ -100,15 +98,12 @@
     });
 
     document.getElementById("mobile-search-btn").addEventListener("click", function () {
-      // toggle search tanpa memengaruhi menu
       search.classList.toggle("hidden");
-
       setTimeout(() => {
         search.classList.toggle("opacity-0");
         search.classList.toggle("scale-95");
       }, 10);
     });
-
 
     // Mapping pencarian
     const searchMap = {
@@ -125,7 +120,12 @@
         if (e.key === "Enter") {
           const query = this.value.trim().toLowerCase();
           const targetUrl = searchMap[query];
+
           if (targetUrl) {
+            // simpan state halaman asal
+            sessionStorage.setItem("searchFrom", window.location.pathname);
+
+            // arahkan ke halaman tujuan
             window.location.href = targetUrl;
           } else {
             alert("Halaman tidak ditemukan.\nCoba ketik: home/beranda, about/tentang, menu/makanan/minuman, gallery/galeri, location/lokasi");
@@ -134,6 +134,18 @@
       });
     }
 
+    // Terapkan ke semua input search
     document.querySelectorAll('input[placeholder="Search..."]').forEach(input => handleSearch(input));
-  </script>
+
+    // Saat kembali (undo/back) dari hasil search
+    window.addEventListener("pageshow", function () {
+      const inputs = document.querySelectorAll('input[placeholder="Search..."]');
+
+      // flush input (kosongkan)
+      inputs.forEach(input => input.value = "");
+
+      // hapus jejak state asal biar tidak double
+      sessionStorage.removeItem("searchFrom");
+    });
+</script>
 </nav>

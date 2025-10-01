@@ -37,11 +37,16 @@ class AccountAuthController extends Controller
             'username' => 'Username atau password salah.',
         ])->onlyInput('username');
     }
-
     public function logout(Request $request)
     {
-        $request->session()->flush(); // hapus semua session
-        return redirect()->route('login.form')->with('success', 'Logout berhasil.');
-    }
+        // hapus session login manual
+        $request->session()->forget(['account_id', 'account_name', 'account_username']);
 
+        // invalidate & regenerate untuk amankan CSRF
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login.form')
+            ->with('success', 'Berhasil logout');
+    }
 }
