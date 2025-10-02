@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Login Menu</title>
+  <title>Login Page</title>
   <link rel="icon" type="image/jpeg" href="img/logo-joss-gandos.png">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>

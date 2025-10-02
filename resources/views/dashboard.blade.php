@@ -51,7 +51,7 @@
 
   <!-- Button Tambah -->
   <button onclick="openChooseModal()"
-    class="bg-gradient-to-r from-rose-500 to-pink-600 text-white px-6 py-2 rounded-lg shadow hover:opacity-90 transition">
+    class="bg-gradient-to-r from-green-500 to-green-700 text-white px-6 py-2 rounded-lg shadow hover:opacity-90 transition">
     + Tambah Data
   </button>
 
@@ -60,7 +60,6 @@
     <table class="min-w-full text-sm text-gray-700">
       <thead class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
         <tr>
-          <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">ID</th>
           <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Judul</th>
           <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Deskripsi</th>
           <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Foto</th>
@@ -73,7 +72,6 @@
         @if(isset($photos))
           @foreach($photos as $photo)
             <tr class="hover:bg-gray-50 transition">
-              <td class="px-6 py-4">{{ $photo->id }}</td>
               <td class="px-6 py-4 font-medium">{{ $photo->title }}</td>
               <td class="px-6 py-4 text-gray-500 italic">-</td>
               <td class="px-6 py-4">
@@ -82,9 +80,9 @@
               <td class="px-6 py-4">
                 <span class="px-3 py-1 rounded-full text-xs font-semibold 
                   {{ $photo->category === 'food' ? 'bg-red-100 text-red-700' :
-                     ($photo->category === 'customer' ? 'bg-blue-100 text-blue-700' :
-                     ($photo->category === 'event' ? 'bg-green-100 text-green-700' :
-                     'bg-yellow-100 text-yellow-700')) }}">
+                    ($photo->category === 'customer' ? 'bg-blue-100 text-blue-700' :
+                    ($photo->category === 'event' ? 'bg-green-100 text-green-700' :
+                    'bg-yellow-100 text-yellow-700')) }}">
                   {{ ucfirst($photo->category) }}
                 </span>
               </td>
@@ -108,7 +106,6 @@
           {{-- Menu --}}
           @foreach($menus as $menu)
             <tr class="hover:bg-gray-50 transition">
-              <td class="px-6 py-4">{{ $menu->id }}</td>
               <td class="px-6 py-4 font-medium">{{ $menu->title }}</td>
               <td class="px-6 py-4 text-gray-600">{{ $menu->description }}</td>
               <td class="px-6 py-4">
@@ -152,8 +149,10 @@
       </button>
       <h2 class="text-xl font-bold mb-4">Tambah Foto</h2>
       <div class="flex flex-col gap-3">
-        <button onclick="openTambahGallery()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Gallery</button>
-        <button onclick="openTambahMenu()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Menu</button>
+        <button onclick="openTambahGallery()" 
+        class="bg-gradient-to-r from-purple-500 to-purple-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Gallery</button>
+        <button onclick="openTambahMenu()" 
+        class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Menu</button>
       </div>
     </div>
   </div>
@@ -176,7 +175,7 @@
         </select>
         <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
         <div class="flex justify-end">
-          <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Upload</button>
+          <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Upload</button>
         </div>
       </form>
     </div>
@@ -243,7 +242,7 @@
         </select>
         <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
         <div class="flex justify-end">
-          <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Simpan</button>
+          <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Upload</button>
         </div>
       </form>
     </div>
@@ -291,8 +290,7 @@
       </form>
     </div>
   </div> 
-
-  <!-- Script -->
+  
   <script>
     // ================================
     // Auto hide success alert

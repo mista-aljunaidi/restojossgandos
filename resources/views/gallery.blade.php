@@ -37,13 +37,18 @@
                                 group-hover/card:!blur-0 group-hover/card:!brightness-100 group-hover/card:!scale-100">
                     <div class="pointer-events-none absolute top-4 left-4 opacity-0 translate-y-4 transition-all duration-500
                                 group-hover/card:opacity-100 group-hover/card:translate-y-0">
-                        <span class="block text-gray-200/90 text-xs tracking-widest uppercase">{{ $photo->category }}</span>
-                        <h3 class="text-gray-200 font-extrabold text-2xl leading-tight drop-shadow">{{ $photo->title }}</h3>
+                        <span class="block text-gray-200/90 text-xs tracking-widest uppercase text-shadow-strong">{{ $photo->category }}</span>
+                        <h3 class="text-gray-200 font-extrabold text-2xl leading-tight text-shadow-strong">{{ $photo->title }}</h3>
                     </div>
                 </div>
             @empty
             @endforelse
         </div>
+        <style>
+            .text-shadow-strong {
+              text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
+            }
+          </style>
     </section>
     </section>
 </main>

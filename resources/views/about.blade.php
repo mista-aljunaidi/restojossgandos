@@ -67,7 +67,7 @@
                             <div class="absolute top-1/2 -left-6 w-4 h-4 bg-blue-300 rounded-full"></div>
                         </div>
                     <!-- Gambar Founder -->
-                            <img src="img/founder.jpg" alt="Founder Resto Joss Gandos" 
+                            <img src="img/about/founder.jpg" alt="Founder Resto Joss Gandos" 
                             class="relative z-10 rounded-lg shadow-xl w-full max-w-md object-cover transform transition-transform duration-500 hover:rotate-y-12 hover:-rotate-x-6 hover:scale-105">
                     </div>
 
@@ -102,7 +102,7 @@
                     <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
                         <div class="text-center bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
                         <div class="w-32 h-32 mx-auto mb-4 flex items-center justify-center perspective">
-                            <img src="img/mista.jpg" alt="Founder Resto Joss Gandos"
+                            <img src="img/about/mista.jpg" alt="Founder Resto Joss Gandos"
                             class="rounded-full shadow-lg w-full h-full object-cover transform transition-transform duration-500 hover:rotate-y-12 hover:-rotate-x-6 hover:scale-105">
                         </div>
                             <h3 class="text-xl font-semibold text-dark">Chef Budi</h3>
@@ -111,7 +111,7 @@
                         
                         <div class="text-center bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
                         <div class="w-32 h-32 mx-auto mb-4 flex items-center justify-center perspective">
-                            <img src="img/sari.jpg" alt="Founder Resto Joss Gandos"
+                            <img src="img/about/sari.jpg" alt="Founder Resto Joss Gandos"
                             class="rounded-full shadow-lg w-full h-full object-cover transform transition-transform duration-500 hover:rotate-y-12 hover:-rotate-x-6 hover:scale-105">
                         </div>
                             <h3 class="text-xl font-semibold text-dark">Sari</h3>
@@ -120,7 +120,7 @@
                         
                         <div class="text-center bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
                         <div class="w-32 h-32 mx-auto mb-4 flex items-center justify-center perspective">
-                            <img src="img/jojolion.jpg" alt="Founder Resto Joss Gandos"
+                            <img src="img/about/jojolion.jpg" alt="Founder Resto Joss Gandos"
                             class="rounded-full shadow-lg w-full h-full object-cover transform transition-transform duration-500 hover:rotate-y-12 hover:-rotate-x-6 hover:scale-105">
                         </div>
                             <h3 class="text-xl font-semibold text-dark">Andi</h3>
