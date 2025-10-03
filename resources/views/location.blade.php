@@ -3,7 +3,12 @@
     <!-- LOKASI PAGE -->
     <section class="py-8">
       <div class="max-w-5xl mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center text-gray-600 mb-8">Lokasi Outlet</h2>
+        <h2 class="text-4xl font-bold text-center text-gray-600 mb-8 text-shadow-strong">Lokasi Outlet</h2>
+        <style>
+              .text-shadow-strong {
+              text-shadow: 2px 2px 6px rgba(0,0,0,0.25);
+              }
+        </style>
 
         <!-- Slider -->
         <div class="relative w-full h-[500px] overflow-hidden mb-12 rounded-3xl">

@@ -31,11 +31,11 @@
         <a href="location" class="hover:text-white">Lokasi Kami<span aria-hidden="true">&rarr;</span></a>
       </div>
     </div>
-    <style>
+        <style>
             .text-shadow-strong {
               text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
             }
-          </style>
+        </style>
   </div>
 
     <!-- Preload video agar cepat siap -->

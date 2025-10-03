@@ -5,8 +5,13 @@
     <section>
       <div class="mx-auto max-w-6xl px-4 py-8 font-sans">
         <div class="text-center mb-6">
-          <h1 class="text-4xl font-bold text-gray-600 mb-4">Menu Kami</h1>
+          <h1 class="text-4xl font-bold text-gray-600 mb-4 text-shadow-strong">Menu Kami</h1>
         </div>
+        <style>
+              .text-shadow-strong {
+              text-shadow: 2px 2px 6px rgba(0,0,0,0.25);
+              }
+        </style>
 
         <!-- Container Gambar + Detail -->
         <div class="relative w-full max-w-4xl mx-auto overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -36,11 +41,6 @@
             @endforelse
 
           </div>
-          <style>
-            .text-shadow-strong {
-              text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
-            }
-          </style>
 
           <!-- Tombol Navigasi -->
           <button onclick="prevSlide()" class="absolute top-1/2 left-4 -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-200">
@@ -74,7 +74,7 @@
         <!-- Section Menu Spesial -->
         <section class="pt-12 pb-16 fade-section opacity-0 translate-y-10 transition-all duration-1000">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold text-gray-600 mb-8">Menu Spesial Kami</h2>
+            <h2 class="text-3xl font-bold text-gray-600 mb-8 text-shadow-strong">Menu Spesial Kami</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
               @forelse($specialMenus as $menu)

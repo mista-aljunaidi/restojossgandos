@@ -3,7 +3,7 @@
 <main class="pt-16 min-h-screen font-sans ">
     <!-- GALLERY PAGE -->
     <section class="py-8 fade-section opacity-100 translate-y-10 transition-all duration-1000">
-    <h2 class="text-4xl font-bold text-center text-gray-600 mb-8">Galeri Kami</h2>
+    <h2 class="text-4xl font-bold text-center text-gray-600 mb-8 text-shadow-strong">Galeri Kami</h2>
 
     {{-- Slider khusus ambience --}}
     <section class="relative w-full h-[500px] rounded-3xl overflow-hidden">
@@ -45,10 +45,10 @@
             @endforelse
         </div>
         <style>
-            .text-shadow-strong {
-              text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9);
-            }
-          </style>
+              .text-shadow-strong {
+              text-shadow: 2px 2px 6px rgba(0,0,0,0.25);
+              }
+        </style>
     </section>
     </section>
 </main>

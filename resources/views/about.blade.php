@@ -6,11 +6,16 @@
             <section class="py-6 md:py-10 fade-section opacity-0 translate-y-10 transition-all duration-1000">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-6 md:mb-8">
-                    <h1 class="text-4xl font-bold text-gray-600 mb-4">Tentang Kami</h1>
+                    <h1 class="text-4xl font-bold text-gray-600 mb-4 text-shadow-strong">Tentang Kami</h1>
                     <p class="text-gray-900 max-w-3xl mx-auto">
                     Perjalanan kami dalam menghadirkan cita rasa terbaik untuk Anda
                     </p>
                 </div>
+                <style>
+                    .text-shadow-strong {
+                    text-shadow: 2px 2px 6px rgba(0,0,0,0.25);
+                    }
+                </style>
 
                 <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-start">
                 <!-- Sejarah Kami -->
@@ -54,21 +59,16 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
                     
-                    <!-- Bagian Gambar dengan Dekorasi -->
+                    <!-- Bagian Gambar dengan Bingkai -->
                     <div class="relative flex items-center justify-center">
-                        <!-- Dekorasi baru: Layer bingkai & pola -->
-                        <div class="absolute inset-0 -z-10">
-                            <!-- Layer kotak miring -->
-                            <div class="absolute -top-4 -left-4 w-full h-full border-4 border-indigo-300 rounded-lg rotate-6"></div>
-                            <div class="absolute -bottom-4 -right-4 w-full h-full border-4 border-pink-300 rounded-lg -rotate-6"></div>
-                            <!-- Pola lingkaran kecil -->
-                            <div class="absolute -top-6 right-10 w-6 h-6 bg-yellow-300 rounded-full"></div>
-                            <div class="absolute bottom-6 left-10 w-8 h-8 bg-green-300 rounded-full"></div>
-                            <div class="absolute top-1/2 -left-6 w-4 h-4 bg-blue-300 rounded-full"></div>
-                        </div>
-                    <!-- Gambar Founder -->
-                            <img src="img/about/founder.jpg" alt="Founder Resto Joss Gandos" 
-                            class="relative z-10 rounded-lg shadow-xl w-full max-w-md object-cover transform transition-transform duration-500 hover:rotate-y-12 hover:-rotate-x-6 hover:scale-105">
+                    <!-- Bingkai dengan gradasi merah ke kuning -->
+                    <div class="bg-gradient-to-br from-red-500 via-red-400 to-yellow-300 rounded-3xl p-4">
+                        <img src="img/about/founder.jpg" alt="Founder Resto Joss Gandos" 
+                            class="w-full h-full object-cover rounded-2xl shadow-2xl">
+                    </div>
+                    <!-- Decorative elements -->
+                    <div class="absolute -top-14 -right-0.5 w-32 h-32 bg-red-500 rounded-full opacity-20"></div>
+                    <div class="absolute -bottom-8 -left-4 w-32 h-32 bg-yellow-400 rounded-full opacity-20"></div>
                     </div>
 
                     <!-- Bagian Teks dengan Background Putih -->
@@ -95,9 +95,14 @@
             <section class="py-6 md:py-10 bg-secondary fade-section opacity-0 translate-y-10 transition-all duration-1000">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-6 md:mb-8">
-                    <h2 class="text-3xl font-bold text-gray-600 mb-4">Tim Kami</h2>
+                    <h2 class="text-3xl font-bold text-gray-600 mb-4 text-shadow-strong">Tim Kami</h2>
                         <p class="text-gray-900">Berkenalan dengan orang-orang dibalik kesuksesan Resto Joss Gandos</p>
                     </div>
+                    <style>
+                        .text-shadow-strong {
+                        text-shadow: 2px 2px 6px rgba(0,0,0,0.25);
+                        }
+                    </style>
                     
                     <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
                         <div class="text-center bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
