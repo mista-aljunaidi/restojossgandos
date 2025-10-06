@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard</title>
-  <link rel="icon" type="image/png" href="{{ asset('img/logo-joss-gandos.png') }}">
+  <link rel="icon" type="image/png" href="{{ asset('img/logojossgandos.png') }}">
   @vite(['resources/css/app.css','resources/js/app.js'])
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
@@ -12,68 +12,70 @@
 
 <body class="bg-[url('{{ asset('img/backgroundbatik.png') }}')] bg-cover bg-fixed bg-center">
 
-  <!-- Navbar -->
   <x-navbar></x-navbar>
 
-  <!-- Wrapper Dashboard -->
-<div class="max-w-6xl mx-auto p-6 pt-24 fade-section opacity-0 translate-y-10 transition-all duration-1000">
-
-  <!-- Header Dashboard -->
-  <div class="flex items-center justify-between mb-8">
-    <h1 class="text-3xl font-bold text-black tracking-wide">Dashboard</h1>
-    <form action="{{ route('logout') }}" method="POST">
-      @csrf
-      <button type="submit"
-        class="flex items-center gap-2 bg-gradient-to-r from-red-500 to-red-700 text-white px-5 py-2 rounded-lg shadow hover:opacity-90 transition">
-        <i class="uil uil-signout-alt"></i> Logout
-      </button>
-    </form>
-  </div>
-
-  <!-- Flash Success -->
-  @if(session('success'))
-    <div id="success-alert"
-      class="mb-4 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 rounded-lg shadow transition-all duration-500 ease-in-out">
-      {{ session('success') }}
+    <!-- Wrapper Dashboard -->
+  <div class="max-w-6xl mx-auto p-6 pt-24 fade-section opacity-0 translate-y-10 transition-all duration-1000">
+    <!-- Header Dashboard -->
+    <div class="flex items-center justify-between mb-8">
+      <h1 class="text-3xl font-bold text-black tracking-wide">Dashboard</h1>
+      <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button type="submit"
+          class="flex items-center justify-center bg-gradient-to-r from-red-500 to-red-700 text-white p-2 rounded-lg shadow hover:opacity-90 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" 
+              fill="none" 
+              viewBox="0 0 24 24" 
+              stroke-width="1.8" 
+              stroke="currentColor" 
+              class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" 
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M18 12H9m9 0l-3 3m3-3l-3-3" />
+          </svg>
+        </button>
+      </form>
     </div>
-  @endif
 
-  <!-- Validasi Error -->
-  @if ($errors->any())
-    <div class="mb-4 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg shadow">
-      <ul class="list-disc list-inside text-sm space-y-1">
-        @foreach ($errors->all() as $error)
-          <li>⚠️ {{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-  @endif
+    <!-- Flash Success -->
+    @if(session('success'))
+      <div id="success-alert"
+        class="mb-4 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 rounded-lg shadow transition-all duration-500 ease-in-out">
+        {{ session('success') }}
+      </div>
+    @endif
 
-  <!-- Button Tambah -->
-  <button onclick="openChooseModal()"
-    class="bg-gradient-to-r from-green-500 to-green-700 text-white px-6 py-2 rounded-lg shadow hover:opacity-90 transition">
-    + Tambah Data
-  </button>
+    <!-- Validasi Error -->
+    @if ($errors->any())
+      <div class="mb-4 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg shadow">
+        <ul class="list-disc list-inside text-sm space-y-1">
+          @foreach ($errors->all() as $error)
+            <li>⚠️ {{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
 
-  <!-- Tabel Data -->
-  <div class="bg-white shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-100">
-    <table class="min-w-full text-sm text-gray-700">
-      <thead class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-        <tr>
-          <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Judul</th>
-          <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Deskripsi</th>
-          <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Foto</th>
-          <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Kategori</th>
-          <th class="px-6 py-3 text-center font-semibold uppercase tracking-wider">Aksi</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-200">
-        {{-- Gallery --}}
-        @if(isset($photos))
+    <!-- Tombol Tambah -->
+    <button onclick="openChooseModal()"
+      class="bg-gradient-to-r from-green-500 to-green-700 text-white px-6 py-2 rounded-lg shadow hover:opacity-90 transition">
+      + Tambah Data
+    </button>
+
+    <!-- Dashboard Gallery -->
+    <div id="dashboard-gallery" class="bg-white shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-100">
+      <table class="min-w-full text-sm text-gray-700">
+        <thead class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+          <tr>
+            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Judul</th>
+            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Foto</th>
+            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Kategori</th>
+            <th class="px-6 py-3 text-center font-semibold uppercase tracking-wider">Aksi</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
           @foreach($photos as $photo)
             <tr class="hover:bg-gray-50 transition">
               <td class="px-6 py-4 font-medium">{{ $photo->title }}</td>
-              <td class="px-6 py-4 text-gray-500 italic">-</td>
               <td class="px-6 py-4">
                 <img src="{{ asset($photo->image_path) }}" class="h-14 w-14 rounded-xl object-cover shadow">
               </td>
@@ -102,8 +104,23 @@
               </td>
             </tr>
           @endforeach
+        </tbody>
+      </table>
+    </div>
 
-          {{-- Menu --}}
+    <!-- Dashboard Menu -->
+    <div id="dashboard-menu" class="bg-white shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-100 hidden">
+      <table class="min-w-full text-sm text-gray-700">
+        <thead class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+          <tr>
+            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Judul</th>
+            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Deskripsi</th>
+            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Foto</th>
+            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Tipe</th>
+            <th class="px-6 py-3 text-center font-semibold uppercase tracking-wider">Aksi</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
           @foreach($menus as $menu)
             <tr class="hover:bg-gray-50 transition">
               <td class="px-6 py-4 font-medium">{{ $menu->title }}</td>
@@ -134,11 +151,69 @@
               </td>
             </tr>
           @endforeach
-        @endif
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tombol angka pagination -->
+    <div class="flex justify-center items-center space-x-2 mt-6">
+      <button id="btn-gallery"
+        class="pagination-btn active-page">1</button>
+      <button id="btn-menu"
+        class="pagination-btn">2</button>
+    </div>
   </div>
-</div>
+
+  <!-- Script Toggle -->
+  <script>
+    const btnGallery = document.getElementById('btn-gallery');
+    const btnMenu = document.getElementById('btn-menu');
+    const dashboardGallery = document.getElementById('dashboard-gallery');
+    const dashboardMenu = document.getElementById('dashboard-menu');
+
+    btnGallery.addEventListener('click', () => {
+      dashboardGallery.classList.remove('hidden');
+      dashboardMenu.classList.add('hidden');
+      btnGallery.classList.add('active-page');
+      btnMenu.classList.remove('active-page');
+    });
+
+    btnMenu.addEventListener('click', () => {
+      dashboardMenu.classList.remove('hidden');
+      dashboardGallery.classList.add('hidden');
+      btnMenu.classList.add('active-page');
+      btnGallery.classList.remove('active-page');
+    });
+  </script>
+
+  <!-- Styling Pagination -->
+  <style>
+    .pagination-btn {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f3f4f6;
+      color: #374151;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .pagination-btn:hover {
+      background-color: #e5e7eb;
+      transform: translateY(-1px);
+    }
+
+    .active-page {
+      background: linear-gradient(to right, #2563eb, #3b82f6);
+      color: white !important;
+      transform: scale(1.05);
+      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
+    }
+  </style>
 
   <!-- ================== MODAL ================== -->
   <!-- Modal Pilih Tambah -->

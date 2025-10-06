@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Resto Joss Gandos</title>
-    <link rel="icon" type="image/jpeg" href="img/logo-joss-gandos.png">
+    <link rel="icon" type="image/jpeg" href="img/logojossgandos.png">
     
     <!-- Tailwind & Library -->
     <script src="https://cdn.tailwindcss.com"></script>
