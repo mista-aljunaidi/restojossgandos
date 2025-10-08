@@ -55,55 +55,8 @@
       + Tambah Data
     </button>
 
-    <!-- Dashboard Gallery -->
-    <div id="dashboard-gallery" class="bg-white shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-100">
-      <table class="min-w-full text-sm text-gray-700">
-        <thead class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-          <tr>
-            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Judul</th>
-            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Foto</th>
-            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Kategori</th>
-            <th class="px-6 py-3 text-center font-semibold uppercase tracking-wider">Aksi</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-          @foreach($photos as $photo)
-            <tr class="hover:bg-gray-50 transition">
-              <td class="px-6 py-4 font-medium">{{ $photo->title }}</td>
-              <td class="px-6 py-4">
-                <img src="{{ asset($photo->image_path) }}" class="h-14 w-14 rounded-xl object-cover shadow">
-              </td>
-              <td class="px-6 py-4">
-                <span class="px-3 py-1 rounded-full text-xs font-semibold 
-                  {{ $photo->category === 'food' ? 'bg-red-100 text-red-700' :
-                    ($photo->category === 'customer' ? 'bg-blue-100 text-blue-700' :
-                    ($photo->category === 'event' ? 'bg-green-100 text-green-700' :
-                    'bg-yellow-100 text-yellow-700')) }}">
-                  {{ ucfirst($photo->category) }}
-                </span>
-              </td>
-              <td class="px-6 py-4 flex gap-2 justify-center">
-                <button class="bg-blue-600 text-white px-4 py-1.5 rounded-lg shadow hover:bg-blue-700 transition"
-                        data-id="{{ $photo->id }}"
-                        data-title="{{ $photo->title }}"
-                        data-category="{{ $photo->category }}"
-                        onclick="openUpdatePhotoFromBtn(this)">
-                  Edit
-                </button>
-                <button class="bg-red-600 text-white px-4 py-1.5 rounded-lg shadow hover:bg-red-700 transition"
-                        data-id="{{ $photo->id }}"
-                        onclick="openDeletePhotoFromBtn(this)">
-                  Hapus
-                </button>
-              </td>
-            </tr>
-          @endforeach
-        </tbody>
-      </table>
-    </div>
-
     <!-- Dashboard Menu -->
-    <div id="dashboard-menu" class="bg-white shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-100 hidden">
+    <div id="dashboard-menu" class="bg-white shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-100">
       <table class="min-w-full text-sm text-gray-700">
         <thead class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
           <tr>
@@ -149,34 +102,88 @@
       </table>
     </div>
 
-    <!-- Tombol angka pagination -->
-    <div class="flex justify-center items-center space-x-2 mt-6">
-      <button id="btn-gallery"
-        class="pagination-btn active-page">1</button>
-      <button id="btn-menu"
-        class="pagination-btn">2</button>
+    <!-- Dashboard Gallery -->
+    <div id="dashboard-gallery" class="bg-white shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-100 hidden">
+      <table class="min-w-full text-sm text-gray-700">
+        <thead class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
+          <tr>
+            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Judul</th>
+            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Foto</th>
+            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Kategori</th>
+            <th class="px-6 py-3 text-center font-semibold uppercase tracking-wider">Aksi</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          @foreach($photos as $photo)
+            <tr class="hover:bg-gray-50 transition">
+              <td class="px-6 py-4 font-medium">{{ $photo->title }}</td>
+              <td class="px-6 py-4">
+                <img src="{{ asset($photo->image_path) }}" class="h-14 w-14 rounded-xl object-cover shadow">
+              </td>
+              <td class="px-6 py-4">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold 
+                  {{ $photo->category === 'food' ? 'bg-red-100 text-red-700' :
+                    ($photo->category === 'customer' ? 'bg-blue-100 text-blue-700' :
+                    ($photo->category === 'event' ? 'bg-green-100 text-green-700' :
+                    'bg-yellow-100 text-yellow-700')) }}">
+                  {{ ucfirst($photo->category) }}
+                </span>
+              </td>
+              <td class="px-6 py-4 flex gap-2 justify-center">
+                <button class="bg-blue-600 text-white px-4 py-1.5 rounded-lg shadow hover:bg-blue-700 transition"
+                        data-id="{{ $photo->id }}"
+                        data-title="{{ $photo->title }}"
+                        data-category="{{ $photo->category }}"
+                        onclick="openUpdatePhotoFromBtn(this)">
+                  Edit
+                </button>
+                <button class="bg-red-600 text-white px-4 py-1.5 rounded-lg shadow hover:bg-red-700 transition"
+                        data-id="{{ $photo->id }}"
+                        onclick="openDeletePhotoFromBtn(this)">
+                  Hapus
+                </button>
+              </td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
     </div>
-  </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center items-center space-x-2 mt-6">
+      <button id="btn-menu" class="pagination-btn active-page">1</button>
+      <button id="btn-gallery" class="pagination-btn">2</button>
+    </div>
 
   <!-- Script Toggle -->
   <script>
-    const btnGallery = document.getElementById('btn-gallery');
-    const btnMenu = document.getElementById('btn-menu');
-    const dashboardGallery = document.getElementById('dashboard-gallery');
-    const dashboardMenu = document.getElementById('dashboard-menu');
+    document.addEventListener('DOMContentLoaded', () => {
+      const btnMenu = document.getElementById('btn-menu');
+      const btnGallery = document.getElementById('btn-gallery');
+      const dashboardMenu = document.getElementById('dashboard-menu');
+      const dashboardGallery = document.getElementById('dashboard-gallery');
 
-    btnGallery.addEventListener('click', () => {
-      dashboardGallery.classList.remove('hidden');
-      dashboardMenu.classList.add('hidden');
-      btnGallery.classList.add('active-page');
-      btnMenu.classList.remove('active-page');
-    });
-
-    btnMenu.addEventListener('click', () => {
+      // Pastikan tampilan awal: Menu aktif
       dashboardMenu.classList.remove('hidden');
       dashboardGallery.classList.add('hidden');
       btnMenu.classList.add('active-page');
       btnGallery.classList.remove('active-page');
+
+      // Tombol Menu (1)
+      btnMenu.addEventListener('click', () => {
+        dashboardMenu.classList.remove('hidden');
+        dashboardGallery.classList.add('hidden');
+        btnMenu.classList.add('active-page');
+        btnGallery.classList.remove('active-page');
+      });
+
+      // Tombol Gallery (2)
+      btnGallery.addEventListener('click', () => {
+        dashboardGallery.classList.remove('hidden');
+        dashboardMenu.classList.add('hidden');
+        btnGallery.classList.add('active-page');
+        btnMenu.classList.remove('active-page');
+      });
     });
   </script>
 
