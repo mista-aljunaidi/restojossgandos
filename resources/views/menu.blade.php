@@ -25,7 +25,7 @@
                      alt="{{ $menu->title }}" 
                      class="w-full h-[600px] object-cover">
                 <!-- Judul -->
-                <h3 class="absolute top-4 left-1/2 transform -translate-x-1/2 text-center text-gray-200 font-extrabold text-3xl leading-tight 
+                <h3 class="absolute top-4 left-1/2 transform -translate-x-1/2 text-center text-white font-extrabold text-3xl leading-tight 
                 opacity-0 translate-y-full transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 text-shadow-strong">
                   {{ $menu->title }}
                 </h3>

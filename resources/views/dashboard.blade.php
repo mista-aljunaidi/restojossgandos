@@ -14,21 +14,52 @@
 
   <x-navbar></x-navbar>
 
-    <!-- Wrapper Dashboard -->
+  <!-- Wrapper Dashboard -->
   <div class="max-w-6xl mx-auto p-6 pt-24 fade-section opacity-0 translate-y-10 transition-all duration-1000">
     <!-- Header Dashboard -->
-    <div class="flex items-center justify-between mb-8">
-      <h1 class="text-3xl font-bold text-black tracking-wide">Dashboard</h1>
-      <form action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button type="submit"
-          class="flex items-center justify-center bg-gradient-to-r from-red-500 to-red-700 text-white p-3 rounded-xl shadow-lg hover:opacity-90 transition transform hover:scale-105">
-          <img src="{{ asset('img/exit.png') }}" 
-              alt="Logout" 
-              class="w-8 h-8 invert" />
-        </button>
-      </form>
-    </div>
+      <div class="mb-6">
+        <!-- Judul Dashboard -->
+        <div class="mb-4">
+          <h1 class="text-3xl font-extrabold bg-gradient-to-r from-gray-800 to-gray-700 bg-clip-text text-transparent drop-shadow-sm tracking-wide">
+            Dashboard
+          </h1>
+        </div>
+
+        <!-- Baris Tombol & Pencarian -->
+        <div class="flex flex-col sm:flex-row justify-end items-center gap-3 -mr-3">
+          <!-- Search bar -->
+          <div class="relative ml-4">
+            <svg class="w-5 h-5 absolute left-3 top-2.5 text-gray-900"
+              fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+
+            <input type="text" placeholder="Cari menu atau foto..."
+              class="w-64 pl-10 pr-3 py-2 border border-gray-900 rounded-full shadow-sm 
+                    focus:ring-2 focus:ring-red-400 focus:border-red-400 focus:outline-none
+                    transition duration-200 text-gray-700 placeholder-gray-400">
+          </div>
+
+          <!-- Tombol Tambah -->
+          <button onclick="openChooseModal()"
+            class="bg-gradient-to-r from-green-500 to-green-700 text-white px-6 py-3 rounded-xl shadow-lg hover:opacity-90 hover:scale-105 transition text-[15px] font-medium">
+            + Tambah Data
+          </button>
+
+          <!-- Tombol Logout -->
+          <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit"
+              class="flex items-center justify-center bg-gradient-to-r from-red-500 to-red-700 text-white p-3 rounded-xl shadow-lg hover:opacity-90 hover:scale-105 transition">
+              <img src="{{ asset('img/exit.png') }}" 
+                  alt="Logout" 
+                  class="w-7 h-7 invert" />
+            </button>
+          </form>
+        </div>
+      </div>
 
     <!-- Flash Success -->
     @if(session('success'))
@@ -48,12 +79,6 @@
         </ul>
       </div>
     @endif
-
-    <!-- Tombol Tambah -->
-    <button onclick="openChooseModal()"
-      class="bg-gradient-to-r from-green-500 to-green-700 text-white px-6 py-2 rounded-lg shadow hover:opacity-90 transition">
-      + Tambah Data
-    </button>
 
     <!-- Dashboard Menu -->
     <div id="dashboard-menu" class="bg-white shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-100">
@@ -325,8 +350,10 @@
   </div>
 
   <!-- Modal Update Menu -->
-  <div id="modalUpdateMenu" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeUpdateMenu()">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
+  <div id="modalUpdateMenu" 
+     class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+      onclick="if(event.target === this) closeUpdateMenu()">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
       <button type="button" onclick="closeUpdateMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
       </button>
@@ -334,23 +361,25 @@
       <form id="formUpdateMenu" method="POST" enctype="multipart/form-data" data-action="{{ route('menu.update', ':id') }}">
         @csrf
         @method('PUT')
-        <input type="text" id="updateTitle" name="title" placeholder="Nama Menu" class="border p-2 rounded mb-3 w-full" required>
-        <textarea id="updateDescription" name="description" placeholder="Deskripsi Menu" class="border p-2 rounded mb-3 w-full" required></textarea>
-        <select id="updateType" name="type" class="border p-2 rounded mb-3 w-full" required>
+        <input type="text" id="updateTitle" name="title" placeholder="Nama Menu" class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
+        <textarea id="updateDescription" name="description" placeholder="Deskripsi Menu" class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required></textarea>
+        <select id="updateType" name="type" class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
           <option value="carousel">Carousel</option>
           <option value="special">Menu Spesial</option>
         </select>
-        <input type="file" name="image" class="border p-2 rounded mb-3 w-full">
+        <input type="file" name="image" class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition">
         <div class="flex justify-end">
-          <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
+          <button type="submit" class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Update</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- Modal Delete Menu -->
-  <div id="modalDeleteMenu" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeDeleteMenu()">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative">
+  <div id="modalDeleteMenu" 
+      class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+      onclick="if(event.target === this) closeDeleteMenu()">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
       <button type="button" onclick="closeDeleteMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
       </button>
@@ -360,12 +389,12 @@
         @csrf
         @method('DELETE')
         <div class="flex justify-center gap-3">
-          <button type="button" onclick="closeDeleteMenu()" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Batal</button>
-          <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Hapus</button>
+          <button type="button" onclick="closeDeleteMenu()" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition">Batal</button>
+          <button type="submit" class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded hover:opacity-90 transition">Hapus</button>
         </div>
       </form>
     </div>
-  </div> 
+  </div>
   
   <script>
     // ================================
@@ -458,35 +487,67 @@
     // ================================
     // Menu CRUD: use data-action placeholders
     // ================================
-    function openUpdateMenuFromBtn(btn) {
-      const id = btn.dataset.id;
-      const title = btn.dataset.title || '';
-      const description = btn.dataset.description || '';
-      const type = btn.dataset.type || '';
-      const form = document.getElementById('formUpdateMenu');
-      const actionTemplate = form.getAttribute('data-action');
-      if (actionTemplate) form.action = actionTemplate.replace(':id', id);
-      document.getElementById('updateTitle').value = title;
-      document.getElementById('updateDescription').value = description;
-      document.getElementById('updateType').value = type;
-      showModal('modalUpdateMenu');
-    }
+    function showModal(id) {
+    const modal = document.getElementById(id);
+    const content = modal.querySelector('div.bg-white');
 
-    function closeUpdateMenu() {
-      hideModal('modalUpdateMenu');
-    }
+    // Atur posisi sesuai scroll user
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    content.style.marginTop = `${scrollY + 100}px`;
 
-    function openDeleteMenuFromBtn(btn) {
-      const id = btn.dataset.id;
-      const form = document.getElementById('formDeleteMenu');
-      const actionTemplate = form.getAttribute('data-action');
-      if (actionTemplate) form.action = actionTemplate.replace(':id', id);
-      showModal('modalDeleteMenu');
-    }
+    modal.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      modal.classList.add('flex');
+      modal.classList.remove('opacity-0');
+      content.classList.remove('opacity-0', 'scale-95');
+      content.classList.add('opacity-100', 'scale-100');
+    });
+  }
 
-    function closeDeleteMenu() {
-      hideModal('modalDeleteMenu');
-    }
+  function hideModal(id) {
+    const modal = document.getElementById(id);
+    const content = modal.querySelector('div.bg-white');
+    content.classList.add('opacity-0', 'scale-95');
+    content.classList.remove('opacity-100', 'scale-100');
+    modal.classList.add('opacity-0');
+    setTimeout(() => {
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+      modal.classList.remove('opacity-0');
+    }, 250);
+  }
+
+  // Open Update Modal
+  function openUpdateMenuFromBtn(btn) {
+    const id = btn.dataset.id;
+    const title = btn.dataset.title || '';
+    const description = btn.dataset.description || '';
+    const type = btn.dataset.type || '';
+    const form = document.getElementById('formUpdateMenu');
+    const actionTemplate = form.getAttribute('data-action');
+    if (actionTemplate) form.action = actionTemplate.replace(':id', id);
+    document.getElementById('updateTitle').value = title;
+    document.getElementById('updateDescription').value = description;
+    document.getElementById('updateType').value = type;
+    showModal('modalUpdateMenu');
+  }
+
+  function closeUpdateMenu() {
+    hideModal('modalUpdateMenu');
+  }
+
+  // Open Delete Modal
+  function openDeleteMenuFromBtn(btn) {
+    const id = btn.dataset.id;
+    const form = document.getElementById('formDeleteMenu');
+    const actionTemplate = form.getAttribute('data-action');
+    if (actionTemplate) form.action = actionTemplate.replace(':id', id);
+    showModal('modalDeleteMenu');
+  }
+
+  function closeDeleteMenu() {
+    hideModal('modalDeleteMenu');
+  }
 
     // ================================
     // Modal pilih tambah / tambah menu
