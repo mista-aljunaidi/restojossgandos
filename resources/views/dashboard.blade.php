@@ -36,7 +36,7 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
 
-            <input type="text" placeholder="Cari menu atau foto..."
+            <input id="searchInput" type="text" placeholder="Cari judul, deskripsi, kategori, atau tipe..."
               class="w-64 pl-10 pr-3 py-2 border border-gray-900 rounded-full shadow-sm 
                     focus:ring-2 focus:ring-red-400 focus:border-red-400 focus:outline-none
                     transition duration-200 text-gray-700 placeholder-gray-400">
@@ -180,6 +180,197 @@
       <button id="btn-gallery" class="pagination-btn">2</button>
     </div>
 
+  <!-- ================== MODAL ================== -->
+  <!-- Modal Pilih Tambah -->
+  <div id="modalChoose"
+    class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
+    onclick="if(event.target === this) closeChooseModal()">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative">
+      <button type="button" onclick="closeChooseModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
+      <h2 class="text-xl font-bold mb-4">Tambah Foto</h2>
+      <div class="flex flex-col gap-3">
+        <button onclick="openTambahGallery()"
+          class="bg-gradient-to-r from-purple-500 to-purple-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Gallery</button>
+        <button onclick="openTambahMenu()"
+          class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tambah Photo -->
+  <div id="modalTambah"
+    class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+    onclick="if(event.target === this) closeTambahModal()">
+    <div
+      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
+      <button type="button" onclick="closeTambahModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
+      <h2 class="text-xl font-bold mb-4">Tambah Foto Baru</h2>
+      <form action="{{ route('gallery.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="text" name="title" placeholder="Judul Foto" class="border p-2 rounded mb-3 w-full" required>
+        <select name="category" class="border p-2 rounded mb-3 w-full" required>
+          <option value="food">Food</option>
+          <option value="customer">Customer</option>
+          <option value="event">Event</option>
+          <option value="ambience">Ambience</option>
+        </select>
+        <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
+        <div class="flex justify-end">
+          <button type="submit"
+            class="bg-gradient-to-r from-green-500 to-green-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Update Photo -->
+  <div id="modalUpdatePhoto"
+    class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+    onclick="if(event.target === this) closeUpdatePhoto()">
+    <div
+      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
+      <button type="button" onclick="closeUpdatePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
+      <h2 class="text-xl font-bold mb-4">Update Foto</h2>
+      <form id="formUpdatePhoto" method="POST" enctype="multipart/form-data"
+        data-action="{{ route('gallery.update', ':id') }}">
+        @csrf
+        @method('PUT')
+        <input type="text" id="updatePhotoTitle" name="title" placeholder="Judul Foto"
+          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
+        <select id="updatePhotoCategory" name="category"
+          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
+          <option value="food">Food</option>
+          <option value="customer">Customer</option>
+          <option value="event">Event</option>
+          <option value="ambience">Ambience</option>
+        </select>
+        <input type="file" name="image"
+          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition">
+        <div class="flex justify-end">
+          <button type="submit"
+            class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Photo -->
+  <div id="modalDeletePhoto"
+    class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+    onclick="if(event.target === this) closeDeletePhoto()">
+    <div
+      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
+      <button type="button" onclick="closeDeletePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
+      <h2 class="text-xl font-bold mb-4">Hapus Foto</h2>
+      <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus foto ini?</p>
+      <form id="formDeletePhoto" method="POST" data-action="{{ route('gallery.destroy', ':id') }}">
+        @csrf
+        @method('DELETE')
+        <div class="flex justify-center gap-3">
+          <button type="button" onclick="closeDeletePhoto()"
+            class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition">Batal</button>
+          <button type="submit"
+            class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded hover:opacity-90 transition">Hapus</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Tambah Menu -->
+  <div id="modalTambahMenu"
+    class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+    onclick="if(event.target === this) closeTambahMenu()">
+    <div
+      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
+      <button type="button" onclick="closeTambahMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
+      <h2 class="text-xl font-bold mb-4">Tambah Menu Baru</h2>
+      <form action="{{ route('menu.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="text" name="title" placeholder="Nama Menu" class="border p-2 rounded mb-3 w-full" required>
+        <textarea name="description" placeholder="Deskripsi Menu"
+          class="border p-2 rounded mb-3 w-full" required></textarea>
+        <select name="type" class="border p-2 rounded mb-3 w-full" required>
+          <option value="carousel">Carousel</option>
+          <option value="special">Menu Spesial</option>
+        </select>
+        <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
+        <div class="flex justify-end">
+          <button type="submit"
+            class="bg-gradient-to-r from-green-500 to-green-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Update Menu -->
+  <div id="modalUpdateMenu"
+    class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+    onclick="if(event.target === this) closeUpdateMenu()">
+    <div
+      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
+      <button type="button" onclick="closeUpdateMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
+      <h2 class="text-xl font-bold mb-4">Update Menu</h2>
+      <form id="formUpdateMenu" method="POST" enctype="multipart/form-data"
+        data-action="{{ route('menu.update', ':id') }}">
+        @csrf
+        @method('PUT')
+        <input type="text" id="updateTitle" name="title" placeholder="Nama Menu"
+          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
+        <textarea id="updateDescription" name="description" placeholder="Deskripsi Menu"
+          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required></textarea>
+        <select id="updateType" name="type"
+          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
+          <option value="carousel">Carousel</option>
+          <option value="special">Menu Spesial</option>
+        </select>
+        <input type="file" name="image"
+          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition">
+        <div class="flex justify-end">
+          <button type="submit"
+            class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Delete Menu -->
+  <div id="modalDeleteMenu"
+    class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+    onclick="if(event.target === this) closeDeleteMenu()">
+    <div
+      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
+      <button type="button" onclick="closeDeleteMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+        <i class="uil uil-times text-2xl"></i>
+      </button>
+      <h2 class="text-xl font-bold mb-4">Hapus Menu</h2>
+      <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus menu ini?</p>
+      <form id="formDeleteMenu" method="POST" data-action="{{ route('menu.destroy', ':id') }}">
+        @csrf
+        @method('DELETE')
+        <div class="flex justify-center gap-3">
+          <button type="button" onclick="closeDeleteMenu()"
+            class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition">Batal</button>
+          <button type="submit"
+            class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded hover:opacity-90 transition">Hapus</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+
   <!-- Script Toggle -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -241,283 +432,248 @@
     }
   </style>
 
-  <!-- ================== MODAL ================== -->
-  <!-- Modal Pilih Tambah -->
-  <div id="modalChoose" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeChooseModal()">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative">
-      <button type="button" onclick="closeChooseModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-      <h2 class="text-xl font-bold mb-4">Tambah Foto</h2>
-      <div class="flex flex-col gap-3">
-        <button onclick="openTambahGallery()" 
-        class="bg-gradient-to-r from-purple-500 to-purple-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Gallery</button>
-        <button onclick="openTambahMenu()" 
-        class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Menu</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tambah Photo -->
-  <div id="modalTambah" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeTambahModal()">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
-      <button type="button" onclick="closeTambahModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-      <h2 class="text-xl font-bold mb-4">Tambah Foto Baru</h2>
-      <form action="{{ route('gallery.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <input type="text" name="title" placeholder="Judul Foto" class="border p-2 rounded mb-3 w-full" required>
-        <select name="category" class="border p-2 rounded mb-3 w-full" required>
-          <option value="food">Food</option>
-          <option value="customer">Customer</option>
-          <option value="event">Event</option>
-          <option value="ambience">Ambience</option>
-        </select>
-        <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
-        <div class="flex justify-end">
-          <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Upload</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Update Photo -->
-  <div id="modalUpdatePhoto" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeUpdatePhoto()">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
-      <button type="button" onclick="closeUpdatePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-      <h2 class="text-xl font-bold mb-4">Update Foto</h2>
-      <form id="formUpdatePhoto" method="POST" enctype="multipart/form-data" data-action="{{ route('gallery.update', ':id') }}">
-        @csrf
-        @method('PUT')
-        <input type="text" id="updatePhotoTitle" name="title" placeholder="Judul Foto" class="border p-2 rounded mb-3 w-full" required>
-        <select id="updatePhotoCategory" name="category" class="border p-2 rounded mb-3 w-full" required>
-          <option value="food">Food</option>
-          <option value="customer">Customer</option>
-          <option value="event">Event</option>
-          <option value="ambience">Ambience</option>
-        </select>
-        <input type="file" name="image" class="border p-2 rounded mb-3 w-full">
-        <div class="flex justify-end">
-          <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Update</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Delete Photo -->
-  <div id="modalDeletePhoto" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeDeletePhoto()">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative">
-      <button type="button" onclick="closeDeletePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-      <h2 class="text-xl font-bold mb-4">Hapus Foto</h2>
-      <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus foto ini?</p>
-      <form id="formDeletePhoto" method="POST" data-action="{{ route('gallery.destroy', ':id') }}">
-        @csrf
-        @method('DELETE')
-        <div class="flex justify-center gap-3">
-          <button type="button" onclick="closeDeletePhoto()" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Batal</button>
-          <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Hapus</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal Tambah Menu -->
-  <div id="modalTambahMenu" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50" onclick="if(event.target === this) closeTambahMenu()">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
-      <button type="button" onclick="closeTambahMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-      <h2 class="text-xl font-bold mb-4">Tambah Menu Baru</h2>
-      <form action="{{ route('menu.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <input type="text" name="title" placeholder="Nama Menu" class="border p-2 rounded mb-3 w-full" required>
-        <textarea name="description" placeholder="Deskripsi Menu" class="border p-2 rounded mb-3 w-full" required></textarea>
-        <select name="type" class="border p-2 rounded mb-3 w-full" required>
-          <option value="carousel">Carousel</option>
-          <option value="special">Menu Spesial</option>
-        </select>
-        <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
-        <div class="flex justify-end">
-          <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Upload</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal Update Menu -->
-  <div id="modalUpdateMenu" 
-     class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
-      onclick="if(event.target === this) closeUpdateMenu()">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
-      <button type="button" onclick="closeUpdateMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-      <h2 class="text-xl font-bold mb-4">Update Menu</h2>
-      <form id="formUpdateMenu" method="POST" enctype="multipart/form-data" data-action="{{ route('menu.update', ':id') }}">
-        @csrf
-        @method('PUT')
-        <input type="text" id="updateTitle" name="title" placeholder="Nama Menu" class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
-        <textarea id="updateDescription" name="description" placeholder="Deskripsi Menu" class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required></textarea>
-        <select id="updateType" name="type" class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
-          <option value="carousel">Carousel</option>
-          <option value="special">Menu Spesial</option>
-        </select>
-        <input type="file" name="image" class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition">
-        <div class="flex justify-end">
-          <button type="submit" class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Update</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Modal Delete Menu -->
-  <div id="modalDeleteMenu" 
-      class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
-      onclick="if(event.target === this) closeDeleteMenu()">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
-      <button type="button" onclick="closeDeleteMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-      <h2 class="text-xl font-bold mb-4">Hapus Menu</h2>
-      <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus menu ini?</p>
-      <form id="formDeleteMenu" method="POST" data-action="{{ route('menu.destroy', ':id') }}">
-        @csrf
-        @method('DELETE')
-        <div class="flex justify-center gap-3">
-          <button type="button" onclick="closeDeleteMenu()" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition">Batal</button>
-          <button type="submit" class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded hover:opacity-90 transition">Hapus</button>
-        </div>
-      </form>
-    </div>
-  </div>
-  
   <script>
-    // ================================
-    // Auto hide success alert
-    // ================================
-    setTimeout(() => {
-      const alertBox = document.getElementById('success-alert');
-      if (alertBox) {
-        alertBox.style.opacity = '0';
-        alertBox.style.transform = 'translateY(-20px)';
-        setTimeout(() => alertBox.remove(), 500);
-      }
-    }, 2000);
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      const dashboardMenu = document.getElementById('dashboard-menu');
+      const dashboardGallery = document.getElementById('dashboard-gallery');
+      const btnMenu = document.getElementById('btn-menu');
+      const btnGallery = document.getElementById('btn-gallery');
 
-    // ================================
-    // Fade in effect
-    // ================================
-    document.addEventListener("DOMContentLoaded", () => {
-      const sections = document.querySelectorAll(".fade-section");
-      const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.remove("opacity-0", "translate-y-10");
-            entry.target.classList.add("opacity-100", "translate-y-0");
-            obs.unobserve(entry.target);
+      let highlightedRows = [];
+      let activeIndex = -1; // posisi baris aktif
+
+      // CSS tambahan untuk gradasi
+      const style = document.createElement('style');
+      style.innerHTML = `
+        .highlighted-row {
+          background: linear-gradient(to right, #fff9c4, #fff59d); /* gradasi kuning lembut */
+          transition: background 0.3s ease;
+        }
+        .active-highlight {
+          background: linear-gradient(to right, #ffd180, #ffcc80); /* oranye lembut */
+          transform: scale(1.01);
+          box-shadow: 0 0 6px rgba(255, 171, 64, 0.5);
+        }
+      `;
+      document.head.appendChild(style);
+
+      function clearHighlights() {
+        highlightedRows.forEach(row => {
+          row.classList.remove('highlighted-row', 'active-highlight');
+        });
+        highlightedRows = [];
+        activeIndex = -1;
+      }
+
+      function showTable(target) {
+        if (target === 'menu') {
+          dashboardMenu.classList.remove('hidden');
+          dashboardGallery.classList.add('hidden');
+          btnMenu.classList.add('active-page');
+          btnGallery.classList.remove('active-page');
+        } else {
+          dashboardGallery.classList.remove('hidden');
+          dashboardMenu.classList.add('hidden');
+          btnGallery.classList.add('active-page');
+          btnMenu.classList.remove('active-page');
+        }
+      }
+
+      function detectTable(keyword) {
+        keyword = keyword.toLowerCase();
+        const menuRows = Array.from(dashboardMenu.querySelectorAll('tbody tr'));
+        const galleryRows = Array.from(dashboardGallery.querySelectorAll('tbody tr'));
+
+        const foundMenu = menuRows.some(row => row.textContent.toLowerCase().includes(keyword));
+        const foundGallery = galleryRows.some(row => row.textContent.toLowerCase().includes(keyword));
+
+        if (foundGallery && !foundMenu) showTable('gallery');
+        else showTable('menu');
+      }
+
+      function highlightRows(keyword) {
+        clearHighlights();
+        if (!keyword) return;
+
+        keyword = keyword.toLowerCase();
+        const visibleTable = !dashboardMenu.classList.contains('hidden') ? dashboardMenu : dashboardGallery;
+        const rows = visibleTable.querySelectorAll('tbody tr');
+        highlightedRows = [];
+
+        rows.forEach(row => {
+          if (row.textContent.toLowerCase().includes(keyword)) {
+            row.classList.add('highlighted-row');
+            highlightedRows.push(row);
           }
         });
-      }, { threshold: 0.2 });
 
-      sections.forEach(section => observer.observe(section));
+        if (highlightedRows.length > 0) {
+          activeIndex = 0;
+          highlightedRows[0].classList.add('active-highlight');
+          highlightedRows[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+
+      function moveHighlight(direction) {
+        if (highlightedRows.length === 0) return;
+
+        highlightedRows[activeIndex].classList.remove('active-highlight');
+
+        if (direction === 'down') {
+          activeIndex = (activeIndex + 1) % highlightedRows.length;
+        } else if (direction === 'up') {
+          activeIndex = (activeIndex - 1 + highlightedRows.length) % highlightedRows.length;
+        }
+
+        highlightedRows[activeIndex].classList.add('active-highlight');
+        highlightedRows[activeIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      // Saat mengetik → tampilkan tabel tujuan
+      searchInput.addEventListener('input', function() {
+        const keyword = this.value.trim();
+        if (!keyword) {
+          clearHighlights();
+          return;
+        }
+        detectTable(keyword);
+      });
+
+      // Saat tekan Enter → highlight hasil
+      searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          const keyword = this.value.trim();
+          highlightRows(keyword);
+        }
+      });
+
+      // Navigasi pakai panah
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          moveHighlight('down');
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          moveHighlight('up');
+        }
+      });
     });
+  </script>
 
-    // ================================
-    // Helper Modal (robust)
-    // ================================
-    function showModal(id) {
-      const modal = document.getElementById(id);
-      if (!modal) return;
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-      // disable page scroll when modal open
-      document.body.style.overflow = 'hidden';
+  <script>
+  // ================================
+  // Auto hide success alert
+  // ================================
+  setTimeout(() => {
+    const alertBox = document.getElementById('success-alert');
+    if (alertBox) {
+      alertBox.style.opacity = '0';
+      alertBox.style.transform = 'translateY(-20px)';
+      setTimeout(() => alertBox.remove(), 500);
     }
+  }, 2000);
 
-    function hideModal(id) {
-      const modal = document.getElementById(id);
-      if (!modal) return;
-      modal.classList.remove('flex');
-      modal.classList.add('hidden');
-      // restore page scroll
-      document.body.style.overflow = '';
-    }
+  // ================================
+  // Fade in effect
+  // ================================
+  document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll(".fade-section");
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove("opacity-0", "translate-y-10");
+          entry.target.classList.add("opacity-100", "translate-y-0");
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
 
-    // ================================
-    // Gallery (Photo) CRUD: using data-action placeholders
-    // ================================
-    function openUpdatePhotoFromBtn(btn) {
-      const id = btn.dataset.id;
-      const title = btn.dataset.title || '';
-      const category = btn.dataset.category || '';
-      const form = document.getElementById('formUpdatePhoto');
-      const actionTemplate = form.getAttribute('data-action');
-      if (actionTemplate) form.action = actionTemplate.replace(':id', id);
-      document.getElementById('updatePhotoTitle').value = title;
-      document.getElementById('updatePhotoCategory').value = category;
-      showModal('modalUpdatePhoto');
-    }
+    sections.forEach(section => observer.observe(section));
+  });
 
-    function closeUpdatePhoto() {
-      const form = document.getElementById('formUpdatePhoto');
-      // clear form action to be safe (optional)
-      // form.action = '';
-      hideModal('modalUpdatePhoto');
-    }
-
-    function openDeletePhotoFromBtn(btn) {
-      const id = btn.dataset.id;
-      const form = document.getElementById('formDeletePhoto');
-      const actionTemplate = form.getAttribute('data-action');
-      if (actionTemplate) form.action = actionTemplate.replace(':id', id);
-      showModal('modalDeletePhoto');
-    }
-
-    function closeDeletePhoto() {
-      // clear action if you want
-      // document.getElementById('formDeletePhoto').action = '';
-      hideModal('modalDeletePhoto');
-    }
-
-    // ================================
-    // Menu CRUD: use data-action placeholders
-    // ================================
-    function showModal(id) {
+  // ================================
+  // Global Modal System (dengan animasi elegan)
+  // ================================
+  function showModal(id) {
     const modal = document.getElementById(id);
-    const content = modal.querySelector('div.bg-white');
+    if (!modal) return;
+    const content = modal.querySelector('div.bg-white, div.bg-gray-50, div.bg-slate-50');
 
-    // Atur posisi sesuai scroll user
+    // Posisi modal mengikuti scroll
     const scrollY = window.scrollY || document.documentElement.scrollTop;
-    content.style.marginTop = `${scrollY + 100}px`;
+    if (content) content.style.marginTop = `${scrollY + 100}px`;
 
     modal.classList.remove('hidden');
     requestAnimationFrame(() => {
       modal.classList.add('flex');
       modal.classList.remove('opacity-0');
-      content.classList.remove('opacity-0', 'scale-95');
-      content.classList.add('opacity-100', 'scale-100');
+      if (content) {
+        content.classList.remove('opacity-0', 'scale-95');
+        content.classList.add('opacity-100', 'scale-100');
+      }
     });
+
+    document.body.style.overflow = 'hidden'; // Disable scroll
   }
 
   function hideModal(id) {
     const modal = document.getElementById(id);
-    const content = modal.querySelector('div.bg-white');
-    content.classList.add('opacity-0', 'scale-95');
-    content.classList.remove('opacity-100', 'scale-100');
+    if (!modal) return;
+    const content = modal.querySelector('div.bg-white, div.bg-gray-50, div.bg-slate-50');
+
+    if (content) {
+      content.classList.add('opacity-0', 'scale-95');
+      content.classList.remove('opacity-100', 'scale-100');
+    }
     modal.classList.add('opacity-0');
     setTimeout(() => {
       modal.classList.remove('flex');
       modal.classList.add('hidden');
       modal.classList.remove('opacity-0');
+      document.body.style.overflow = ''; // Enable scroll again
     }, 250);
   }
 
-  // Open Update Modal
+  // ================================
+  // GALLERY CRUD (diperbarui agar sama dengan Menu)
+  // ================================
+  function openUpdatePhotoFromBtn(btn) {
+    const id = btn.dataset.id;
+    const title = btn.dataset.title || '';
+    const category = btn.dataset.category || '';
+    const form = document.getElementById('formUpdatePhoto');
+    const actionTemplate = form.getAttribute('data-action');
+    if (actionTemplate) form.action = actionTemplate.replace(':id', id);
+    document.getElementById('updatePhotoTitle').value = title;
+    document.getElementById('updatePhotoCategory').value = category;
+
+    // Gunakan efek modal baru
+    showModal('modalUpdatePhoto');
+  }
+
+  function closeUpdatePhoto() {
+    hideModal('modalUpdatePhoto');
+  }
+
+  function openDeletePhotoFromBtn(btn) {
+    const id = btn.dataset.id;
+    const form = document.getElementById('formDeletePhoto');
+    const actionTemplate = form.getAttribute('data-action');
+    if (actionTemplate) form.action = actionTemplate.replace(':id', id);
+
+    // Gunakan efek modal baru
+    showModal('modalDeletePhoto');
+  }
+
+  function closeDeletePhoto() {
+    hideModal('modalDeletePhoto');
+  }
+
+  // ================================
+  // MENU CRUD
+  // ================================
   function openUpdateMenuFromBtn(btn) {
     const id = btn.dataset.id;
     const title = btn.dataset.title || '';
@@ -529,6 +685,7 @@
     document.getElementById('updateTitle').value = title;
     document.getElementById('updateDescription').value = description;
     document.getElementById('updateType').value = type;
+
     showModal('modalUpdateMenu');
   }
 
@@ -536,7 +693,6 @@
     hideModal('modalUpdateMenu');
   }
 
-  // Open Delete Modal
   function openDeleteMenuFromBtn(btn) {
     const id = btn.dataset.id;
     const form = document.getElementById('formDeleteMenu');
@@ -549,23 +705,23 @@
     hideModal('modalDeleteMenu');
   }
 
-    // ================================
-    // Modal pilih tambah / tambah menu
-    // ================================
-    function openChooseModal() { showModal('modalChoose'); }
-    function closeChooseModal() { hideModal('modalChoose'); }
+  // ================================
+  // Modal pilih tambah / tambah menu / gallery
+  // ================================
+  function openChooseModal() { showModal('modalChoose'); }
+  function closeChooseModal() { hideModal('modalChoose'); }
 
-    function openTambahGallery() {
-      closeChooseModal();
-      showModal('modalTambah');
-    }
-    function closeTambahModal() { hideModal('modalTambah'); }
+  function openTambahGallery() {
+    closeChooseModal();
+    showModal('modalTambah');
+  }
+  function closeTambahModal() { hideModal('modalTambah'); }
 
-    function openTambahMenu() {
-      closeChooseModal();
-      showModal('modalTambahMenu');
-    }
-    function closeTambahMenu() { hideModal('modalTambahMenu'); }
-  </script>
-</body>
+  function openTambahMenu() {
+    closeChooseModal();
+    showModal('modalTambahMenu');
+  }
+  function closeTambahMenu() { hideModal('modalTambahMenu'); }
+</script>
+
 </html>
