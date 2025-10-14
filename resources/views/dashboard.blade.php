@@ -10,175 +10,201 @@
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
 </head>
 
-<body class="bg-[url('{{ asset('img/backgroundbatik.png') }}')] bg-cover bg-fixed bg-center">
+<body class="bg-white text-gray-900 overflow-x-hidden overflow-y-auto">
 
-  <x-navbar></x-navbar>
+  <!-- Wrapper utama: sidebar + konten -->
+  <div class="flex min-h-screen">
 
-  <!-- Wrapper Dashboard -->
-  <div class="max-w-6xl mx-auto p-6 pt-24 fade-section opacity-0 translate-y-10 transition-all duration-1000">
-    <!-- Header Dashboard -->
-      <div class="mb-6">
-        <!-- Judul Dashboard -->
-        <div class="mb-4">
-          <h1 class="text-3xl font-extrabold bg-gradient-to-r from-gray-800 to-gray-700 bg-clip-text text-transparent drop-shadow-sm tracking-wide">
-            Dashboard
-          </h1>
+    <!-- Sidebar -->
+    <aside id="sidebar"
+      class="bg-gray-900 text-white shadow-xl flex flex-col justify-between z-50 transition-all duration-300
+             fixed left-0 top-0 h-screen w-60 -translate-x-full md:translate-x-0 md:relative md:h-auto">
+      <div>
+        <!-- Logo -->
+        <div class="flex items-start gap-3 px-6 py-5 mt-16 md:mt-4 pb-2 border-b border-gray-700">
+          <img src="{{ asset('img/logojossgandos.png') }}" alt="Logo"
+            class="w-10 h-10 object-contain flex-shrink-0">
+          <span class="text-lg font-semibold tracking-wide text-white leading-tight">
+            Resto <br> Joss Gandos
+          </span>
         </div>
 
-        <!-- Baris Tombol & Pencarian -->
-        <div class="flex flex-col sm:flex-row justify-end items-center gap-3 -mr-3">
-          <!-- Search bar -->
-          <div class="relative ml-4">
-            <svg class="w-5 h-5 absolute left-3 top-2.5 text-gray-900"
+        <!-- Dashboard -->
+        <nav class="mt-6 flex flex-col space-y-2 px-2">
+          <a href="{{ route('dashboard') }}"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gray-700 hover:bg-gray-600 text-white font-medium transition duration-300">
+            <img src="{{ asset('img/dashboard.png') }}" alt="Dashboard" class="w-6 h-6 invert">
+            <span>Dashboard</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Logout -->
+      <form action="{{ route('logout') }}" method="POST" class="px-4 py-5 border-t border-gray-700">
+        @csrf
+        <button type="submit"
+          class="flex items-center justify-center gap-3 w-full bg-gray-700 hover:bg-red-600 text-white py-3 rounded-xl shadow-md transition duration-300">
+          <img src="{{ asset('img/exit.png') }}" alt="Logout" class="w-6 h-6 invert">
+          <span class="font-medium">Logout</span>
+        </button>
+      </form>
+    </aside>
+
+    <!-- Overlay mobile -->
+    <div id="overlay"
+      class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-40 md:hidden transition-opacity duration-300"
+      onclick="toggleSidebar()"></div>
+
+    <!-- Konten utama -->
+    <div class="flex-1 flex flex-col transition-all duration-300">
+
+      <!-- Header -->
+      <header
+        class="flex items-center justify-between px-4 md:px-8 py-4 border-b bg-gray-100 shadow-sm sticky top-0 z-30">
+        <div class="flex items-center gap-3">
+          <!-- Tombol Hamburger -->
+          <button class="md:hidden p-2 rounded-lg hover:bg-gray-200 transition" onclick="toggleSidebar()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <h1 class="text-2xl font-bold text-gray-700 hidden md:block">Dashboard</h1>
+        </div>
+
+        <div class="flex items-center gap-3 w-full md:w-auto">
+          <!-- Search Bar -->
+          <div class="relative group flex-1 md:flex-none md:w-72">
+            <svg class="w-5 h-5 absolute left-3 top-2 text-gray-500 pointer-events-none group-hover:text-red-500 transition"
               fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
               stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-
-            <input id="searchInput" type="text" placeholder="Cari judul, deskripsi, kategori, atau tipe..."
-              class="w-64 pl-10 pr-3 py-2 border border-gray-900 rounded-full shadow-sm 
-                    focus:ring-2 focus:ring-red-400 focus:border-red-400 focus:outline-none
-                    transition duration-200 text-gray-700 placeholder-gray-400">
+            <input type="text" id="searchInput"
+              class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-400 focus:outline-none transition"
+              placeholder="Cari data..." />
           </div>
 
           <!-- Tombol Tambah -->
           <button onclick="openChooseModal()"
-            class="bg-gradient-to-r from-green-500 to-green-700 text-white px-6 py-3 rounded-xl shadow-lg hover:opacity-90 hover:scale-105 transition text-[15px] font-medium">
+            class="bg-gradient-to-r from-green-500 to-green-700 text-white px-4 md:px-6 py-2 md:py-3 rounded-xl shadow-lg hover:opacity-90 hover:scale-105 transition text-sm md:text-[15px] font-medium">
             + Tambah Data
           </button>
+        </div>
+      </header>
 
-          <!-- Tombol Logout -->
-          <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button type="submit"
-              class="flex items-center justify-center bg-gradient-to-r from-red-500 to-red-700 text-white p-3 rounded-xl shadow-lg hover:opacity-90 hover:scale-105 transition">
-              <img src="{{ asset('img/exit.png') }}" 
-                  alt="Logout" 
-                  class="w-7 h-7 invert" />
-            </button>
-          </form>
+      <!-- Flash Success -->
+      @if(session('success'))
+        <div id="success-alert"
+          class="mx-4 md:mx-auto mt-4 mb-2 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 rounded-lg shadow transition-all duration-500 ease-in-out">
+          {{ session('success') }}
+        </div>
+      @endif
+
+      <!-- Validasi Error -->
+      @if ($errors->any())
+        <div class="mx-4 md:mx-auto mb-4 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg shadow">
+          <ul class="list-disc list-inside text-sm space-y-1">
+            @foreach ($errors->all() as $error)
+              <li>⚠️ {{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
+
+      <!-- Dashboard Menu -->
+      <div id="dashboard-menu"
+        class="bg-gray-100 shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-300 max-w-6xl mx-4 md:mx-auto p-2 md:p-4">
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm text-gray-700">
+            <thead class="bg-gray-300 border-b border-gray-200">
+              <tr>
+                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Judul</th>
+                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Deskripsi</th>
+                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Foto</th>
+                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Tipe</th>
+                <th class="px-4 py-2 text-center font-semibold uppercase tracking-wider">Aksi</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              @foreach($menus as $menu)
+                <tr class="transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:bg-gray-50 rounded-lg">
+                  <td class="px-4 py-2 font-medium">{{ $menu->title }}</td>
+                  <td class="px-4 py-2 text-gray-600">{{ Str::limit($menu->description, 90) }}</td>
+                  <td class="px-4 py-2">
+                    <img src="{{ asset($menu->image_path) }}" class="h-12 w-12 rounded-lg object-cover shadow">
+                  </td>
+                  <td class="px-4 py-2">
+                    <span
+                      class="px-2.5 py-0.5 rounded-full text-xs font-semibold {{ $menu->type === 'carousel' ? 'bg-purple-100 text-purple-700' : 'bg-orange-100 text-orange-500' }}">
+                      {{ ucfirst($menu->type) }}
+                    </span>
+                  </td>
+                  <td class="px-4 py-2 flex gap-1.5 justify-center">
+                    <button class="bg-blue-600 text-white px-3 py-1 rounded-md shadow hover:bg-blue-700 transition"
+                      data-id="{{ $menu->id }}" onclick="openUpdateMenuFromBtn(this)">Edit</button>
+                    <button class="bg-red-600 text-white px-3 py-1 rounded-md shadow hover:bg-red-700 transition"
+                      data-id="{{ $menu->id }}" onclick="openDeleteMenuFromBtn(this)">Hapus</button>
+                  </td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
         </div>
       </div>
 
-    <!-- Flash Success -->
-    @if(session('success'))
-      <div id="success-alert"
-        class="mb-4 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 rounded-lg shadow transition-all duration-500 ease-in-out">
-        {{ session('success') }}
+      <!-- Dashboard Gallery -->
+      <div id="dashboard-gallery"
+        class="bg-gray-100 shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-300 max-w-6xl mx-4 md:mx-auto p-2 md:p-4 hidden">
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm text-gray-700">
+            <thead class="bg-gray-300 border-b border-gray-200">
+              <tr>
+                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Judul</th>
+                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Foto</th>
+                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Kategori</th>
+                <th class="px-4 py-2 text-center font-semibold uppercase tracking-wider">Aksi</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              @foreach($photos as $photo)
+                <tr class="transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:bg-gray-50 rounded-lg">
+                  <td class="px-4 py-2 font-medium">{{ $photo->title }}</td>
+                  <td class="px-4 py-2">
+                    <img src="{{ asset($photo->image_path) }}" class="h-12 w-12 rounded-lg object-cover shadow">
+                  </td>
+                  <td class="px-4 py-2">
+                    <span
+                      class="px-2.5 py-0.5 rounded-full text-xs font-semibold
+                      {{ $photo->category === 'food' ? 'bg-red-100 text-red-700' :
+                      ($photo->category === 'customer' ? 'bg-blue-100 text-blue-700' :
+                      ($photo->category === 'event' ? 'bg-green-100 text-green-700' :
+                      'bg-yellow-100 text-yellow-700')) }}">
+                      {{ ucfirst($photo->category) }}
+                    </span>
+                  </td>
+                  <td class="px-4 py-2 flex gap-1.5 justify-center">
+                    <button class="bg-blue-600 text-white px-3 py-1 rounded-md shadow hover:bg-blue-700 transition"
+                      data-id="{{ $photo->id }}" onclick="openUpdatePhotoFromBtn(this)">Edit</button>
+                    <button class="bg-red-600 text-white px-3 py-1 rounded-md shadow hover:bg-red-700 transition"
+                      data-id="{{ $photo->id }}" onclick="openDeletePhotoFromBtn(this)">Hapus</button>
+                  </td>
+                </tr>
+              @endforeach
+            </tbody>
+          </table>
+        </div>
       </div>
-    @endif
 
-    <!-- Validasi Error -->
-    @if ($errors->any())
-      <div class="mb-4 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg shadow">
-        <ul class="list-disc list-inside text-sm space-y-1">
-          @foreach ($errors->all() as $error)
-            <li>⚠️ {{ $error }}</li>
-          @endforeach
-        </ul>
+      <!-- Pagination -->
+      <div class="flex justify-center items-center space-x-2 mt-6 mb-10">
+        <button id="btn-menu" class="pagination-btn active-page">1</button>
+        <button id="btn-gallery" class="pagination-btn">2</button>
       </div>
-    @endif
-
-    <!-- Dashboard Menu -->
-    <div id="dashboard-menu" class="bg-white shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-100">
-      <table class="min-w-full text-sm text-gray-700">
-        <thead class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-          <tr>
-            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Judul</th>
-            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Deskripsi</th>
-            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Foto</th>
-            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Tipe</th>
-            <th class="px-6 py-3 text-center font-semibold uppercase tracking-wider">Aksi</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-          @foreach($menus as $menu)
-            <tr class="hover:bg-gray-50 transition">
-              <td class="px-6 py-4 font-medium">{{ $menu->title }}</td>
-              <td class="px-6 py-4 text-gray-600">{{ $menu->description }}</td>
-              <td class="px-6 py-4">
-                <img src="{{ asset($menu->image_path) }}" class="h-14 w-14 rounded-xl object-cover shadow">
-              </td>
-              <td class="px-6 py-4">
-                <span class="px-3 py-1 rounded-full text-xs font-semibold 
-                  {{ $menu->type === 'carousel' ? 'bg-purple-100 text-purple-700' : 'bg-orange-100 text-orange-500' }}">
-                  {{ ucfirst($menu->type) }}
-                </span>
-              </td>
-              <td class="px-6 py-4 flex gap-2 justify-center">
-                <button class="bg-blue-600 text-white px-4 py-1.5 rounded-lg shadow hover:bg-blue-700 transition"
-                        data-id="{{ $menu->id }}"
-                        data-title="{{ $menu->title }}"
-                        data-description="{{ $menu->description }}"
-                        data-type="{{ $menu->type }}"
-                        onclick="openUpdateMenuFromBtn(this)">
-                  Edit
-                </button>
-                <button class="bg-red-600 text-white px-4 py-1.5 rounded-lg shadow hover:bg-red-700 transition"
-                        data-id="{{ $menu->id }}"
-                        onclick="openDeleteMenuFromBtn(this)">
-                  Hapus
-                </button>
-              </td>
-            </tr>
-          @endforeach
-        </tbody>
-      </table>
     </div>
-
-    <!-- Dashboard Gallery -->
-    <div id="dashboard-gallery" class="bg-white shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-100 hidden">
-      <table class="min-w-full text-sm text-gray-700">
-        <thead class="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-          <tr>
-            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Judul</th>
-            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Foto</th>
-            <th class="px-6 py-3 text-left font-semibold uppercase tracking-wider">Kategori</th>
-            <th class="px-6 py-3 text-center font-semibold uppercase tracking-wider">Aksi</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200">
-          @foreach($photos as $photo)
-            <tr class="hover:bg-gray-50 transition">
-              <td class="px-6 py-4 font-medium">{{ $photo->title }}</td>
-              <td class="px-6 py-4">
-                <img src="{{ asset($photo->image_path) }}" class="h-14 w-14 rounded-xl object-cover shadow">
-              </td>
-              <td class="px-6 py-4">
-                <span class="px-3 py-1 rounded-full text-xs font-semibold 
-                  {{ $photo->category === 'food' ? 'bg-red-100 text-red-700' :
-                    ($photo->category === 'customer' ? 'bg-blue-100 text-blue-700' :
-                    ($photo->category === 'event' ? 'bg-green-100 text-green-700' :
-                    'bg-yellow-100 text-yellow-700')) }}">
-                  {{ ucfirst($photo->category) }}
-                </span>
-              </td>
-              <td class="px-6 py-4 flex gap-2 justify-center">
-                <button class="bg-blue-600 text-white px-4 py-1.5 rounded-lg shadow hover:bg-blue-700 transition"
-                        data-id="{{ $photo->id }}"
-                        data-title="{{ $photo->title }}"
-                        data-category="{{ $photo->category }}"
-                        onclick="openUpdatePhotoFromBtn(this)">
-                  Edit
-                </button>
-                <button class="bg-red-600 text-white px-4 py-1.5 rounded-lg shadow hover:bg-red-700 transition"
-                        data-id="{{ $photo->id }}"
-                        onclick="openDeletePhotoFromBtn(this)">
-                  Hapus
-                </button>
-              </td>
-            </tr>
-          @endforeach
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Pagination -->
-    <div class="flex justify-center items-center space-x-2 mt-6">
-      <button id="btn-menu" class="pagination-btn active-page">1</button>
-      <button id="btn-gallery" class="pagination-btn">2</button>
-    </div>
+  </div>
 
   <!-- ================== MODAL ================== -->
   <!-- Modal Pilih Tambah -->
@@ -370,6 +396,16 @@
   </div>
 
 </body>
+
+  <!-- Script Toggle Sidebar -->
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      sidebar.classList.toggle('-translate-x-full');
+      overlay.classList.toggle('hidden');
+    }
+  </script>
 
   <!-- Script Toggle -->
   <script>
@@ -637,7 +673,7 @@
   }
 
   // ================================
-  // GALLERY CRUD (diperbarui agar sama dengan Menu)
+  // GALLERY CRUD
   // ================================
   function openUpdatePhotoFromBtn(btn) {
     const id = btn.dataset.id;
