@@ -84,7 +84,7 @@
             </svg>
             <input type="text" id="searchInput"
               class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-400 focus:outline-none transition"
-              placeholder="Cari data..." />
+              placeholder="Cari judul, kategori, deskripsi..."/>
           </div>
 
           <!-- Tombol Tambah -->
@@ -159,21 +159,21 @@
       <div id="dashboard-gallery"
         class="bg-gray-100 shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-300 max-w-6xl mx-4 md:mx-auto p-2 md:p-4 hidden">
         <div class="overflow-x-auto">
-          <table class="min-w-full text-sm text-gray-700">
+          <table class="w-full table-fixed text-sm text-gray-700">
             <thead class="bg-gray-300 border-b border-gray-200">
               <tr>
-                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Judul</th>
-                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Foto</th>
-                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Kategori</th>
-                <th class="px-4 py-2 text-center font-semibold uppercase tracking-wider">Aksi</th>
+                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider w-[40%]">Judul</th>
+                <th class="px-4 py-2 text-center font-semibold uppercase tracking-wider w-[20%]">Foto</th>
+                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider w-[20%]">Kategori</th>
+                <th class="px-4 py-2 text-center font-semibold uppercase tracking-wider w-[20%]">Aksi</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
               @foreach($photos as $photo)
                 <tr class="transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:bg-gray-50 rounded-lg">
-                  <td class="px-4 py-2 font-medium">{{ $photo->title }}</td>
+                  <td class="px-4 py-2 font-medium truncate">{{ $photo->title }}</td>
                   <td class="px-4 py-2">
-                    <img src="{{ asset($photo->image_path) }}" class="h-12 w-12 rounded-lg object-cover shadow">
+                    <img src="{{ asset($photo->image_path) }}" class="h-12 w-12 rounded-lg object-cover shadow mx-auto">
                   </td>
                   <td class="px-4 py-2">
                     <span
@@ -211,7 +211,7 @@
   <div id="modalChoose"
     class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
     onclick="if(event.target === this) closeChooseModal()">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative transition-all duration-300">
       <button type="button" onclick="closeChooseModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
       </button>
@@ -225,8 +225,8 @@
     </div>
   </div>
 
-  <!-- Tambah Photo -->
-  <div id="modalTambah"
+  <!-- Modal Tambah Gallery -->
+  <div id="modalTambahPhoto"
     class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
     onclick="if(event.target === this) closeTambahModal()">
     <div
@@ -255,20 +255,25 @@
 
   <!-- Update Photo -->
   <div id="modalUpdatePhoto"
-    class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+    class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50 transition-opacity duration-300 ease-out"
     onclick="if(event.target === this) closeUpdatePhoto()">
+
     <div
-      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
+      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative transform -translate-y-[60%] scale-95 opacity-0 transition-all duration-300 ease-out">
+      
       <button type="button" onclick="closeUpdatePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
       </button>
+
       <h2 class="text-xl font-bold mb-4">Update Foto</h2>
       <form id="formUpdatePhoto" method="POST" enctype="multipart/form-data"
         data-action="{{ route('gallery.update', ':id') }}">
         @csrf
         @method('PUT')
+
         <input type="text" id="updatePhotoTitle" name="title" placeholder="Judul Foto"
           class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
+
         <select id="updatePhotoCategory" name="category"
           class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
           <option value="food">Food</option>
@@ -276,11 +281,15 @@
           <option value="event">Event</option>
           <option value="ambience">Ambience</option>
         </select>
+
         <input type="file" name="image"
           class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition">
+
         <div class="flex justify-end">
           <button type="submit"
-            class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Update</button>
+            class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">
+            Update
+          </button>
         </div>
       </form>
     </div>
@@ -288,23 +297,31 @@
 
   <!-- Delete Photo -->
   <div id="modalDeletePhoto"
-    class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+    class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50 transition-opacity duration-300 ease-out"
     onclick="if(event.target === this) closeDeletePhoto()">
+
     <div
-      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
+      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative transform -translate-y-[60%] scale-95 opacity-0 transition-all duration-300 ease-out">
+
       <button type="button" onclick="closeDeletePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
         <i class="uil uil-times text-2xl"></i>
       </button>
+
       <h2 class="text-xl font-bold mb-4">Hapus Foto</h2>
       <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus foto ini?</p>
+
       <form id="formDeletePhoto" method="POST" data-action="{{ route('gallery.destroy', ':id') }}">
         @csrf
         @method('DELETE')
         <div class="flex justify-center gap-3">
           <button type="button" onclick="closeDeletePhoto()"
-            class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition">Batal</button>
+            class="bg-gray-400 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-500 transition">
+            Batal
+          </button>
           <button type="submit"
-            class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded hover:opacity-90 transition">Hapus</button>
+            class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">
+            Hapus
+          </button>
         </div>
       </form>
     </div>
@@ -675,6 +692,23 @@
   // ================================
   // GALLERY CRUD
   // ================================
+  function openTambahGallery() {
+    closeChooseModal();
+    const modal = document.getElementById('modalTambahPhoto');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.querySelector('div').classList.remove('opacity-0', 'scale-95');
+      modal.querySelector('div').classList.add('opacity-100', 'scale-100');
+    }, 10);
+  }
+  function closeTambahModal() {
+    const modal = document.getElementById('modalTambahPhoto');
+    const box = modal.querySelector('div');
+    box.classList.add('opacity-0', 'scale-95');
+    box.classList.remove('opacity-100', 'scale-100');
+    setTimeout(() => modal.classList.add('hidden'), 300);
+  }
+
   function openUpdatePhotoFromBtn(btn) {
     const id = btn.dataset.id;
     const title = btn.dataset.title || '';
@@ -710,6 +744,23 @@
   // ================================
   // MENU CRUD
   // ================================
+  function openTambahMenu() {
+    closeChooseModal();
+    const modal = document.getElementById('modalTambahMenu');
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modal.querySelector('div').classList.remove('opacity-0', 'scale-95');
+      modal.querySelector('div').classList.add('opacity-100', 'scale-100');
+    }, 10);
+  }
+  function closeTambahMenu() {
+    const modal = document.getElementById('modalTambahMenu');
+    const box = modal.querySelector('div');
+    box.classList.add('opacity-0', 'scale-95');
+    box.classList.remove('opacity-100', 'scale-100');
+    setTimeout(() => modal.classList.add('hidden'), 300);
+  }
+
   function openUpdateMenuFromBtn(btn) {
     const id = btn.dataset.id;
     const title = btn.dataset.title || '';
@@ -749,9 +800,9 @@
 
   function openTambahGallery() {
     closeChooseModal();
-    showModal('modalTambah');
+    showModal('modalTambahPhoto');
   }
-  function closeTambahModal() { hideModal('modalTambah'); }
+  function closeTambahModal() { hideModal('modalTambahPhoto'); }
 
   function openTambahMenu() {
     closeChooseModal();
