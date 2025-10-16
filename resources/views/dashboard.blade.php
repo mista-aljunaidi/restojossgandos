@@ -17,22 +17,24 @@
 
     <!-- Sidebar -->
     <aside id="sidebar"
-      class="bg-gray-900 text-white shadow-xl flex flex-col justify-between z-50 transition-all duration-300
-             fixed left-0 top-0 h-screen w-60 -translate-x-full md:translate-x-0 md:relative md:h-auto">
+      class="bg-gradient-to-b from-gray-900/95 to-gray-800/90 backdrop-blur-lg text-white shadow-[0_0_25px_rgba(255,255,255,0.05)]
+            flex flex-col justify-between z-50 transition-all duration-300
+            fixed left-0 top-0 h-screen w-60 -translate-x-full md:translate-x-0 md:relative md:h-auto border-r border-gray-700/50">
       <div>
         <!-- Logo -->
-        <div class="flex items-start gap-3 px-6 py-5 mt-16 md:mt-4 pb-2 border-b border-gray-700">
+        <div class="flex items-start gap-3 px-6 py-5 mt-16 md:mt-4 pb-2 border-b border-gray-700/50">
           <img src="{{ asset('img/logojossgandos.png') }}" alt="Logo"
-            class="w-10 h-10 object-contain flex-shrink-0">
+            class="w-10 h-10 object-contain flex-shrink-0 drop-shadow-[0_0_6px_rgba(255,255,255,0.2)]">
           <span class="text-lg font-semibold tracking-wide text-white leading-tight">
             Resto <br> Joss Gandos
           </span>
         </div>
 
         <!-- Dashboard -->
-        <nav class="mt-6 flex flex-col space-y-2 px-2">
+        <nav class="mt-6 flex flex-col space-y-2 px-3">
           <a href="{{ route('dashboard') }}"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gray-700 hover:bg-gray-600 text-white font-medium transition duration-300">
+            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-gray-700/60 to-gray-700/30 hover:from-gray-600/80 hover:to-gray-600/60
+                  text-white font-medium transition duration-300 backdrop-blur-sm border border-gray-600/30 hover:border-gray-400/50 shadow-md">
             <img src="{{ asset('img/dashboard.png') }}" alt="Dashboard" class="w-6 h-6 invert">
             <span>Dashboard</span>
           </a>
@@ -40,10 +42,11 @@
       </div>
 
       <!-- Logout -->
-      <form action="{{ route('logout') }}" method="POST" class="px-4 py-5 border-t border-gray-700">
+      <form action="{{ route('logout') }}" method="POST" class="px-4 py-5 border-t border-gray-700/50">
         @csrf
         <button type="submit"
-          class="flex items-center justify-center gap-3 w-full bg-gray-700 hover:bg-red-600 text-white py-3 rounded-xl shadow-md transition duration-300">
+          class="flex items-center justify-center gap-3 w-full bg-gradient-to-r from-gray-700/60 to-gray-700/30
+                hover:from-red-600 hover:to-red-700 text-white py-3 rounded-xl shadow-lg transition duration-300 border border-gray-600/40">
           <img src="{{ asset('img/exit.png') }}" alt="Logout" class="w-6 h-6 invert">
           <span class="font-medium">Logout</span>
         </button>
@@ -59,38 +62,31 @@
     <div class="flex-1 flex flex-col transition-all duration-300">
 
       <!-- Header -->
-      <header
-        class="flex items-center justify-between px-4 md:px-8 py-4 border-b bg-gray-100 shadow-sm sticky top-0 z-30">
+      <header class="flex items-center justify-between w-full bg-white/60 backdrop-blur-md rounded-2xl shadow-md px-6 py-4 mb-6 border border-gray-200/60 sticky top-0 z-40">
         <div class="flex items-center gap-3">
-          <!-- Tombol Hamburger -->
-          <button class="md:hidden p-2 rounded-lg hover:bg-gray-200 transition" onclick="toggleSidebar()">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-          <h1 class="text-2xl font-bold text-gray-700 hidden md:block">Dashboard</h1>
+          <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Dashboard</h1>
         </div>
 
-        <div class="flex items-center gap-3 w-full md:w-auto">
-          <!-- Search Bar -->
-          <div class="relative group flex-1 md:flex-none md:w-72">
-            <svg class="w-5 h-5 absolute left-3 top-2 text-gray-500 pointer-events-none group-hover:text-red-500 transition"
-              fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+        <div class="flex items-center gap-3">
+          <!-- Search bar -->
+          <div class="relative">
+            <svg class="w-5 h-5 absolute left-3 top-2.5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
               stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
             <input type="text" id="searchInput"
-              class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-400 focus:outline-none transition"
-              placeholder="Cari judul, kategori, deskripsi..."/>
+              placeholder="Cari menu, kategori, deskripsi..."
+              class="pl-10 pr-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white/80 w-72 transition-all duration-300">
           </div>
 
-          <!-- Tombol Tambah -->
-          <button onclick="openChooseModal()"
-            class="bg-gradient-to-r from-green-500 to-green-700 text-white px-4 md:px-6 py-2 md:py-3 rounded-xl shadow-lg hover:opacity-90 hover:scale-105 transition text-sm md:text-[15px] font-medium">
-            + Tambah Data
+          <!-- Button tambah data -->
+          <button onclick="openTambahModal()"
+            class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl shadow-lg transition-all duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>Tambah Data</span>
           </button>
         </div>
       </header>
@@ -113,6 +109,65 @@
           </ul>
         </div>
       @endif
+
+      <!-- Statistik -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 mt-4">
+        <!-- Foto Galeri -->
+        <div class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
+          <div class="bg-pink-500/10 text-pink-600 p-3 rounded-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 16l4-4 4 4m0 0l4-4 4 4M4 8h16" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-gray-700 font-semibold">Foto Galeri</h3>
+            <p class="text-2xl font-bold text-gray-900"></p>
+          </div>
+        </div>
+
+        <!-- Menu Tersedia -->
+        <div class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
+          <div class="bg-red-500/10 text-red-600 p-3 rounded-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2zm3 10h8m-8-4h8" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-gray-700 font-semibold">Menu Tersedia</h3>
+            <p class="text-2xl font-bold text-gray-900"></p>
+          </div>
+        </div>
+
+        <!-- Testimoni Pelanggan -->
+        <div class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
+          <div class="bg-green-500/10 text-green-600 p-3 rounded-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M7 8h10M7 12h6m-6 4h10M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-gray-700 font-semibold">Testimoni</h3>
+            <p class="text-2xl font-bold text-gray-900">12</p>
+          </div>
+        </div>
+
+        <!-- Event / Promo Aktif -->
+        <div class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
+          <div class="bg-yellow-500/10 text-yellow-600 p-3 rounded-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6-2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h7l2 2h7z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-gray-700 font-semibold">Event / Promo Aktif</h3>
+            <p class="text-2xl font-bold text-gray-900">3</p>
+          </div>
+        </div>
+      </section>
 
       <!-- Dashboard Menu -->
       <div id="dashboard-menu"
@@ -255,7 +310,7 @@
 
   <!-- Update Photo -->
   <div id="modalUpdatePhoto"
-    class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50 transition-opacity duration-300 ease-out"
+    class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 transition-opacity duration-300 ease-out"
     onclick="if(event.target === this) closeUpdatePhoto()">
 
     <div
@@ -297,7 +352,7 @@
 
   <!-- Delete Photo -->
   <div id="modalDeletePhoto"
-    class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50 transition-opacity duration-300 ease-out"
+    class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 transition-opacity duration-300 ease-out"
     onclick="if(event.target === this) closeDeletePhoto()">
 
     <div

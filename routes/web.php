@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountAuthController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\DashboardController;
 
 // FRONTEND (publik)
 Route::get('/gallery', [GalleryController::class, 'publicIndex'])->name('gallery.front');
@@ -11,7 +12,7 @@ Route::get('/menu', [MenuController::class, 'publicIndex'])->name('menu.front');
 
 // ADMIN (dashboard)
 Route::prefix('dashboard')->group(function () {
-    // Dashboard utama -> tampilkan semua (gallery + menu)
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/', function () {
         // cek apakah session login masih ada
         if (!session()->has('account_id')) {
