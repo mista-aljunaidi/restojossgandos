@@ -61,34 +61,46 @@
     <!-- Konten utama -->
     <div class="flex-1 flex flex-col transition-all duration-300">
 
-      <!-- Header -->
-      <header class="flex items-center justify-between w-full bg-white/60 backdrop-blur-md rounded-2xl shadow-md px-6 py-4 mb-6 border border-gray-200/60 sticky top-0 z-40">
-        <div class="flex items-center gap-3">
-          <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Dashboard</h1>
+      <!-- Header (Dashboard + Input Text  + Button Tambah Data) -->
+      <header class="flex items-center justify-between gap-3 w-full bg-white/60 backdrop-blur-md rounded-2xl shadow-md px-4 sm:px-6 py-3 sm:py-4 mb-6 border border-gray-200/60 sticky top-0 z-40">
+
+        <!-- Kiri: Tombol toggle + Judul -->
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <!-- Tombol Toggle Sidebar (mobile only) -->
+          <button onclick="toggleSidebar()" class="md:hidden flex items-center justify-center p-2 rounded-lg hover:bg-gray-200 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+
+          <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 tracking-tight whitespace-nowrap">
+            Dashboard
+          </h1>
         </div>
 
-        <div class="flex items-center gap-3">
-          <!-- Search bar -->
-          <div class="relative">
-            <svg class="w-5 h-5 absolute left-3 top-2.5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-              stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <input type="text" id="searchInput"
-              placeholder="Cari menu, kategori, deskripsi..."
-              class="pl-10 pr-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white/80 w-72 transition-all duration-300">
-          </div>
+        <!-- Tengah: Search bar -->
+        <div class="relative flex-1 max-w-md mx-2">
+          <svg class="w-5 h-5 absolute left-3 top-2.5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="searchInput"
+            placeholder="Cari menu, kategori, deskripsi..."
+            class="pl-10 pr-4 py-2 w-full rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white/80 transition-all duration-300">
+        </div>
 
-          <!-- Button tambah data -->
-          <button onclick="openTambahModal()"
-            class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl shadow-lg transition-all duration-300">
+        <!-- Kanan: Tombol tambah data -->
+        <div class="flex-shrink-0">
+          <button onclick="openChooseModal()"
+            class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 sm:px-5 py-2 rounded-xl shadow-lg transition-all duration-300 whitespace-nowrap">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
             <span>Tambah Data</span>
           </button>
         </div>
+
       </header>
 
       <!-- Flash Success -->
@@ -702,7 +714,7 @@
   });
 
   // ================================
-  // Global Modal System (dengan animasi elegan)
+  // Global Modal System
   // ================================
   function showModal(id) {
     const modal = document.getElementById(id);
