@@ -180,6 +180,67 @@
           </div>
         </div>
       </section>
+      
+      <!-- Filter & Sort Menu -->
+      <div id="filter-menu"
+        class="flex flex-col sm:flex-row items-center justify-between gap-2 mb-4 max-w-6xl mx-4 md:mx-auto px-2 md:px-0 mt-8">
+        <div class="flex items-center gap-3 flex-wrap">
+          <div class="flex items-center gap-2">
+            <label class="text-sm text-gray-600 font-medium">Filter by Tipe:</label>
+            <select id="menuFilterType"
+              class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-400 outline-none transition">
+              <option value="">Semua</option>
+              <option value="special">Special</option>
+              <option value="carousel">Carousel</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-gray-600 font-medium">Sort by:</label>
+          <select id="menuSortBy"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 outline-none transition">
+            <option value="latest">Terbaru</option>
+            <option value="oldest">Terlama</option>
+          </select>
+
+          <button id="menuResetFilter"
+            class="px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition">
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Filter & Sort Gallery -->
+      <div id="filter-gallery"
+        class="flex flex-col sm:flex-row items-center justify-between gap-2 mb-4 max-w-6xl mx-4 md:mx-auto px-2 md:px-0 mt-8">
+        <div class="flex items-center gap-3 flex-wrap">
+          <div class="flex items-center gap-2">
+            <label class="text-sm text-gray-600 font-medium">Filter by Kategori:</label>
+            <select id="galleryFilterCategory"
+              class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-400 outline-none transition">
+              <option value="">Semua</option>
+              <option value="food">Food</option>
+              <option value="customer">Customer</option>
+              <option value="event">Event</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label class="text-sm text-gray-600 font-medium">Sort by:</label>
+          <select id="gallerySortBy"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 outline-none transition">
+            <option value="latest">Terbaru</option>
+            <option value="oldest">Terlama</option>
+          </select>
+
+          <button id="galleryResetFilter"
+            class="px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition">
+            Reset
+          </button>
+        </div>
+      </div>
 
       <!-- Dashboard Menu -->
       <div id="dashboard-menu"
@@ -489,6 +550,157 @@
       sidebar.classList.toggle('-translate-x-full');
       overlay.classList.toggle('hidden');
     }
+  </script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // tombol & blok
+    const btnMenu = document.getElementById("btn-menu");
+    const btnGallery = document.getElementById("btn-gallery");
+    const dashboardMenu = document.getElementById("dashboard-menu");
+    const dashboardGallery = document.getElementById("dashboard-gallery");
+
+    // filter blocks (pastikan ID ini ada di HTML)
+    const filterMenuBlock = document.getElementById("filter-menu");
+    const filterGalleryBlock = document.getElementById("filter-gallery");
+
+    // selects & buttons (menu)
+    const filterTypeMenu = document.getElementById("menuFilterType");
+    const sortMenu = document.getElementById("menuSortBy");
+    const resetMenu = document.getElementById("menuResetFilter");
+
+    // selects & buttons (gallery)
+    const filterCategoryGallery = document.getElementById("galleryFilterCategory");
+    const sortGallery = document.getElementById("gallerySortBy");
+    const resetGallery = document.getElementById("galleryResetFilter");
+
+    // safety checks — jika elemen penting gak ada, hentikan lebih awal dengan pesan
+    if (!btnMenu || !btnGallery || !dashboardMenu || !dashboardGallery) {
+      console.warn("Element pagination/dashboard missing — periksa ID elemen.");
+      return;
+    }
+    if (!filterMenuBlock || !filterGalleryBlock) {
+      console.warn("Filter blocks missing — pastikan ada #filter-menu dan #filter-gallery.");
+      // continue anyway; script akan cek setiap elemen sebelum menggunakan
+    }
+
+    // Simpan baris asli (as node arrays) — ini kunci supaya Reset mengembalikan urutan awal
+    const menuTbody = dashboardMenu.querySelector("tbody");
+    const galleryTbody = dashboardGallery.querySelector("tbody");
+
+    // jika tbody tidak ada, stop
+    if (!menuTbody || !galleryTbody) {
+      console.warn("tbody untuk menu/gallery tidak ditemukan.");
+      return;
+    }
+
+    // clone nodes into arrays (preserve original order)
+    const originalMenuRows = Array.from(menuTbody.querySelectorAll("tr")).map(tr => tr.cloneNode(true));
+    const originalGalleryRows = Array.from(galleryTbody.querySelectorAll("tr")).map(tr => tr.cloneNode(true));
+
+    // helper show/hide that only toggles 'hidden' class (kehilangan flex jangan dilakukan)
+    const show = el => el && el.classList.remove("hidden");
+    const hide = el => el && el.classList.add("hidden");
+
+    // ---------- TOGGLE VIEWS ----------
+    function showMenuView() {
+      show(dashboardMenu);
+      hide(dashboardGallery);
+      if (filterMenuBlock) show(filterMenuBlock);
+      if (filterGalleryBlock) hide(filterGalleryBlock);
+      btnMenu.classList.add("active-page");
+      btnGallery.classList.remove("active-page");
+      resetMenuFiltersAndView();
+    }
+
+    function showGalleryView() {
+      show(dashboardGallery);
+      hide(dashboardMenu);
+      if (filterGalleryBlock) show(filterGalleryBlock);
+      if (filterMenuBlock) hide(filterMenuBlock);
+      btnGallery.classList.add("active-page");
+      btnMenu.classList.remove("active-page");
+      resetGalleryFiltersAndView();
+    }
+
+    btnMenu.addEventListener("click", showMenuView);
+    btnGallery.addEventListener("click", showGalleryView);
+
+    // default: show menu
+    showMenuView();
+
+    // ---------- MENU: Filter / Sort / Reset (work from originalMenuRows) ----------
+    function applyMenuFilterAndSort() {
+      // if selects missing, nothing to do
+      if (!filterTypeMenu || !sortMenu) return;
+
+      const typeValue = (filterTypeMenu.value || "").toLowerCase();
+      const sortValue = (sortMenu.value || "latest").toLowerCase();
+
+      // filter from original rows to preserve original order
+      let rows = originalMenuRows.filter(row => {
+        // find type cell text — using the span text inside 4th column
+        const typeSpan = row.querySelector("td:nth-child(4) span");
+        const type = typeSpan ? typeSpan.textContent.trim().toLowerCase() : "";
+        return typeValue === "" || type === typeValue;
+      });
+
+      // sort: latest = original order, oldest = reversed
+      if (sortValue === "oldest") rows = rows.slice().reverse();
+
+      // render
+      menuTbody.innerHTML = "";
+      rows.forEach(r => menuTbody.appendChild(r.cloneNode(true)));
+    }
+
+    function resetMenuFiltersAndView() {
+      if (filterTypeMenu) filterTypeMenu.value = "";
+      if (sortMenu) sortMenu.value = "latest";
+      // restore original rows
+      menuTbody.innerHTML = "";
+      originalMenuRows.forEach(r => menuTbody.appendChild(r.cloneNode(true)));
+    }
+
+    if (filterTypeMenu) filterTypeMenu.addEventListener("change", applyMenuFilterAndSort);
+    if (sortMenu) sortMenu.addEventListener("change", applyMenuFilterAndSort);
+    if (resetMenu) resetMenu.addEventListener("click", resetMenuFiltersAndView);
+
+    // ---------- GALLERY: Filter / Sort / Reset (work from originalGalleryRows) ----------
+    function applyGalleryFilterAndSort() {
+      if (!filterCategoryGallery || !sortGallery) return;
+
+      const catValue = (filterCategoryGallery.value || "").toLowerCase();
+      const sortValue = (sortGallery.value || "latest").toLowerCase();
+
+      let rows = originalGalleryRows.filter(row => {
+        // find category span inside 3rd td
+        const catSpan = row.querySelector("td:nth-child(3) span");
+        const cat = catSpan ? catSpan.textContent.trim().toLowerCase() : "";
+        return catValue === "" || cat === catValue;
+      });
+
+      if (sortValue === "oldest") rows = rows.slice().reverse();
+
+      // render
+      galleryTbody.innerHTML = "";
+      rows.forEach(r => galleryTbody.appendChild(r.cloneNode(true)));
+    }
+
+    function resetGalleryFiltersAndView() {
+      if (filterCategoryGallery) filterCategoryGallery.value = "";
+      if (sortGallery) sortGallery.value = "latest";
+      galleryTbody.innerHTML = "";
+      originalGalleryRows.forEach(r => galleryTbody.appendChild(r.cloneNode(true)));
+    }
+
+    if (filterCategoryGallery) filterCategoryGallery.addEventListener("change", applyGalleryFilterAndSort);
+    if (sortGallery) sortGallery.addEventListener("change", applyGalleryFilterAndSort);
+    if (resetGallery) resetGallery.addEventListener("click", resetGalleryFiltersAndView);
+
+    // ---------- Safety: if user toggles views manually, keep tables consistent ----------
+    // If there are any other toggles that change visibility, you can call showMenuView() / showGalleryView()
+
+  });
   </script>
 
   <!-- Script Toggle -->
