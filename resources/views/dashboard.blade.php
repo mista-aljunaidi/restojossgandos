@@ -38,6 +38,14 @@
             <img src="{{ asset('img/dashboard.png') }}" alt="Dashboard" class="w-6 h-6 invert">
             <span>Dashboard</span>
           </a>
+
+          <!-- Statistik -->
+          <a href="{{ route('statistik') }}"
+            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-gray-700/60 to-gray-700/30 hover:from-gray-600/80 hover:to-gray-600/60
+                  text-white font-medium transition duration-300 backdrop-blur-sm border border-gray-600/30 hover:border-gray-400/50 shadow-md">
+            <i class="uil uil-chart-line text-indigo-300 text-lg"></i>
+            <span>Statistik</span>
+          </a>
         </nav>
       </div>
 
@@ -331,212 +339,212 @@
         <button id="btn-menu" class="pagination-btn active-page">1</button>
         <button id="btn-gallery" class="pagination-btn">2</button>
       </div>
-    </div>
-  </div>
 
-  <!-- ================== MODAL ================== -->
-  <!-- Modal Pilih Tambah -->
-  <div id="modalChoose"
-    class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
-    onclick="if(event.target === this) closeChooseModal()">
-    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative transition-all duration-300">
-      <button type="button" onclick="closeChooseModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-      <h2 class="text-xl font-bold mb-4">Tambah Foto</h2>
-      <div class="flex flex-col gap-3">
-        <button onclick="openTambahGallery()"
-          class="bg-gradient-to-r from-purple-500 to-purple-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Gallery</button>
-        <button onclick="openTambahMenu()"
-          class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Menu</button>
+      <!-- ================== MODAL ================== -->
+      <!-- Modal Pilih Tambah -->
+      <div id="modalChoose"
+        class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
+        onclick="if(event.target === this) closeChooseModal()">
+        <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative transition-all duration-300">
+          <button type="button" onclick="closeChooseModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+            <i class="uil uil-times text-2xl"></i>
+          </button>
+          <h2 class="text-xl font-bold mb-4">Tambah Foto</h2>
+          <div class="flex flex-col gap-3">
+            <button onclick="openTambahGallery()"
+              class="bg-gradient-to-r from-purple-500 to-purple-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Gallery</button>
+            <button onclick="openTambahMenu()"
+              class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Menu</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Modal Tambah Gallery -->
-  <div id="modalTambahPhoto"
-    class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
-    onclick="if(event.target === this) closeTambahModal()">
-    <div
-      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
-      <button type="button" onclick="closeTambahModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-      <h2 class="text-xl font-bold mb-4">Tambah Foto Baru</h2>
-      <form action="{{ route('gallery.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <input type="text" name="title" placeholder="Judul Foto" class="border p-2 rounded mb-3 w-full" required>
-        <select name="category" class="border p-2 rounded mb-3 w-full" required>
-          <option value="food">Food</option>
-          <option value="customer">Customer</option>
-          <option value="event">Event</option>
-          <option value="ambience">Ambience</option>
-        </select>
-        <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
-        <div class="flex justify-end">
-          <button type="submit"
-            class="bg-gradient-to-r from-green-500 to-green-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Upload</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Update Photo -->
-  <div id="modalUpdatePhoto"
-    class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 transition-opacity duration-300 ease-out"
-    onclick="if(event.target === this) closeUpdatePhoto()">
-
-    <div
-      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative transform -translate-y-[60%] scale-95 opacity-0 transition-all duration-300 ease-out">
-      
-      <button type="button" onclick="closeUpdatePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-
-      <h2 class="text-xl font-bold mb-4">Update Foto</h2>
-      <form id="formUpdatePhoto" method="POST" enctype="multipart/form-data"
-        data-action="{{ route('gallery.update', ':id') }}">
-        @csrf
-        @method('PUT')
-
-        <input type="text" id="updatePhotoTitle" name="title" placeholder="Judul Foto"
-          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
-
-        <select id="updatePhotoCategory" name="category"
-          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
-          <option value="food">Food</option>
-          <option value="customer">Customer</option>
-          <option value="event">Event</option>
-          <option value="ambience">Ambience</option>
-        </select>
-
-        <input type="file" name="image"
-          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition">
-
-        <div class="flex justify-end">
-          <button type="submit"
-            class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">
-            Update
+      <!-- Modal Tambah Gallery -->
+      <div id="modalTambahPhoto"
+        class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+        onclick="if(event.target === this) closeTambahModal()">
+        <div
+          class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
+          <button type="button" onclick="closeTambahModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+            <i class="uil uil-times text-2xl"></i>
           </button>
+          <h2 class="text-xl font-bold mb-4">Tambah Foto Baru</h2>
+          <form action="{{ route('gallery.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="text" name="title" placeholder="Judul Foto" class="border p-2 rounded mb-3 w-full" required>
+            <select name="category" class="border p-2 rounded mb-3 w-full" required>
+              <option value="food">Food</option>
+              <option value="customer">Customer</option>
+              <option value="event">Event</option>
+              <option value="ambience">Ambience</option>
+            </select>
+            <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
+            <div class="flex justify-end">
+              <button type="submit"
+                class="bg-gradient-to-r from-green-500 to-green-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Upload</button>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
-  </div>
+      </div>
 
-  <!-- Delete Photo -->
-  <div id="modalDeletePhoto"
-    class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 transition-opacity duration-300 ease-out"
-    onclick="if(event.target === this) closeDeletePhoto()">
+      <!-- Update Photo -->
+      <div id="modalUpdatePhoto"
+        class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 transition-opacity duration-300 ease-out"
+        onclick="if(event.target === this) closeUpdatePhoto()">
 
-    <div
-      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative transform -translate-y-[60%] scale-95 opacity-0 transition-all duration-300 ease-out">
-
-      <button type="button" onclick="closeDeletePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-
-      <h2 class="text-xl font-bold mb-4">Hapus Foto</h2>
-      <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus foto ini?</p>
-
-      <form id="formDeletePhoto" method="POST" data-action="{{ route('gallery.destroy', ':id') }}">
-        @csrf
-        @method('DELETE')
-        <div class="flex justify-center gap-3">
-          <button type="button" onclick="closeDeletePhoto()"
-            class="bg-gray-400 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-500 transition">
-            Batal
+        <div
+          class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative transform -translate-y-[60%] scale-95 opacity-0 transition-all duration-300 ease-out">
+          
+          <button type="button" onclick="closeUpdatePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+            <i class="uil uil-times text-2xl"></i>
           </button>
-          <button type="submit"
-            class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">
-            Hapus
+
+          <h2 class="text-xl font-bold mb-4">Update Foto</h2>
+          <form id="formUpdatePhoto" method="POST" enctype="multipart/form-data"
+            data-action="{{ route('gallery.update', ':id') }}">
+            @csrf
+            @method('PUT')
+
+            <input type="text" id="updatePhotoTitle" name="title" placeholder="Judul Foto"
+              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
+
+            <select id="updatePhotoCategory" name="category"
+              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
+              <option value="food">Food</option>
+              <option value="customer">Customer</option>
+              <option value="event">Event</option>
+              <option value="ambience">Ambience</option>
+            </select>
+
+            <input type="file" name="image"
+              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition">
+
+            <div class="flex justify-end">
+              <button type="submit"
+                class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">
+                Update
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Delete Photo -->
+      <div id="modalDeletePhoto"
+        class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 transition-opacity duration-300 ease-out"
+        onclick="if(event.target === this) closeDeletePhoto()">
+
+        <div
+          class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative transform -translate-y-[60%] scale-95 opacity-0 transition-all duration-300 ease-out">
+
+          <button type="button" onclick="closeDeletePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+            <i class="uil uil-times text-2xl"></i>
           </button>
-        </div>
-      </form>
-    </div>
-  </div>
 
-  <!-- Modal Tambah Menu -->
-  <div id="modalTambahMenu"
-    class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
-    onclick="if(event.target === this) closeTambahMenu()">
-    <div
-      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
-      <button type="button" onclick="closeTambahMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-      <h2 class="text-xl font-bold mb-4">Tambah Menu Baru</h2>
-      <form action="{{ route('menu.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <input type="text" name="title" placeholder="Nama Menu" class="border p-2 rounded mb-3 w-full" required>
-        <textarea name="description" placeholder="Deskripsi Menu"
-          class="border p-2 rounded mb-3 w-full" required></textarea>
-        <select name="type" class="border p-2 rounded mb-3 w-full" required>
-          <option value="carousel">Carousel</option>
-          <option value="special">Menu Spesial</option>
-        </select>
-        <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
-        <div class="flex justify-end">
-          <button type="submit"
-            class="bg-gradient-to-r from-green-500 to-green-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Upload</button>
-        </div>
-      </form>
-    </div>
-  </div>
+          <h2 class="text-xl font-bold mb-4">Hapus Foto</h2>
+          <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus foto ini?</p>
 
-  <!-- Modal Update Menu -->
-  <div id="modalUpdateMenu"
-    class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
-    onclick="if(event.target === this) closeUpdateMenu()">
-    <div
-      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
-      <button type="button" onclick="closeUpdateMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-      <h2 class="text-xl font-bold mb-4">Update Menu</h2>
-      <form id="formUpdateMenu" method="POST" enctype="multipart/form-data"
-        data-action="{{ route('menu.update', ':id') }}">
-        @csrf
-        @method('PUT')
-        <input type="text" id="updateTitle" name="title" placeholder="Nama Menu"
-          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
-        <textarea id="updateDescription" name="description" placeholder="Deskripsi Menu"
-          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required></textarea>
-        <select id="updateType" name="type"
-          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
-          <option value="carousel">Carousel</option>
-          <option value="special">Menu Spesial</option>
-        </select>
-        <input type="file" name="image"
-          class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition">
-        <div class="flex justify-end">
-          <button type="submit"
-            class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Update</button>
+          <form id="formDeletePhoto" method="POST" data-action="{{ route('gallery.destroy', ':id') }}">
+            @csrf
+            @method('DELETE')
+            <div class="flex justify-center gap-3">
+              <button type="button" onclick="closeDeletePhoto()"
+                class="bg-gray-400 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-500 transition">
+                Batal
+              </button>
+              <button type="submit"
+                class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">
+                Hapus
+              </button>
+            </div>
+          </form>
         </div>
-      </form>
-    </div>
-  </div>
+      </div>
 
-  <!-- Modal Delete Menu -->
-  <div id="modalDeleteMenu"
-    class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
-    onclick="if(event.target === this) closeDeleteMenu()">
-    <div
-      class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
-      <button type="button" onclick="closeDeleteMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-        <i class="uil uil-times text-2xl"></i>
-      </button>
-      <h2 class="text-xl font-bold mb-4">Hapus Menu</h2>
-      <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus menu ini?</p>
-      <form id="formDeleteMenu" method="POST" data-action="{{ route('menu.destroy', ':id') }}">
-        @csrf
-        @method('DELETE')
-        <div class="flex justify-center gap-3">
-          <button type="button" onclick="closeDeleteMenu()"
-            class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition">Batal</button>
-          <button type="submit"
-            class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded hover:opacity-90 transition">Hapus</button>
+      <!-- Modal Tambah Menu -->
+      <div id="modalTambahMenu"
+        class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+        onclick="if(event.target === this) closeTambahMenu()">
+        <div
+          class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
+          <button type="button" onclick="closeTambahMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+            <i class="uil uil-times text-2xl"></i>
+          </button>
+          <h2 class="text-xl font-bold mb-4">Tambah Menu Baru</h2>
+          <form action="{{ route('menu.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="text" name="title" placeholder="Nama Menu" class="border p-2 rounded mb-3 w-full" required>
+            <textarea name="description" placeholder="Deskripsi Menu"
+              class="border p-2 rounded mb-3 w-full" required></textarea>
+            <select name="type" class="border p-2 rounded mb-3 w-full" required>
+              <option value="carousel">Carousel</option>
+              <option value="special">Menu Spesial</option>
+            </select>
+            <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
+            <div class="flex justify-end">
+              <button type="submit"
+                class="bg-gradient-to-r from-green-500 to-green-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Upload</button>
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
+
+      <!-- Modal Update Menu -->
+      <div id="modalUpdateMenu"
+        class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+        onclick="if(event.target === this) closeUpdateMenu()">
+        <div
+          class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
+          <button type="button" onclick="closeUpdateMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+            <i class="uil uil-times text-2xl"></i>
+          </button>
+          <h2 class="text-xl font-bold mb-4">Update Menu</h2>
+          <form id="formUpdateMenu" method="POST" enctype="multipart/form-data"
+            data-action="{{ route('menu.update', ':id') }}">
+            @csrf
+            @method('PUT')
+            <input type="text" id="updateTitle" name="title" placeholder="Nama Menu"
+              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
+            <textarea id="updateDescription" name="description" placeholder="Deskripsi Menu"
+              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required></textarea>
+            <select id="updateType" name="type"
+              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
+              <option value="carousel">Carousel</option>
+              <option value="special">Menu Spesial</option>
+            </select>
+            <input type="file" name="image"
+              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition">
+            <div class="flex justify-end">
+              <button type="submit"
+                class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Update</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Modal Delete Menu -->
+      <div id="modalDeleteMenu"
+        class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
+        onclick="if(event.target === this) closeDeleteMenu()">
+        <div
+          class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
+          <button type="button" onclick="closeDeleteMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+            <i class="uil uil-times text-2xl"></i>
+          </button>
+          <h2 class="text-xl font-bold mb-4">Hapus Menu</h2>
+          <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus menu ini?</p>
+          <form id="formDeleteMenu" method="POST" data-action="{{ route('menu.destroy', ':id') }}">
+            @csrf
+            @method('DELETE')
+            <div class="flex justify-center gap-3">
+              <button type="button" onclick="closeDeleteMenu()"
+                class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition">Batal</button>
+              <button type="submit"
+                class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded hover:opacity-90 transition">Hapus</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 

@@ -11,6 +11,9 @@ Route::get('/gallery', [GalleryController::class, 'publicIndex'])->name('gallery
 Route::get('/menu', [MenuController::class, 'publicIndex'])->name('menu.front');
 
 // ADMIN (dashboard)
+Route::get('/statistik', function () {
+    return view('statistik');
+})->name('statistik');
 Route::prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/', function () {
