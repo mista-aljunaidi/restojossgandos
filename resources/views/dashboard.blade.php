@@ -131,11 +131,13 @@
       @endif
 
       <!-- Statistik -->
-      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 mt-4">
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 mt-4 px-4 md:px-8">
         <!-- Foto Galeri -->
-        <div class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
+        <div
+          class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
           <div class="bg-pink-500/10 text-pink-600 p-3 rounded-xl">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M4 16l4-4 4 4m0 0l4-4 4 4M4 8h16" />
             </svg>
@@ -147,9 +149,11 @@
         </div>
 
         <!-- Menu Tersedia -->
-        <div class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
+        <div
+          class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
           <div class="bg-red-500/10 text-red-600 p-3 rounded-xl">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2zm3 10h8m-8-4h8" />
             </svg>
@@ -161,9 +165,11 @@
         </div>
 
         <!-- Testimoni Pelanggan -->
-        <div class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
+        <div
+          class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
           <div class="bg-green-500/10 text-green-600 p-3 rounded-xl">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M7 8h10M7 12h6m-6 4h10M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
@@ -175,9 +181,11 @@
         </div>
 
         <!-- Event / Promo Aktif -->
-        <div class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
+        <div
+          class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
           <div class="bg-yellow-500/10 text-yellow-600 p-3 rounded-xl">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9 12l2 2 4-4m6-2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h7l2 2h7z" />
             </svg>
