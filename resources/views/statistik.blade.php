@@ -28,7 +28,7 @@
           </span>
         </div>
 
-        <!-- Dashboard -->
+        <!-- Navigasi -->
         <nav class="mt-6 flex flex-col space-y-2 px-3">
           <a href="{{ route('dashboard') }}"
             class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-gray-700/60 to-gray-700/30 hover:from-gray-600/80 hover:to-gray-600/60
@@ -37,17 +37,16 @@
             <span>Dashboard</span>
           </a>
 
-          <!-- Statistik -->
           <a href="{{ route('statistik') }}"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-gray-700/60 to-gray-700/30 hover:from-gray-600/80 hover:to-gray-600/60
-                  text-white font-medium transition duration-300 backdrop-blur-sm border border-gray-600/30 hover:border-gray-400/50 shadow-md">
-            <i class="uil uil-chart-line text-indigo-300 text-lg"></i>
+            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-indigo-700/70 to-indigo-600/40 hover:from-indigo-600/80 hover:to-indigo-500/70
+                  text-white font-medium transition duration-300 backdrop-blur-sm border border-indigo-400/40 shadow-lg">
+            <i class="uil uil-chart-line text-indigo-200 text-lg"></i>
             <span>Statistik</span>
           </a>
         </nav>
       </div>
 
-      <!-- Logout -->
+      <!-- Tombol Logout -->
       <form action="{{ route('logout') }}" method="POST" class="px-4 py-5 border-t border-gray-700/50">
         @csrf
         <button type="submit"
@@ -59,20 +58,39 @@
       </form>
     </aside>
 
-    <!-- Overlay mobile -->
+    <!-- Overlay (mobile) -->
     <div id="overlay"
       class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-40 md:hidden transition-opacity duration-300"
       onclick="toggleSidebar()"></div>
 
     <!-- Konten Utama -->
-    <main class="flex-1 md:ml-[60px] ml-0 pl-6 pr-4 py-8 transition-all duration-300 bg-gray-50 min-h-screen">
-      <div class="max-w-6xl">
-        <h1 class="text-3xl font-bold mb-8 flex items-center gap-2 text-gray-900">
-          <i class="uil uil-chart-line text-indigo-600 text-3xl"></i>
-          Statistik Website
-        </h1>
+    <main class="flex-1 md:ml-[40px] ml-0 pl-6 pr-4 py-6 transition-all duration-300 bg-gray-50 min-h-screen">
 
-        <!-- Statistik Ringkas -->
+      <!-- Header -->
+      <div class="max-w-6xl">
+        <header
+          class="flex items-center justify-between gap-3 bg-white/70 backdrop-blur-md rounded-2xl shadow-md px-4 sm:px-6 py-4 mb-8 border border-gray-200/60 sticky top-0 z-30">
+
+          <!-- Kiri: Tombol Sidebar (Mobile) + Judul -->
+          <div class="flex items-center gap-3">
+            <button onclick="toggleSidebar()"
+              class="md:hidden flex items-center justify-center p-2 rounded-lg hover:bg-gray-200 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">
+              Statistik
+            </h1>
+          </div>
+
+        </header>
+      </div>
+
+      <!-- Statistik Ringkas -->
+      <div class="max-w-6xl">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
           <div class="bg-white shadow-md rounded-2xl p-5 flex items-center justify-between hover:shadow-lg transition">
             <div>
@@ -105,10 +123,11 @@
           </div>
         </div>
 
-        <!-- Diagram Statistik -->
+        <!-- Grafik Pengunjung -->
         <div class="bg-white shadow-md rounded-2xl p-6">
           <h2 class="text-lg font-semibold mb-4 flex items-center gap-2 text-gray-900">
-            <i class="uil uil-chart-growth text-indigo-600"></i> Grafik Pengunjung Bulanan
+            <i class="uil uil-chart-growth text-indigo-600"></i>
+            Grafik Pengunjung Bulanan
           </h2>
           <canvas id="visitorsChart" height="100"></canvas>
         </div>

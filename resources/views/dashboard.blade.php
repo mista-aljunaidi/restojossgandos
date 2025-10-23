@@ -33,8 +33,8 @@
         <!-- Dashboard -->
         <nav class="mt-6 flex flex-col space-y-2 px-3">
           <a href="{{ route('dashboard') }}"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-gray-700/60 to-gray-700/30 hover:from-gray-600/80 hover:to-gray-600/60
-                  text-white font-medium transition duration-300 backdrop-blur-sm border border-gray-600/30 hover:border-gray-400/50 shadow-md">
+            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-indigo-700/70 to-indigo-600/40 hover:from-indigo-600/80 hover:to-indigo-500/70
+                  text-white font-medium transition duration-300 backdrop-blur-sm border border-indigo-400/40 shadow-lg">
             <img src="{{ asset('img/dashboard.png') }}" alt="Dashboard" class="w-6 h-6 invert">
             <span>Dashboard</span>
           </a>
@@ -80,7 +80,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
-
+          
           <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 tracking-tight whitespace-nowrap">
             Dashboard
           </h1>
