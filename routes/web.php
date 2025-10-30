@@ -10,14 +10,12 @@ use App\Http\Controllers\DashboardController;
 Route::get('/gallery', [GalleryController::class, 'publicIndex'])->name('gallery.front');
 Route::get('/menu', [MenuController::class, 'publicIndex'])->name('menu.front');
 
-// ADMIN (dashboard)
-Route::get('/statistik', function () {
-    return view('statistik');
-})->name('statistik');
+// ADMIN
+// Route Dashboard (juga dilindungi session login)
 Route::prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    
     Route::get('/', function () {
-        // cek apakah session login masih ada
         if (!session()->has('account_id')) {
             return redirect()->route('login.form')
                              ->with('error', 'Session anda telah habis, silakan login ulang.');
@@ -26,13 +24,27 @@ Route::prefix('dashboard')->group(function () {
         $photos = \App\Models\Gallery::latest()->get();
         $menus  = \App\Models\Menu::latest()->get();
 
-        // tambahkan no-cache agar browser tidak simpan halaman lama
         return response()
             ->view('dashboard', compact('photos', 'menus'))
             ->header('Cache-Control','no-cache, no-store, must-revalidate')
             ->header('Pragma','no-cache')
             ->header('Expires','0');
     })->name('dashboard');
+    
+// Route Statistik
+Route::get('/statistik', function () {
+    // Cek session login
+    if (!session()->has('account_id')) {
+        return redirect()->route('login.form')
+                         ->with('error', 'Session anda telah habis, silakan login ulang.');
+    }
+
+    return response()
+        ->view('statistik')
+        ->header('Cache-Control', 'no-cache, no-store, must-revalidate')
+        ->header('Pragma', 'no-cache')
+        ->header('Expires', '0');
+})->name('statistik');
 
     // GALLERY CRUD
     Route::post('/gallery', [GalleryController::class, 'store'])->name('gallery.store');
@@ -52,7 +64,7 @@ Route::post('/login', [AccountAuthController::class, 'login'])->name('login');
 // Logout
 Route::post('/logout', [AccountAuthController::class, 'logout'])->name('logout');
 
-// HOME
+// Page
 Route::view('/', 'home');
 Route::view('/about', 'about');
 Route::view('/location', 'location');

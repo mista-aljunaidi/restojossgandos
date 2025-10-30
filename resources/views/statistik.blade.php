@@ -69,7 +69,7 @@
       <!-- Header -->
       <div class="max-w-6xl">
         <header
-          class="flex items-center justify-between gap-3 bg-white/70 backdrop-blur-md rounded-2xl shadow-md px-4 sm:px-6 py-4 mb-8 border border-gray-200/60 sticky top-0 z-30">
+          class="flex items-center justify-between gap-3 bg-white/70 backdrop-blur-md rounded-2xl shadow-md px-4 sm:px-6 py-4 mb-8 border border-gray-200/60 sticky top-0 z-30 fade-in-up">
 
           <!-- Kiri: Tombol Sidebar (Mobile) + Judul -->
           <div class="flex items-center gap-3">
@@ -90,7 +90,7 @@
       </div>
 
       <!-- Statistik Ringkas -->
-      <div class="max-w-6xl">
+      <div class="max-w-6xl fade-in-up">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
           <div class="bg-white shadow-md rounded-2xl p-5 flex items-center justify-between hover:shadow-lg transition">
             <div>
@@ -135,6 +135,31 @@
     </main>
 
   </body>
+
+    <style>
+      .fade-in-up {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
+
+      .fade-in-up.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const fadeElements = document.querySelectorAll(".fade-in-up");
+
+        fadeElements.forEach((el, i) => {
+          setTimeout(() => {
+            el.classList.add("show");
+          }, i * 200); // delay 200ms antar elemen
+        });
+      });
+    </script>
 
     <!-- Script Toggle Sidebar -->
     <script>

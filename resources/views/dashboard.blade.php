@@ -70,7 +70,7 @@
     <div class="flex-1 flex flex-col transition-all duration-300">
 
       <!-- Header (Dashboard + Input Text  + Button Tambah Data) -->
-      <header class="flex items-center justify-between gap-3 w-full bg-white/60 backdrop-blur-md rounded-2xl shadow-md px-4 sm:px-6 py-3 sm:py-4 mb-6 border border-gray-200/60 sticky top-0 z-40">
+      <header class="flex items-center justify-between gap-3 w-full bg-white/60 backdrop-blur-md rounded-2xl shadow-md px-4 sm:px-6 py-3 sm:py-4 mb-6 border border-gray-200/60 sticky top-0 z-40  fade-in-up">
 
         <!-- Kiri: Tombol toggle + Judul -->
         <div class="flex items-center gap-3 flex-shrink-0">
@@ -131,7 +131,7 @@
       @endif
 
       <!-- Statistik -->
-      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 mt-4 px-4 md:px-8">
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 mt-4 px-4 md:px-8 fade-in-up">
         <!-- Foto Galeri -->
         <div
           class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
@@ -144,7 +144,7 @@
           </div>
           <div>
             <h3 class="text-gray-700 font-semibold">Foto Galeri</h3>
-            <p class="text-2xl font-bold text-gray-900"></p>
+            <p class="text-2xl font-bold text-gray-900">{{ $galleryCount ?? 0 }}</p>
           </div>
         </div>
 
@@ -160,7 +160,7 @@
           </div>
           <div>
             <h3 class="text-gray-700 font-semibold">Menu Tersedia</h3>
-            <p class="text-2xl font-bold text-gray-900"></p>
+            <p class="text-2xl font-bold text-gray-900">{{ $menuCount ?? 0 }}</p>
           </div>
         </div>
 
@@ -176,7 +176,7 @@
           </div>
           <div>
             <h3 class="text-gray-700 font-semibold">Testimoni</h3>
-            <p class="text-2xl font-bold text-gray-900">12</p>
+            <p class="text-2xl font-bold text-gray-900">{{ $testimonialCount ?? 12 }}</p>
           </div>
         </div>
 
@@ -192,14 +192,14 @@
           </div>
           <div>
             <h3 class="text-gray-700 font-semibold">Event / Promo Aktif</h3>
-            <p class="text-2xl font-bold text-gray-900">3</p>
+            <p class="text-2xl font-bold text-gray-900">{{ $eventCount ?? 3 }}</p>
           </div>
         </div>
       </section>
       
       <!-- Filter & Sort Menu -->
       <div id="filter-menu"
-        class="flex flex-col sm:flex-row items-center justify-between gap-2 mb-4 max-w-6xl mx-4 md:mx-auto px-2 md:px-0 mt-8">
+        class="flex flex-col sm:flex-row items-center justify-between gap-2 mb-4 max-w-6xl mx-4 md:mx-auto px-2 md:px-0 mt-8  fade-in-up">
         <div class="flex items-center gap-3 flex-wrap">
           <div class="flex items-center gap-2">
             <label class="text-sm text-gray-600 font-medium">Filter by Tipe:</label>
@@ -229,7 +229,7 @@
 
       <!-- Filter & Sort Gallery -->
       <div id="filter-gallery"
-        class="flex flex-col sm:flex-row items-center justify-between gap-2 mb-4 max-w-6xl mx-4 md:mx-auto px-2 md:px-0 mt-8">
+        class="flex flex-col sm:flex-row items-center justify-between gap-2 mb-4 max-w-6xl mx-4 md:mx-auto px-2 md:px-0 mt-8 fade-in-up">
         <div class="flex items-center gap-3 flex-wrap">
           <div class="flex items-center gap-2">
             <label class="text-sm text-gray-600 font-medium">Filter by Kategori:</label>
@@ -260,7 +260,7 @@
 
       <!-- Dashboard Menu -->
       <div id="dashboard-menu"
-        class="bg-gray-100 shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-300 max-w-6xl mx-4 md:mx-auto p-2 md:p-4">
+        class="bg-gray-100 shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-300 max-w-6xl mx-4 md:mx-auto p-2 md:p-4 fade-in-up">
         <div class="overflow-x-auto">
           <table class="min-w-full text-sm text-gray-700">
             <thead class="bg-gray-300 border-b border-gray-200">
@@ -301,7 +301,7 @@
 
       <!-- Dashboard Gallery -->
       <div id="dashboard-gallery"
-        class="bg-gray-100 shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-300 max-w-6xl mx-4 md:mx-auto p-2 md:p-4 hidden">
+        class="bg-gray-100 shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-300 max-w-6xl mx-4 md:mx-auto p-2 md:p-4 hidden fade-in-up">
         <div class="overflow-x-auto">
           <table class="w-full table-fixed text-sm text-gray-700">
             <thead class="bg-gray-300 border-b border-gray-200">
@@ -343,7 +343,7 @@
       </div>
 
       <!-- Pagination -->
-      <div class="flex justify-center items-center space-x-2 mt-6 mb-10">
+      <div class="flex justify-center items-center space-x-2 mt-6 mb-10 fade-in-up">
         <button id="btn-menu" class="pagination-btn active-page">1</button>
         <button id="btn-gallery" class="pagination-btn">2</button>
       </div>
@@ -557,6 +557,31 @@
   </div>
 
 </body>
+
+  <style>
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .fade-in-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const fadeElements = document.querySelectorAll(".fade-in-up");
+
+      fadeElements.forEach((el, i) => {
+        setTimeout(() => {
+          el.classList.add("show");
+        }, i * 200); // delay 200ms antar elemen
+      });
+    });
+  </script>
 
   <!-- Script Toggle Sidebar -->
   <script>
