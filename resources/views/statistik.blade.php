@@ -92,48 +92,50 @@
       <!-- Statistik Ringkas -->
       <div class="max-w-6xl fade-in-up">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
-          <div class="bg-white shadow-md rounded-2xl p-5 flex items-center justify-between hover:shadow-lg transition">
-            <div>
-              <h2 class="text-gray-600 text-sm font-medium">Total Pengunjung</h2>
-              <p class="text-2xl font-semibold text-gray-900 mt-1">12.458</p>
+            <div class="bg-white shadow-md rounded-2xl p-5 flex items-center justify-between hover:shadow-lg transition">
+                <div>
+                    <h2 class="text-gray-600 text-sm font-medium">Total Pengunjung</h2>
+                    <p class="text-2xl font-semibold text-gray-900 mt-1">{{ $totalVisitors ?? '0' }}</p>
+                </div>
+                <div class="bg-green-100 p-3 rounded-xl">
+                    <i class="uil uil-users-alt text-green-600 text-xl"></i>
+                </div>
             </div>
-            <div class="bg-green-100 p-3 rounded-xl">
-              <i class="uil uil-users-alt text-green-600 text-xl"></i>
-            </div>
-          </div>
 
-          <div class="bg-white shadow-md rounded-2xl p-5 flex items-center justify-between hover:shadow-lg transition">
-            <div>
-              <h2 class="text-gray-600 text-sm font-medium">Durasi Rata-rata</h2>
-              <p class="text-2xl font-semibold text-gray-900 mt-1">3m 42s</p>
+            <div class="bg-white shadow-md rounded-2xl p-5 flex items-center justify-between hover:shadow-lg transition">
+                <div>
+                    <h2 class="text-gray-600 text-sm font-medium">Durasi Rata-rata</h2>
+                    <p class="text-2xl font-semibold text-gray-900 mt-1">{{ $avgDuration ?? '0m 0s' }}</p>
+                </div>
+                <div class="bg-blue-100 p-3 rounded-xl">
+                    <i class="uil uil-clock text-blue-600 text-xl"></i>
+                </div>
             </div>
-            <div class="bg-blue-100 p-3 rounded-xl">
-              <i class="uil uil-clock text-blue-600 text-xl"></i>
-            </div>
-          </div>
 
-          <div class="bg-white shadow-md rounded-2xl p-5 flex items-center justify-between hover:shadow-lg transition">
-            <div>
-              <h2 class="text-gray-600 text-sm font-medium">Tingkat Kunjungan Ulang</h2>
-              <p class="text-2xl font-semibold text-gray-900 mt-1">27%</p>
+            <div class="bg-white shadow-md rounded-2xl p-5 flex items-center justify-between hover:shadow-lg transition">
+                <div>
+                    <h2 class="text-gray-600 text-sm font-medium">Tingkat Kunjungan Ulang</h2>
+                    <p class="text-2xl font-bold text-gray-900 mt-1">{{ $repeatRate ?? '0' }}%</p>
+                </div>
+                <div class="bg-purple-100 p-3 rounded-xl">
+                    <i class="uil uil-sync text-purple-600 text-xl"></i>
+                </div>
             </div>
-            <div class="bg-purple-100 p-3 rounded-xl">
-              <i class="uil uil-sync text-purple-600 text-xl"></i>
-            </div>
-          </div>
         </div>
 
         <!-- Grafik Pengunjung -->
         <div class="bg-white shadow-md rounded-2xl p-6">
-          <h2 class="text-lg font-semibold mb-4 flex items-center gap-2 text-gray-900">
-            <i class="uil uil-chart-growth text-indigo-600"></i>
-            Grafik Pengunjung Bulanan
-          </h2>
-          <canvas id="visitorsChart" height="100"></canvas>
+            <h2 class="text-lg font-semibold mb-4 flex items-center gap-2 text-gray-900">
+                <i class="uil uil-chart-growth text-indigo-600"></i>
+                Grafik Pengunjung Bulanan
+            </h2>
+            <div class="relative h-96 w-full">
+                <canvas id="visitorsChart"></canvas>
+            </div>
         </div>
+
       </div>
     </main>
-
   </body>
 
     <style>
@@ -172,32 +174,61 @@
     </script>
 
     <!-- Script Chart.js -->
+
+    @if(isset($monthlyLabels) && isset($monthlyData))
     <script>
-      const ctx1 = document.getElementById('visitorsChart').getContext('2d');
-      new Chart(ctx1, {
-        type: 'line',
-        data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt'],
-          datasets: [{
-            label: 'Jumlah Pengunjung',
-            data: [1200, 1500, 1800, 2100, 1900, 2500, 2700, 3000, 2900, 3200],
-            borderColor: '#6366F1',
-            backgroundColor: 'rgba(99,102,241,0.2)',
-            borderWidth: 2,
-            tension: 0.3,
-            fill: true,
-            pointRadius: 4,
-            pointBackgroundColor: '#4F46E5'
-          }]
-        },
-        options: {
-          responsive: true,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { display: false } },
-            y: { beginAtZero: true }
-          }
-        }
-      });
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            const monthlyLabels = @json($monthlyLabels);
+            const monthlyData = @json($monthlyData);
+            
+            const canvasElement = document.getElementById('visitorsChart');
+
+            if (canvasElement) {
+                const ctx1 = canvasElement.getContext('2d');
+                
+                new Chart(ctx1, {
+                    type: 'line',
+                    data: {
+                        labels: monthlyLabels, 
+                        datasets: [{
+                            label: 'Jumlah Pengunjung',
+                            data: monthlyData, 
+                            borderColor: '#6366F1',
+                            backgroundColor: 'rgba(99,102,241,0.2)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            fill: true,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#4F46E5'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        // 'maintainAspectRatio: false' WAJIB ada agar 
+                        // chart mengisi div pembungkus (h-96)
+                        maintainAspectRatio: false, 
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { 
+                                grid: { display: false } 
+                            },
+                            y: { 
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 50 
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
     </script>
+    @else
+    <script>
+        console.error("Data statistik (monthlyLabels/monthlyData) tidak terdefinisi. Controller mungkin mengalami error.");
+    </script>
+    @endif
+    
 </html>
