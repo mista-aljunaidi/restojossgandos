@@ -20,7 +20,7 @@
 
           <!-- Gambar -->
           <img id="sliderImage" 
-              src="img/download.jpeg" 
+              src="img/location/SampleFotoLok.jpg" 
               alt="Outlet Location" 
               class="w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-100">
 
@@ -33,9 +33,9 @@
 
         <script>
           const images = [
-            "img/download.jpeg",
-            "img/download.jpeg",
-            "img/download.jpeg"
+            "img/location/SampleFotoLok.jpg",
+            "img/location/SampleFotoLok.jpg",
+            "img/location/SampleFotoLok.jpg"
           ];
 
           let index = 0;
