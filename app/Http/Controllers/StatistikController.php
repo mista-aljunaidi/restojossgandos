@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Visit; // Model yang baru Anda buat
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB; // <-- PENTING: Tambahkan ini
 
 class StatistikController extends Controller
 {
@@ -18,13 +19,24 @@ class StatistikController extends Controller
 
         // --- 2. Perhitungan Statistik Riil ---
         
-        // Total Pengunjung: Hitung sesi unik selama 1 tahun terakhir
-        $totalVisitors = Visit::where('created_at', '>=', Carbon::now()->subYear())->distinct('session_id')->count();
+        // Total Pengunjung: Hitung sesi unik (Bukan 1 tahun terakhir, tapi semua)
+        $totalVisitors = Visit::distinct('session_id')->count();
 
-        // Durasi Rata-rata & Kunjungan Ulang: Karena ini kompleks, gunakan nilai sementara
-        $avgDurationSeconds = 222;
-        $avgDuration = floor($avgDurationSeconds / 60) . 'm ' . ($avgDurationSeconds % 60) . 's';
-        $repeatRate = 27;
+        // Tingkat Kunjungan Ulang: Hitung sesi yang memiliki > 1 hari kunjungan
+        $returningVisitors = DB::table('visits')
+                            ->select('session_id')
+                            ->groupBy('session_id')
+                            // Hitung jumlah hari unik per sesi
+                            ->having(DB::raw('COUNT(DISTINCT DATE(created_at))'), '>', 1) 
+                            ->get() // Ambil koleksi hasil
+                            ->count(); // Hitung jumlah baris dari koleksi
+        
+        // Kalkulasi persentase
+        $repeatRate = ($totalVisitors > 0) ? round(($returningVisitors / $totalVisitors) * 100) : 0;
+
+        // Durasi Rata-rata: (Placeholder)
+        // Data 'visits' kita saat ini tidak bisa menghitung ini.
+        $avgDuration = 'N/A'; // Kita set N/A agar jelas ini belum bisa dihitung
 
         // Data Grafik Bulanan
         $monthlyLabels = [];
@@ -45,8 +57,8 @@ class StatistikController extends Controller
         // 3. Mengirimkan data ke view 'statistik.blade.php'
         $data = [
             'totalVisitors' => number_format($totalVisitors, 0, ',', '.'),
-            'avgDuration' => $avgDuration,
-            'repeatRate' => $repeatRate,
+            'avgDuration' => $avgDuration, // Akan menampilkan 'N/A'
+            'repeatRate' => $repeatRate, // Akan menampilkan angka riil (misal 15%)
             'monthlyLabels' => $monthlyLabels,
             'monthlyData' => $monthlyData,
         ];
