@@ -288,7 +288,13 @@
                   </td>
                   <td class="px-4 py-2 flex gap-1.5 justify-center">
                     <button class="bg-blue-600 text-white px-3 py-1 rounded-md shadow hover:bg-blue-700 transition"
-                      data-id="{{ $menu->id }}" onclick="openUpdateMenuFromBtn(this)">Edit</button>
+                      onclick="openUpdateMenuFromBtn(this)"
+                      data-id="{{ $menu->id }}"
+                      data-title="{{ $menu->title }}"
+                      data-description="{{ $menu->description }}"
+                      data-type="{{ $menu->type }}">
+                      Edit
+                    </button>
                     <button class="bg-red-600 text-white px-3 py-1 rounded-md shadow hover:bg-red-700 transition"
                       data-id="{{ $menu->id }}" onclick="openDeleteMenuFromBtn(this)">Hapus</button>
                   </td>
@@ -331,7 +337,12 @@
                   </td>
                   <td class="px-4 py-2 flex gap-1.5 justify-center">
                     <button class="bg-blue-600 text-white px-3 py-1 rounded-md shadow hover:bg-blue-700 transition"
-                      data-id="{{ $photo->id }}" onclick="openUpdatePhotoFromBtn(this)">Edit</button>
+                      onclick="openUpdatePhotoFromBtn(this)"
+                      data-id="{{ $photo->id }}"
+                      data-title="{{ $photo->title }}"
+                      data-category="{{ $photo->category }}">
+                      Edit
+                    </button>
                     <button class="bg-red-600 text-white px-3 py-1 rounded-md shadow hover:bg-red-700 transition"
                       data-id="{{ $photo->id }}" onclick="openDeletePhotoFromBtn(this)">Hapus</button>
                   </td>
