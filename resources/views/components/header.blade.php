@@ -3,20 +3,19 @@
   <div class="max-w-7xl mx-auto relative flex items-center justify-center h-[600px] sm:h-[600px] md:h-[600px]">
     
     <!-- Video Background -->
-    <div class="absolute inset-0 z-0 flex justify-center">
-      <video
-        id="bg-video"
-        class="w-full h-full object-cover rounded-3xl" 
-        src="vid/phonk.mp4"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto">
-      </video>
-    </div>
+    <div class="absolute inset-0 z-0 flex flex-col justify-center items-center overflow-hidden rounded-3xl bg-black">
+  <iframe 
+    id="bg-video"
+    class="w-full aspect-video pointer-events-none" 
+    src="https://www.youtube.com/embed/b2y8iRP0eXg?autoplay=1&mute=1&controls=0&loop=1&playlist=b2y8iRP0eXg&playsinline=1&rel=0&modestbranding=1" 
+    title="Testimoni Resto Bebek Joss Gandos" 
+    frameborder="0" 
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+    allowfullscreen>
+  </iframe>
+</div>
     <!-- Overlay -->
-    <div class="absolute inset-0 bg-black bg-opacity-70 z-10 rounded-3xl"></div>
+    <div class="absolute inset-0 bg-black bg-opacity-50 z-10 rounded-3xl"></div>
 
     <!-- Konten Hero -->
     <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">

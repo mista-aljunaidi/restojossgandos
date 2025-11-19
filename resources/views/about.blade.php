@@ -20,16 +20,17 @@
                 <div class="grid md:grid-cols-2 gap-6 md:gap-10 items-start">
                 <!-- Sejarah Kami -->
                 <div class="bg-gray-100 p-6 md:p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                    <h2 class="text-2xl font-bold text-dark mb-3">Sejarah Kami</h2>
-                    <p class="text-gray-900 mb-4">
-                    Resto Joss Gandos didirikan pada tahun 2015 dengan visi menghadirkan pengalaman kuliner yang tak terlupakan. 
-                    Dimulai dari sebuah warung kecil, kini kami telah berkembang menjadi restoran yang dikenal luas di kota.
-                    </p>
-                    <p class="text-gray-900">
-                    Dengan komitmen pada kualitas dan inovasi, kami terus mengembangkan resep-resep autentik yang 
-                    memadukan cita rasa tradisional dengan sentuhan modern.
-                    </p>
-                </div>
+    <h2 class="text-2xl font-bold text-dark mb-3">Sejarah Kami</h2>
+    <p class="text-gray-900 mb-4">
+        Joss Gandos Resto & Café didirikan pada 28 Oktober 2017 oleh Dr. Siswanto, 
+        bertransformasi dari semangat awal "Bebek Joss Gandos" menjadi pionir kuliner di kawasan Jemursari.
+        Berpegang pada filosofi "Joss, Mantap, dan Luar Biasa", kami berhasil melewati masa sulit pandemi dengan ketangguhan dan solidaritas tim yang tinggi.
+        Sejak awal, kami tidak hanya menyajikan hidangan lezat, tetapi juga pengalaman hiburan lengkap dengan fasilitas karaoke dan VIP room untuk memanjakan setiap tamu yang datang.
+    </p>
+    <p class="text-gray-900">
+        Memasuki usia sewindu pada tahun 2025, kami terus berinovasi melalui perluasan menu nusantara yang ikonik, seperti Gulai Kepala Ikan Salmon tanpa santan, serta melakukan ekspansi dengan membuka cabang baru di Ketintang. Kini, Joss Gandos telah berkembang menjadi destinasi kuliner terpercaya di Surabaya untuk berbagai acara keluarga dan korporat, senantiasa berkomitmen menghadirkan pelayanan profesional dan cita rasa autentik yang tak terlupakan.
+    </p>
+</div>
 
                 <!-- Visi & Misi -->
                 <div class="bg-gray-100 p-6 md:p-8 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
@@ -37,16 +38,18 @@
                     <div class="mb-4 md:mb-5">
                     <h4 class="font-semibold text-dark mb-2">Visi</h4>
                     <p class="text-gray-900">
-                        Menjadi restoran pilihan utama yang menghadirkan pengalaman kuliner berkualitas tinggi dengan suasana yang nyaman dan ramah.
+                        Menjadi restoran pilihan utama di Surabaya yang dikenal dengan cita rasa autentik, pelayanan ramah, serta suasana nyaman untuk seluruh keluarga.
                     </p>
                     </div>
                     <div>
                     <h4 class="font-semibold text-dark mb-2">Misi</h4>
                     <ul class="text-gray-900 space-y-1.5 md:space-y-2">
-                        <li>• Menyajikan makanan berkualitas dengan bahan-bahan segar</li>
-                        <li>• Memberikan pelayanan terbaik kepada setiap pelanggan</li>
-                        <li>• Menciptakan suasana yang nyaman untuk berkumpul</li>
-                        <li>• Terus berinovasi dalam menu dan pelayanan</li>
+                        <li>• Menyajikan hidangan berkualitas tinggi dengan bahan segar dan cita rasa konsisten yang memuaskan pelanggan</li>
+                        <li>• Memberikan pelayanan cepat, ramah, dan profesional, sehingga setiap pelanggan merasa dihargai dan nyaman</li>
+                        <li>• Menciptakan suasana restoran yang bersih, nyaman, dan bersahabat, cocok untuk makan keluarga, teman, maupun acara kecil</li>
+                        <li>• Terus berinovasi dalam menu dan layanan, agar dapat mengikuti kebutuhan dan selera pelanggan yang terus berkembang</li>
+                        <li>• Menjaga standar kebersihan dan keamanan makanan sesuai aturan dan praktik terbaik di industri kuliner</li>
+                        <li>• Membangun hubungan baik dengan masyarakat sekitar serta memberikan kontribusi positif bagi lingkungan sekitar</li>
                     </ul>
                     </div>
                 </div>
