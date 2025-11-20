@@ -74,8 +74,7 @@
         <!-- Section Menu Spesial -->
         <section class="pt-12 pb-16 fade-section opacity-0 translate-y-10 transition-all duration-1000">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold text-gray-600 mb-8 text-shadow-strong">Menu Spesial Kami</h2>
-
+            <h2 class="text-2xl font-bold text-gray-700 inline-block border-b-4 border-red-700 pb-2 mb-6 text-shadow-strong">Menu Spesial Kami</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
               @forelse($specialMenus as $menu)
                 <div class="bg-gray-100 rounded-2xl shadow-md hover:shadow-xl transition p-6">

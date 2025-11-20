@@ -22,8 +22,8 @@
         class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">Menu</x-nav-link>
         <x-nav-link href="/gallery" 
         class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">Gallery</x-nav-link>
-        <x-nav-link href="/location" 
-        class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">Location</x-nav-link>
+        <x-nav-link href="/reservation" 
+        class="relative after:absolute after:left-0 after:bottom-0 after:w-0 after:h-[2px] after:bg-red-600 after:transition-all hover:after:w-full">Reservation</x-nav-link>
 
         <!-- Search Desktop -->
         <div class="relative group ml-4">
@@ -76,7 +76,7 @@
       <x-nav-link href="/about" class="block">About</x-nav-link>
       <x-nav-link href="/menu" class="block">Menu</x-nav-link>
       <x-nav-link href="/gallery" class="block">Gallery</x-nav-link>
-      <x-nav-link href="/location" class="block">Location</x-nav-link>
+      <x-nav-link href="/reservation" class="block">Reservation</x-nav-link>
     </div>
   </div>
 
@@ -111,7 +111,7 @@
       about: "/about", tentang: "/about",
       menu: "/menu", makanan: "/menu", minuman: "/menu",
       gallery: "/gallery", galeri: "/gallery",
-      location: "/location", lokasi: "/location",
+      reservation: "/reservation", reservasi: "/reservation",
       dashboard: "/login", dasbor: "/login"
     };
 
@@ -128,7 +128,7 @@
             // arahkan ke halaman tujuan
             window.location.href = targetUrl;
           } else {
-            alert("Halaman tidak ditemukan.\nCoba ketik: home/beranda, about/tentang, menu/makanan/minuman, gallery/galeri, location/lokasi");
+            alert("Halaman tidak ditemukan.\nCoba ketik: home/beranda, about/tentang, menu/makanan/minuman, gallery/galeri, reservation/reservasi");
           }
         }
       });

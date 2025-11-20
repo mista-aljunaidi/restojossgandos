@@ -58,4 +58,4 @@ Route::get('/', function (Request $request) {
 });
 
 Route::view('/about', 'about');
-Route::view('/location', 'location');
+Route::view('/reservation', 'reservation');

@@ -25,7 +25,7 @@
                 <div class="order-2 lg:order-2">
                     <div class="relative mt-12 mb-8">
                         <div class="bg-gradient-to-br from-red-100 to-orange-100 rounded-3xl p-4">
-                            <img src="img/utama.png" alt="Resto Joss Gandos" 
+                            <img src="img/home/selamatdatang.jpg" alt="Resto Joss Gandos" 
                                 class="w-full h-full object-cover rounded-2xl shadow-2xl">
                         </div>
                         <!-- Decorative elements -->
@@ -190,27 +190,33 @@
 
     <!-- CTA Section -->
     <section id="cta" class="relative py-24 fade-section opacity-0 translate-y-10 transition-all duration-1000">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">  
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
-                    <span class="block text-red-600">Siap Merasakan<br>Pengalaman Kuliner Terbaik?</span>
-                </h2>
-                <p class="text-xl text-black mb-12 max-w-2xl mx-auto">
-                    Bergabunglah dengan ribuan pelanggan yang telah merasakan kelezatan hidangan istimewa kami. Pesan sekarang dan dapatkan pengalaman tak terlupakan!
-                </p>
-                
-                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-2">
-                    <a href="https://lynk.id/jossgandosjemursari?fbclid=PAZXh0bgNhZW0CMTEAAadQ6oTKFFIRWah1S61m679zrmcp1eix-Bj08ymumVluAy3KdT2S4PB0lFcBCw_aem_8hjvEIZZbU59qtZkbiMPaQ" 
-                       class="bg-white text-red-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-100 hover-lift shadow-2xl transform hover:scale-105 transition-all duration-300 inline-block">
-                      Pesan Sekarang
-                    </a>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">  
+            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">
+                        <span class="block text-red-600">Siap Merasakan<br>Pengalaman Kuliner Terbaik?</span>
+                    </h2>
+                    <p class="text-xl text-black mb-12 max-w-2xl mx-auto">
+                        Bergabunglah dengan ribuan pelanggan yang telah merasakan kelezatan hidangan istimewa kami. Pesan sekarang dan dapatkan pengalaman tak terlupakan!
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-2">
+                        
+                        <a href="https://lynk.id/jossgandosjemursari?fbclid=PAZXh0bgNhZW0CMTEAAadQ6oTKFFIRWah1S61m679zrmcp1eix-Bj08ymumVluAy3KdT2S4PB0lFcBCw_aem_8hjvEIZZbU59qtZkbiMPaQ" 
+                          class="bg-white text-red-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-100 hover-lift shadow-2xl transform hover:scale-105 transition-all duration-300 inline-block border-2 border-transparent">
+                          Pesan Sekarang
+                        </a>
+
+                        <a href="/reservation" 
+                          class="bg-red-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-red-700 hover-lift shadow-2xl transform hover:scale-105 transition-all duration-300 inline-block border-2 border-red-600">
+                          Reservasi Sekarang
+                        </a>
+
+                    </div>
                 </div>
             </div>
         </div>
-      </div>
     </section>
-
   </main>
 
     <!-- SwiperJS CDN -->
