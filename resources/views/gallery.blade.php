@@ -3,7 +3,7 @@
     <style>
         main::-webkit-scrollbar { display: none; }
         main { -ms-overflow-style: none; scrollbar-width: none; }
-        .text-shadow-strong { text-shadow: 2px 2px 6px rgba(0,0,0,0.5); }
+        .text-shadow-strong { text-shadow: 2px 2px 6px rgba(0,0,0,0.25); }
     </style>
 
     <main class="pt-20 min-h-screen bg-batik bg-fixed bg-cover bg-center bg-no-repeat relative w-full overflow-x-hidden font-sans">
@@ -12,13 +12,13 @@
 
         <section class="relative z-10 py-12 text-center fade-section opacity-0 translate-y-10 transition-all duration-1000">
             <div class="max-w-4xl mx-auto px-4">
-                <span class="uppercase tracking-widest text-red-600 font-bold text-sm mb-2 block">Dokumentasi</span>
+                <span class="uppercase tracking-widest text-red-600 font-bold text-sm mb-2 block animate-pulse">Dokumentasi</span>
                 <h1 class="text-5xl md:text-6xl font-serif font-bold text-gray-800 mb-4 drop-shadow-sm">
                     Galeri <span class="text-red-700">Kami</span>
                 </h1>
                 <div class="h-1.5 w-24 bg-gradient-to-r from-red-500 to-yellow-400 mx-auto rounded-full mb-6"></div>
-                <p class="text-lg md:text-xl text-gray-800 max-w-2xl mx-auto font-light">
-                    Kumpulan momen kebersamaan dan hidangan spesial yang telah kami sajikan.
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto font-light">
+                    Kumpulan momen kebersamaan dan kehangatan di Resto Joss Gandos.
                 </p>
             </div>
         </section>
@@ -27,10 +27,10 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 <div class="flex justify-center gap-4 mb-8 flex-wrap">
-                    <button class="px-4 py-2 rounded-full bg-red-600 text-white hover:bg-red-700 filter-btn shadow-md transition-all" data-filter="all">All</button>
-                    <button class="px-4 py-2 rounded-full bg-white text-gray-600 hover:bg-red-50 hover:text-red-600 border border-gray-200 filter-btn shadow-sm transition-all" data-filter="food">Food</button>
-                    <button class="px-4 py-2 rounded-full bg-white text-gray-600 hover:bg-red-50 hover:text-red-600 border border-gray-200 filter-btn shadow-sm transition-all" data-filter="customer">Customer</button>
-                    <button class="px-4 py-2 rounded-full bg-white text-gray-600 hover:bg-red-50 hover:text-red-600 border border-gray-200 filter-btn shadow-sm transition-all" data-filter="event">Event</button>
+                    <button class="px-4 py-2 rounded-full bg-red-500 text-white hover:bg-gray-300 filter-btn" data-filter="all">All</button>
+                    <button class="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 filter-btn" data-filter="food">Food</button>
+                    <button class="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 filter-btn" data-filter="customer">Customer</button>
+                    <button class="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 filter-btn" data-filter="event">Event</button>
                 </div>
 
                 <div id="gallery-grid" class="group/gallery grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -81,6 +81,7 @@
                 </div>
 
                 <div class="flex flex-col gap-10">
+                    
                     <div class="relative rounded-[2.5rem] overflow-hidden shadow-xl group hover:shadow-2xl transition-shadow duration-300">
                         <img src="img/gallery/wedding.png" alt="Wedding Event" class="w-full h-auto object-contain">
                     </div>
@@ -100,6 +101,7 @@
                     <div class="relative rounded-[2.5rem] overflow-hidden shadow-xl group hover:shadow-2xl transition-shadow duration-300">
                         <img src="img/gallery/comunity.png" alt="Community Event" class="w-full h-auto object-contain">
                     </div>
+
                 </div>
             </div>
         </section>
@@ -114,11 +116,11 @@
             btn.addEventListener('click', () => {
                 const filter = btn.getAttribute('data-filter');
                 buttons.forEach(b => {
-                    b.classList.remove('bg-red-600','text-white');
-                    b.classList.add('bg-white','text-gray-600','border-gray-200');
+                    b.classList.remove('bg-red-500','text-white');
+                    b.classList.add('bg-gray-200','text-black');
                 });
-                btn.classList.remove('bg-white','text-gray-600','border-gray-200');
-                btn.classList.add('bg-red-600','text-white');
+                btn.classList.remove('bg-gray-200','text-black');
+                btn.classList.add('bg-red-500','text-white');
 
                 items.forEach(item => {
                     if (filter === 'all' || item.classList.contains(`category-${filter}`)) {

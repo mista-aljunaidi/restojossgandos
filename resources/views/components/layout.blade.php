@@ -158,8 +158,7 @@
         </div>
 
         <div class="animate-slideUp delay-100">
-          <h4 class="font-bold mb-5 text-gray-900 border-b-2 border-red-500 inline-block pb-1">Jam Buka</h4>
-          
+          <h4 class="font-bold mb-5 text-gray-900 border-b-2 border-red-500 inline-block pb-1">Jam Buka Outlet</h4>
           <div class="bg-gradient-to-br from-white/90 to-white/60 backdrop-blur-lg p-5 rounded-2xl shadow-xl border 
                     border-white/80 relative">
 
