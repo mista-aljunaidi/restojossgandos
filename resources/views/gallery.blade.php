@@ -39,8 +39,8 @@
                             
                             <img src="{{ asset($photo->image_path) }}" alt="{{ $photo->title }}"
                                 class="w-full h-64 object-cover transition duration-500
-                                        group-has-[.card:hover]/gallery:blur-[2px] group-has-[.card:hover]/gallery:brightness-75 group-has-[.card:hover]/gallery:scale-[.98]
-                                        group-hover/card:!blur-0 group-hover/card:!brightness-100 group-hover/card:!scale-100">
+                                       group-has-[.card:hover]/gallery:blur-[2px] group-has-[.card:hover]/gallery:brightness-75 group-has-[.card:hover]/gallery:scale-[.98]
+                                       group-hover/card:!blur-0 group-hover/card:!brightness-100 group-hover/card:!scale-100">
                             
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"></div>
 
@@ -63,46 +63,25 @@
             </div>
         </section>
 
-        <section class="relative z-10 pb-16 fade-section opacity-0 translate-y-10 transition-all duration-1000">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl group">
-                    <img src="img/gallery/livemusic.png" alt="Live Music Joss Gandos" 
-                         class="w-full h-auto object-contain">
-                </div>
-            </div>
-        </section>
-
         <section class="relative z-10 pb-24 fade-section opacity-0 translate-y-10 transition-all duration-1000">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 <div class="text-center mb-10">
-                    <h2 class="text-4xl font-serif font-bold text-gray-800 mb-3">Momen Spesial</h2>
+                    <h2 class="text-4xl font-serif font-bold text-gray-800 mb-3">Live Music</h2>
                     <div class="h-1 w-20 bg-red-600 mx-auto rounded-full"></div>
+                    <p class="mt-4 text-gray-600 max-w-2xl mx-auto italic">
+                        Rasakan suasana santap malam yang berbeda dengan iringan musik spesial.
+                    </p>
                 </div>
 
-                <div class="flex flex-col gap-10">
+                <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl hover:border-red-500/30 transition-colors duration-500">
                     
-                    <div class="relative rounded-[2.5rem] overflow-hidden shadow-xl group hover:shadow-2xl transition-shadow duration-300">
-                        <img src="img/gallery/wedding.png" alt="Wedding Event" class="w-full h-auto object-contain">
-                    </div>
-
-                    <div class="relative rounded-[2.5rem] overflow-hidden shadow-xl group hover:shadow-2xl transition-shadow duration-300">
-                        <img src="img/gallery/engagement.png" alt="Engagement Event" class="w-full h-auto object-contain">
-                    </div>
-
-                    <div class="relative rounded-[2.5rem] overflow-hidden shadow-xl group hover:shadow-2xl transition-shadow duration-300">
-                        <img src="img/gallery/birthdayparty.png" alt="Birthday Event" class="w-full h-auto object-contain">
-                    </div>
-
-                    <div class="relative rounded-[2.5rem] overflow-hidden shadow-xl group hover:shadow-2xl transition-shadow duration-300">
-                        <img src="img/gallery/reuni.png" alt="Reunion Event" class="w-full h-auto object-contain">
-                    </div>
-
-                    <div class="relative rounded-[2.5rem] overflow-hidden shadow-xl group hover:shadow-2xl transition-shadow duration-300">
-                        <img src="img/gallery/comunity.png" alt="Community Event" class="w-full h-auto object-contain">
-                    </div>
-
+                    <img src="img/gallery/livemusic.png" alt="Live Music Joss Gandos" 
+                         class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-1000 ease-in-out">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
                 </div>
+
             </div>
         </section>
 

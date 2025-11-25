@@ -1,6 +1,6 @@
 <section class="relative fade-section opacity-0 translate-y-10 transition-all duration-1000 pt-24 pb-10 px-4 sm:px-6 lg:px-8">
   
-  <div class="max-w-7xl mx-auto relative h-[600px] md:h-[650px] rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white/30 group">
+  <div class="max-w-7xl mx-auto relative h-[600px] md:h-[650px] rounded-[2.5rem] overflow-hidden shadow-2xl">
     
     <div class="absolute inset-0 z-0 bg-black">
       <iframe 

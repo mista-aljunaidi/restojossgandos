@@ -31,7 +31,6 @@
 
                                 <h2 class="text-3xl font-serif font-bold text-gray-800 mb-6 flex items-center gap-3 relative z-10">
                                     Sejarah Kami
-                                    <span class="block h-1 w-20 bg-red-500 rounded-full"></span>
                                 </h2>
                                 
                                 <div class="text-gray-700 mb-6 space-y-4 text-justify leading-relaxed relative z-10 text-[15px]">

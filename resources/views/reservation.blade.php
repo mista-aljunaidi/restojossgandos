@@ -70,10 +70,10 @@
                     </h3>
                 </div>
 
-                <div class="relative w-full max-w-5xl mx-auto h-[400px] md:h-[500px] overflow-hidden rounded-[2.5rem] shadow-2xl border-4 border-white bg-white group">
+                <div class="relative w-full max-w-5xl mx-auto h-[400px] md:h-[500px] overflow-hidden rounded-[2.5rem] shadow-2xl">
                     <img id="locationSliderImage" 
                         src="img/reservation/tampakdepanjemursari.jpg" 
-                        alt="Outlet Location" 
+                        alt="Outlet Location"
                         class="w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-100">
 
                     <button onclick="prevLocationImage()" class="absolute left-6 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md border border-white/30 text-white p-3 rounded-full hover:bg-white/40 transition-all z-10">
@@ -153,7 +153,7 @@
             <section class="fade-section opacity-0 translate-y-10 transition-all duration-1000 delay-100">
                 <div class="relative w-full rounded-[3rem] overflow-hidden shadow-2xl group cursor-pointer h-[400px] md:h-[450px]">
                     <div class="absolute inset-0 z-0">
-                        <img src="img/reservation/outdoorbelakang.png" alt="Background Joss Gandos" class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105">
+                        <img src="img/reservation/fullteam.jpg" alt="Background Joss Gandos" class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-br from-red-900/80 via-red-800/60 to-black/50"></div>
                     </div>
 
