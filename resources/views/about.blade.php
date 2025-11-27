@@ -260,7 +260,7 @@
                             </div>
                         </div>
                         
-                        <div class="team-card group relative h-[450px] rounded-2xl overflow-hidden shadow-lg cursor-pointer md:-mt-6">
+                        <div class="team-card group relative h-[450px] rounded-2xl overflow-hidden shadow-lg cursor-pointer">
                             <img src="img/about/svj.jpg" alt="Tatik - SPV" class="w-full h-full object-cover img-vertical-focus transition-transform duration-700 group-hover:scale-110">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90"></div>
                             <div class="team-info absolute bottom-[-20px] left-0 w-full p-6 transition-all duration-300 group-hover:bottom-0">

@@ -70,18 +70,31 @@
                     </h3>
                 </div>
 
-                <div class="relative w-full max-w-5xl mx-auto h-[400px] md:h-[500px] overflow-hidden rounded-[2.5rem] shadow-2xl">
+                <div class="relative w-full max-w-5xl mx-auto h-[400px] md:h-[500px] overflow-hidden rounded-[2.5rem] shadow-2xl group bg-gray-200">
+                    
                     <img id="locationSliderImage" 
                         src="img/reservation/tampakdepanjemursari.jpg" 
-                        alt="Outlet Location"
-                        class="w-full h-full object-cover transition-opacity duration-700 ease-in-out opacity-100">
+                        alt="Outlet Location" 
+                        class="w-full h-full object-cover transition-opacity duration-500 ease-in-out opacity-100">
 
-                    <button onclick="prevLocationImage()" class="absolute left-6 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md border border-white/30 text-white p-3 rounded-full hover:bg-white/40 transition-all z-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none"></div>
+
+                    <button onclick="prevLocationImage()" 
+                            class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/80 backdrop-blur-md border border-white/30 text-white hover:text-gray-800 p-3 rounded-full transition-all duration-300 z-10 opacity-0 group-hover:opacity-100 translate-x-[-20px] group-hover:translate-x-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
                     </button>
-                    <button onclick="nextLocationImage()" class="absolute right-6 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md border border-white/30 text-white p-3 rounded-full hover:bg-white/40 transition-all z-10">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+
+                    <button onclick="nextLocationImage()" 
+                            class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/80 backdrop-blur-md border border-white/30 text-white hover:text-gray-800 p-3 rounded-full transition-all duration-300 z-10 opacity-0 group-hover:opacity-100 translate-x-[20px] group-hover:translate-x-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
                     </button>
+
+                    <div id="sliderIndicators" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-2 z-10">
+                        </div>
                 </div>
             </section>
 
@@ -187,59 +200,133 @@
     </main>
 
     <script>
-        // --- ROOM SLIDER ---
+        // ============================
+        // 1. ROOM SLIDER LOGIC
+        // ============================
         let roomIndex = 0;
         const roomTrack = document.getElementById("roomTrack");
-        const totalRooms = roomTrack.children.length;
+        // Cek apakah element ada untuk menghindari error jika halaman lain tidak punya roomTrack
+        if (roomTrack) {
+            const totalRooms = roomTrack.children.length;
 
-        function updateRoomSlide() {
-            const translateXValue = -(roomIndex * 100);
-            roomTrack.style.transform = `translateX(${translateXValue}%)`;
+            function updateRoomSlide() {
+                const translateXValue = -(roomIndex * 100);
+                roomTrack.style.transform = `translateX(${translateXValue}%)`;
+            }
+
+            function nextRoomImage() {
+                roomIndex = (roomIndex + 1) % totalRooms;
+                updateRoomSlide();
+            }
+
+            function prevRoomImage() {
+                roomIndex = (roomIndex - 1 + totalRooms) % totalRooms;
+                updateRoomSlide();
+            }
         }
 
-        function nextRoomImage() {
-            roomIndex = (roomIndex + 1) % totalRooms;
-            updateRoomSlide();
-        }
-
-        function prevRoomImage() {
-            roomIndex = (roomIndex - 1 + totalRooms) % totalRooms;
-            updateRoomSlide();
-        }
-
-        // --- LOCATION SLIDER ---
+        // ============================
+        // 2. LOCATION SLIDER LOGIC (SMOOTH & DOTS)
+        // ============================
         const locImages = [
             "img/reservation/tampakdepanjemursari.jpg",
-            "img/reservation/tampakdepanjemursari.jpg", 
-            "img/reservation/tampakdepanjemursari.jpg"
+            "img/reservation/Ketintang.jpeg"
         ];
 
         let locIndex = 0;
         const locImgElement = document.getElementById("locationSliderImage");
+        const locIndicatorsContainer = document.getElementById("sliderIndicators");
+        let locAutoSlideInterval;
 
-        function showLocationImage(newIndex) {
+        // A. Fungsi Inisialisasi Dots
+        function initLocIndicators() {
+            if (!locIndicatorsContainer) return;
+            
+            locIndicatorsContainer.innerHTML = ''; // Bersihkan isi
+            locImages.forEach((_, index) => {
+                const dot = document.createElement('button');
+                // Style default dot
+                dot.className = `w-3 h-3 rounded-full transition-all duration-300 ${index === 0 ? 'bg-white w-8' : 'bg-white/50 hover:bg-white'}`;
+                dot.onclick = () => goToLocationImage(index);
+                locIndicatorsContainer.appendChild(dot);
+            });
+        }
+
+        // B. Fungsi Utama Update Gambar
+        function updateLocationSlide() {
+            if (!locImgElement) return;
+
+            // 1. Fade Out
             locImgElement.classList.remove("opacity-100");
             locImgElement.classList.add("opacity-0");
 
+            // 2. Tunggu transisi fade out selesai (500ms)
             setTimeout(() => {
-                locImgElement.src = locImages[newIndex];
-                locImgElement.classList.remove("opacity-0");
-                locImgElement.classList.add("opacity-100");
-            }, 400);
+                // Ganti Source
+                locImgElement.src = locImages[locIndex];
+
+                // Update Dots Active State
+                if (locIndicatorsContainer) {
+                    const dots = locIndicatorsContainer.children;
+                    for (let i = 0; i < dots.length; i++) {
+                        if (i === locIndex) {
+                            dots[i].className = 'w-8 h-3 rounded-full bg-white transition-all duration-300';
+                        } else {
+                            dots[i].className = 'w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all duration-300';
+                        }
+                    }
+                }
+
+                // 3. Fade In (Hanya setelah gambar siap)
+                locImgElement.onload = () => {
+                    locImgElement.classList.remove("opacity-0");
+                    locImgElement.classList.add("opacity-100");
+                };
+                
+                // Fallback jika gambar sudah di-cache (onload mungkin tidak trigger)
+                if (locImgElement.complete) {
+                    locImgElement.classList.remove("opacity-0");
+                    locImgElement.classList.add("opacity-100");
+                }
+
+            }, 500); // Waktu ini harus sesuai dengan class 'duration-500' di HTML img
         }
 
+        // C. Navigasi
         function nextLocationImage() {
             locIndex = (locIndex + 1) % locImages.length;
-            showLocationImage(locIndex);
+            updateLocationSlide();
+            resetLocTimer(); // Reset timer agar tidak bentrok dengan klik user
         }
 
         function prevLocationImage() {
             locIndex = (locIndex - 1 + locImages.length) % locImages.length;
-            showLocationImage(locIndex);
+            updateLocationSlide();
+            resetLocTimer();
         }
-        setInterval(nextLocationImage, 10000); 
 
-        // --- ACCORDION LOGIC ---
+        function goToLocationImage(index) {
+            locIndex = index;
+            updateLocationSlide();
+            resetLocTimer();
+        }
+
+        // D. Timer Auto Slide
+        function startLocTimer() {
+            locAutoSlideInterval = setInterval(() => {
+                locIndex = (locIndex + 1) % locImages.length;
+                updateLocationSlide();
+            }, 5000); // Ganti tiap 5 detik
+        }
+
+        function resetLocTimer() {
+            clearInterval(locAutoSlideInterval);
+            startLocTimer();
+        }
+
+        // ============================
+        // 3. ACCORDION LOGIC
+        // ============================
         function toggleDetail(el) {
             const detail = el.nextElementSibling;
             const icon = el.querySelector(".arrow-icon");
@@ -253,8 +340,15 @@
             }
         }
 
-        // --- FADE ANIMATION ---
+        // ============================
+        // 4. INIT & FADE ANIMATION
+        // ============================
         document.addEventListener("DOMContentLoaded", () => {
+            // Init Location Slider
+            initLocIndicators();
+            startLocTimer();
+
+            // Intersection Observer untuk Fade Section
             const sections = document.querySelectorAll(".fade-section");
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {

@@ -190,12 +190,12 @@
                     <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mb-2">
                         
                         <a href="https://lynk.id/jossgandosjemursari?fbclid=PAZXh0bgNhZW0CMTEAAadQ6oTKFFIRWah1S61m679zrmcp1eix-Bj08ymumVluAy3KdT2S4PB0lFcBCw_aem_8hjvEIZZbU59qtZkbiMPaQ" 
-                          class="bg-white text-red-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-50 hover-lift shadow-xl transform hover:scale-105 transition-all duration-300 inline-block border-2 border-red-100">
+                          class="bg-white text-red-600 px-10 py-4 rounded-full font-bold text-lg hover:bg-gray-50 hover-lift shadow-xl transform hover:scale-105 transition-all duration-300 inline-block border-2 border-red-600">
                           Pesan Sekarang
                         </a>
 
                         <a href="/reservation" 
-                          class="bg-red-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-red-700 hover-lift shadow-xl transform hover:scale-105 transition-all duration-300 inline-block border-2 border-red-600">
+                          class="bg-red-600 text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-red-700 hover-lift shadow-xl transform hover:scale-105 transition-all duration-300 inline-block border-2 border-white">
                           Reservasi Sekarang
                         </a>
 
