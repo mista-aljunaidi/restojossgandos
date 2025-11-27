@@ -12,7 +12,7 @@
 
         <section class="relative z-10 py-12 text-center fade-section opacity-0 translate-y-10 transition-all duration-1000">
             <div class="max-w-4xl mx-auto px-4">
-                <span class="uppercase tracking-widest text-red-600 font-bold text-sm mb-2 block animate-pulse">Dokumentasi</span>
+                <span class="uppercase tracking-widest text-red-600 font-bold text-sm mb-2 block">Dokumentasi</span>
                 <h1 class="text-5xl md:text-6xl font-serif font-bold text-gray-800 mb-4 drop-shadow-sm">
                     Galeri <span class="text-red-700">Kami</span>
                 </h1>

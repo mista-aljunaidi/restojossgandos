@@ -3,1144 +3,841 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Dashboard - Resto Joss Gandos</title>
   <link rel="icon" type="image/png" href="{{ asset('img/logojossgandos.png') }}">
-  @vite(['resources/css/app.css','resources/js/app.js'])
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    
+    /* Smooth Scroll Behavior */
+    html { scroll-behavior: smooth; }
+
+    /* Custom Scrollbar for Table */
+    .custom-scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    /* Animasi Fade */
+    .fade-enter { opacity: 0; transform: translateY(10px); }
+    .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 0.4s ease-out, transform 0.4s ease-out; }
+    
+    /* Highlight Search */
+    .highlighted-row { background-color: #fef9c3 !important; transition: background 0.3s ease; } /* Yellow-100 */
+    .active-highlight { background-color: #fde047 !important; transform: scale-[1.01]; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; z-index: 10; }
+  </style>
 </head>
 
-<body class="bg-white text-gray-900 overflow-x-hidden overflow-y-auto">
+<body class="bg-slate-50 text-slate-800 antialiased overflow-x-hidden">
 
-  <!-- Wrapper utama: sidebar + konten -->
-  <div class="flex min-h-screen">
+  <div class="flex h-screen overflow-hidden">
 
-    <!-- Sidebar -->
-    <aside id="sidebar"
-      class="bg-gradient-to-b from-gray-900/95 to-gray-800/90 backdrop-blur-lg text-white shadow-[0_0_25px_rgba(255,255,255,0.05)]
-            flex flex-col justify-between z-50 transition-all duration-300
-            fixed left-0 top-0 h-screen w-60 -translate-x-full md:translate-x-0 md:relative md:h-auto border-r border-gray-700/50">
+    <aside id="sidebar" 
+      class="fixed inset-y-0 left-0 z-40 w-64 bg-slate-900 text-white transform -translate-x-full transition-transform duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col justify-between shadow-2xl">
+      
       <div>
-        <!-- Logo -->
-        <div class="flex items-start gap-3 px-6 py-5 mt-16 md:mt-4 pb-2 border-b border-gray-700/50">
-          <img src="{{ asset('img/logojossgandos.png') }}" alt="Logo"
-            class="w-10 h-10 object-contain flex-shrink-0 drop-shadow-[0_0_6px_rgba(255,255,255,0.2)]">
-          <span class="text-lg font-semibold tracking-wide text-white leading-tight">
-            Resto <br> Joss Gandos
-          </span>
+        <div class="flex items-center gap-3 px-6 py-8 border-b border-slate-700/50">
+          <div class="relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-orange-600 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
+            <img src="{{ asset('img/logojossgandos.png') }}" alt="Logo" class="relative w-10 h-10 object-contain">
+          </div>
+          <div>
+            <h1 class="font-bold text-lg tracking-wide leading-none">Resto Joss Gandos</h1>
+            <span class="text-xs text-slate-400 font-medium tracking-wider uppercase">Dashboard Admin</span>
+          </div>
         </div>
 
-        <!-- Dashboard -->
-        <nav class="mt-6 flex flex-col space-y-2 px-3">
-          <a href="{{ route('dashboard') }}"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-indigo-700/70 to-indigo-600/40 hover:from-indigo-600/80 hover:to-indigo-500/70
-                  text-white font-medium transition duration-300 backdrop-blur-sm border border-indigo-400/40 shadow-lg">
-            <img src="{{ asset('img/dashboard.png') }}" alt="Dashboard" class="w-6 h-6 invert">
-            <span>Dashboard</span>
+        <nav class="mt-8 px-4 space-y-2">
+          <a href="{{ route('dashboard') }}" 
+             class="flex items-center gap-3 px-4 py-3.5 text-sm font-medium rounded-xl bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 transition-all hover:bg-indigo-700">
+             <i class="uil uil-apps text-xl"></i>
+             <span>Overview</span>
           </a>
 
-          <!-- Statistik -->
-          <a href="{{ route('statistik') }}"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-gray-700/60 to-gray-700/30 hover:from-gray-600/80 hover:to-gray-600/60
-                  text-white font-medium transition duration-300 backdrop-blur-sm border border-gray-600/30 hover:border-gray-400/50 shadow-md">
-            <i class="uil uil-chart-line text-indigo-300 text-lg"></i>
-            <span>Statistik</span>
+          <a href="{{ route('statistik') }}" 
+             class="flex items-center gap-3 px-4 py-3.5 text-sm font-medium rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all group">
+             <i class="uil uil-chart-line text-xl group-hover:text-indigo-400 transition-colors"></i>
+             <span>Statistik</span>
           </a>
         </nav>
       </div>
 
-      <!-- Logout -->
-      <form action="{{ route('logout') }}" method="POST" class="px-4 py-5 border-t border-gray-700/50">
-        @csrf
-        <button type="submit"
-          class="flex items-center justify-center gap-3 w-full bg-gradient-to-r from-gray-700/60 to-gray-700/30
-                hover:from-red-600 hover:to-red-700 text-white py-3 rounded-xl shadow-lg transition duration-300 border border-gray-600/40">
-          <img src="{{ asset('img/exit.png') }}" alt="Logout" class="w-6 h-6 invert">
-          <span class="font-medium">Logout</span>
-        </button>
-      </form>
+      <div class="p-4 border-t border-slate-700/50">
+        <form action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button type="submit" 
+            class="flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-medium text-red-400 bg-slate-800/50 hover:bg-red-500/10 hover:text-red-500 rounded-xl transition-all border border-transparent hover:border-red-500/20">
+            <i class="uil uil-sign-out-alt text-lg"></i>
+            <span>Logout</span>
+          </button>
+        </form>
+      </div>
     </aside>
 
-    <!-- Overlay mobile -->
-    <div id="overlay"
-      class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-40 md:hidden transition-opacity duration-300"
-      onclick="toggleSidebar()"></div>
+    <div id="overlay" class="fixed inset-0 bg-slate-900/50 z-30 hidden md:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
 
-    <!-- Konten utama -->
-    <div class="flex-1 flex flex-col transition-all duration-300">
-
-      <!-- Header (Dashboard + Input Text  + Button Tambah Data) -->
-      <header class="flex items-center justify-between gap-3 w-full bg-white/60 backdrop-blur-md rounded-2xl shadow-md px-4 sm:px-6 py-3 sm:py-4 mb-6 border border-gray-200/60 sticky top-0 z-40  fade-in-up">
-
-        <!-- Kiri: Tombol toggle + Judul -->
-        <div class="flex items-center gap-3 flex-shrink-0">
-          <!-- Tombol Toggle Sidebar (mobile only) -->
-          <button onclick="toggleSidebar()" class="md:hidden flex items-center justify-center p-2 rounded-lg hover:bg-gray-200 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50 relative">
+      
+      <header class="flex-shrink-0 bg-white border-b border-slate-200 shadow-sm z-20 px-6 py-4 flex items-center justify-between gap-4">
+        
+        <div class="flex items-center gap-4 flex-1">
+          <button onclick="toggleSidebar()" class="md:hidden p-2 text-slate-500 hover:bg-slate-100 rounded-lg">
+            <i class="uil uil-bars text-2xl"></i>
           </button>
-          
-          <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 tracking-tight whitespace-nowrap">
-            Dashboard
-          </h1>
+
+          <div class="relative w-full max-w-lg hidden sm:block">
+            <i class="uil uil-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-lg"></i>
+            <input type="text" id="searchInput" 
+              placeholder="Cari menu, kategori, atau galeri..." 
+              class="w-full pl-11 pr-4 py-2.5 bg-slate-100 border-none rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all placeholder:text-slate-400">
+          </div>
         </div>
 
-        <!-- Tengah: Search bar -->
-        <div class="relative flex-1 max-w-md mx-2">
-          <svg class="w-5 h-5 absolute left-3 top-2.5 text-gray-500" fill="none" stroke="currentColor" stroke-width="2"
-            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input type="text" id="searchInput"
-            placeholder="Cari menu, kategori, deskripsi..."
-            class="pl-10 pr-4 py-2 w-full rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white/80 transition-all duration-300">
-        </div>
-
-        <!-- Kanan: Tombol tambah data -->
-        <div class="flex-shrink-0">
-          <button onclick="openChooseModal()"
-            class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 sm:px-5 py-2 rounded-xl shadow-lg transition-all duration-300 whitespace-nowrap">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-            <span>Tambah Data</span>
-          </button>
-        </div>
-
+        <button onclick="openChooseModal()" 
+          class="flex items-center gap-2 bg-green-700 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">
+          <i class="uil uil-plus-circle text-lg"></i>
+          <span>Tambah Data</span>
+        </button>
       </header>
 
-      <!-- Flash Success -->
-      @if(session('success'))
-        <div id="success-alert"
-          class="mx-4 md:mx-auto mt-4 mb-2 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 rounded-lg shadow transition-all duration-500 ease-in-out">
-          {{ session('success') }}
-        </div>
-      @endif
+      <div class="flex-1 overflow-y-auto p-6 scroll-smooth" id="mainScrollContent">
+        
+        @if(session('success'))
+          <div id="success-alert" class="mb-6 p-4 bg-green-50 border border-green-200 text-green-700 rounded-xl flex items-center gap-3 shadow-sm fade-enter-active">
+            <i class="uil uil-check-circle text-xl"></i>
+            <span class="font-medium">{{ session('success') }}</span>
+          </div>
+        @endif
 
-      <!-- Validasi Error -->
-      @if ($errors->any())
-        <div class="mx-4 md:mx-auto mb-4 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-lg shadow">
-          <ul class="list-disc list-inside text-sm space-y-1">
-            @foreach ($errors->all() as $error)
-              <li>⚠️ {{ $error }}</li>
-            @endforeach
-          </ul>
-        </div>
-      @endif
+        @if ($errors->any())
+          <div class="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl shadow-sm">
+             <ul class="list-disc list-inside text-sm font-medium">
+               @foreach ($errors->all() as $error)
+                 <li>{{ $error }}</li>
+               @endforeach
+             </ul>
+          </div>
+        @endif
 
-      <!-- Statistik -->
-      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 mt-4 px-4 md:px-8 fade-in-up">
-        <!-- Foto Galeri -->
-        <div
-          class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
-          <div class="bg-pink-500/10 text-pink-600 p-3 rounded-xl">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M4 16l4-4 4 4m0 0l4-4 4 4M4 8h16" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-gray-700 font-semibold">Foto Galeri</h3>
-            <p class="text-2xl font-bold text-gray-900">{{ $galleryCount ?? 0 }}</p>
-          </div>
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8 fade-section">
+            <div class="bg-white p-5 rounded-2xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-slate-100 flex items-center gap-4 hover:border-indigo-100 transition-colors">
+                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+                    <i class="uil uil-image"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Galeri</p>
+                    <h3 class="text-2xl font-bold text-slate-800">{{ $galleryCount ?? 0 }}</h3>
+                </div>
+            </div>
+            
+            <div class="bg-white p-5 rounded-2xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-slate-100 flex items-center gap-4 hover:border-indigo-100 transition-colors">
+                <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center text-xl">
+                    <i class="uil uil-utensils"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Menu</p>
+                    <h3 class="text-2xl font-bold text-slate-800">{{ $menuCount ?? 0 }}</h3>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-slate-100 flex items-center gap-4 hover:border-indigo-100 transition-colors">
+                <div class="w-12 h-12 rounded-xl bg-green-50 text-green-600 flex items-center justify-center text-xl">
+                    <i class="uil uil-comments"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Testimoni</p>
+                    <h3 class="text-2xl font-bold text-slate-800">{{ $testimonialCount ?? 12 }}</h3>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-slate-100 flex items-center gap-4 hover:border-indigo-100 transition-colors">
+                <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl">
+                    <i class="uil uil-megaphone"></i>
+                </div>
+                <div>
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Promo/Event</p>
+                    <h3 class="text-2xl font-bold text-slate-800">{{ $eventCount ?? 3 }}</h3>
+                </div>
+            </div>
+        </section>
+
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-6 fade-section">
+            
+            <div class="bg-slate-200/60 p-1.5 rounded-xl inline-flex">
+                <button id="btn-menu" class="px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300">
+                    Daftar Menu
+                </button>
+                <button id="btn-gallery" class="px-6 py-2 rounded-lg text-sm font-semibold text-slate-500 hover:text-slate-700 transition-all duration-300">
+                    Galeri Foto
+                </button>
+            </div>
+
+            <div id="filter-wrapper" class="flex flex-wrap items-center gap-2">
+    
+                <div id="filter-menu" class="flex items-center gap-2">
+                    <select id="menuFilterType" class="bg-white border border-slate-200 text-slate-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block px-3 py-2 cursor-pointer shadow-sm outline-none transition-all hover:bg-slate-50">
+                        <option value="">Semua Tipe</option>
+                        <option value="special">Special</option>
+                        <option value="carousel">Carousel</option>
+                    </select>
+                    <select id="menuSortBy" class="bg-white border border-slate-200 text-slate-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block px-3 py-2 cursor-pointer shadow-sm outline-none transition-all hover:bg-slate-50">
+                        <option value="latest">Terbaru</option>
+                        <option value="oldest">Terlama</option>
+                    </select>
+                </div>
+
+                <div id="filter-gallery" class="hidden items-center gap-2">
+                    <select id="galleryFilterCategory" class="bg-white border border-slate-200 text-slate-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block px-3 py-2 cursor-pointer shadow-sm outline-none transition-all hover:bg-slate-50">
+                        <option value="">Semua Kategori</option>
+                        <option value="food">Food</option>
+                        <option value="customer">Customer</option>
+                        <option value="event">Event</option>
+                    </select>
+                    <select id="gallerySortBy" class="bg-white border border-slate-200 text-slate-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block px-3 py-2 cursor-pointer shadow-sm outline-none transition-all hover:bg-slate-50">
+                        <option value="latest">Terbaru</option>
+                        <option value="oldest">Terlama</option>
+                    </select>
+                </div>
+
+                <button id="globalReset" class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:text-indigo-600 shadow-sm transition-all h-[38px]">
+                    <i class="uil uil-redo"></i> 
+                    <span>Reset</span>
+                </button>
+
+            </div>
         </div>
 
-        <!-- Menu Tersedia -->
-        <div
-          class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
-          <div class="bg-red-500/10 text-red-600 p-3 rounded-xl">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2zm3 10h8m-8-4h8" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-gray-700 font-semibold">Menu Tersedia</h3>
-            <p class="text-2xl font-bold text-gray-900">{{ $menuCount ?? 0 }}</p>
-          </div>
-        </div>
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden fade-section">
+            
+            <div id="dashboard-menu" class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-sm text-left text-slate-600">
+                    <thead class="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200 sticky top-0 z-10">
+                        <tr>
+                            <th scope="col" class="px-6 py-4 font-semibold">Info Menu</th>
+                            <th scope="col" class="px-6 py-4 font-semibold">Deskripsi</th>
+                            <th scope="col" class="px-6 py-4 font-semibold text-center">Tipe</th>
+                            <th scope="col" class="px-6 py-4 font-semibold text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        @foreach($menus as $menu)
+                        <tr class="hover:bg-slate-50/80 transition-colors duration-200 group">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-4">
+                                    <img src="{{ asset($menu->image_path) }}" class="w-16 h-16 rounded-xl object-cover shadow-sm border border-slate-100" alt="">
+                                    <span class="font-semibold text-slate-800 text-base">{{ $menu->title }}</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4">
+                                <p class="text-slate-500 line-clamp-2 max-w-xs">{{ $menu->description }}</p>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border
+                                    {{ $menu->type === 'carousel' ? 'bg-purple-50 text-purple-700 border-purple-200' : 'bg-orange-50 text-orange-700 border-orange-200' }}">
+                                    {{ ucfirst($menu->type) }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <div class="flex items-center justify-center gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                                    <button onclick="openUpdateMenuFromBtn(this)" 
+                                        data-id="{{ $menu->id }}" data-title="{{ $menu->title }}" data-description="{{ $menu->description }}" data-type="{{ $menu->type }}"
+                                        class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition" title="Edit">
+                                        <i class="uil uil-edit text-lg"></i>
+                                    </button>
+                                    <button onclick="openDeleteMenuFromBtn(this)" data-id="{{ $menu->id }}"
+                                        class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition" title="Hapus">
+                                        <i class="uil uil-trash-alt text-lg"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
 
-        <!-- Testimoni Pelanggan -->
-        <div
-          class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
-          <div class="bg-green-500/10 text-green-600 p-3 rounded-xl">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M7 8h10M7 12h6m-6 4h10M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-gray-700 font-semibold">Testimoni</h3>
-            <p class="text-2xl font-bold text-gray-900">{{ $testimonialCount ?? 12 }}</p>
-          </div>
+            <div id="dashboard-gallery" class="overflow-x-auto custom-scrollbar hidden">
+                <table class="w-full text-sm text-left text-slate-600">
+                    <thead class="text-xs text-slate-500 uppercase bg-slate-50 border-b border-slate-200 sticky top-0 z-10">
+                        <tr>
+                            <th scope="col" class="px-6 py-4 font-semibold">Foto & Judul</th>
+                            <th scope="col" class="px-6 py-4 font-semibold text-center">Kategori</th>
+                            <th scope="col" class="px-6 py-4 font-semibold text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        @foreach($photos as $photo)
+                        <tr class="hover:bg-slate-50/80 transition-colors duration-200 group">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-20 h-14 rounded-lg overflow-hidden border border-slate-200 shadow-sm relative group-img">
+                                        <img src="{{ asset($photo->image_path) }}" class="w-full h-full object-cover" alt="">
+                                    </div>
+                                    <span class="font-medium text-slate-700">{{ $photo->title }}</span>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border
+                                {{ $photo->category === 'food' ? 'bg-red-50 text-red-700 border-red-200' :
+                                   ($photo->category === 'customer' ? 'bg-blue-50 text-blue-700 border-blue-200' :
+                                   ($photo->category === 'event' ? 'bg-green-50 text-green-700 border-green-200' :
+                                   'bg-yellow-50 text-yellow-700 border-yellow-200')) }}">
+                                   {{ ucfirst($photo->category) }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <div class="flex items-center justify-center gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                                    <button onclick="openUpdatePhotoFromBtn(this)" 
+                                        data-id="{{ $photo->id }}" data-title="{{ $photo->title }}" data-category="{{ $photo->category }}"
+                                        class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition">
+                                        <i class="uil uil-edit text-lg"></i>
+                                    </button>
+                                    <button onclick="openDeletePhotoFromBtn(this)" data-id="{{ $photo->id }}"
+                                        class="p-2 text-red-600 hover:bg-red-50 rounded-lg transition">
+                                        <i class="uil uil-trash-alt text-lg"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            
+            @if($menus->isEmpty() && $photos->isEmpty())
+            <div class="p-10 text-center text-slate-400">
+                <i class="uil uil-folder-open text-4xl mb-2 block"></i>
+                <p>Belum ada data tersedia.</p>
+            </div>
+            @endif
         </div>
+        
+        <div class="h-20"></div> </div>
+    </main>
+  </div>
 
-        <!-- Event / Promo Aktif -->
-        <div
-          class="bg-white/70 backdrop-blur-md border border-gray-200/70 shadow-md hover:shadow-lg transition-all duration-300 rounded-2xl p-5 flex items-center gap-4">
-          <div class="bg-yellow-500/10 text-yellow-600 p-3 rounded-xl">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 12l2 2 4-4m6-2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h7l2 2h7z" />
-            </svg>
-          </div>
-          <div>
-            <h3 class="text-gray-700 font-semibold">Event / Promo Aktif</h3>
-            <p class="text-2xl font-bold text-gray-900">{{ $eventCount ?? 3 }}</p>
-          </div>
-        </div>
-      </section>
+  <div id="modalChoose" class="fixed inset-0 z-[60] hidden" role="dialog" aria-modal="true">
+      <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closeChooseModal()"></div>
       
-      <!-- Filter & Sort Menu -->
-      <div id="filter-menu"
-        class="flex flex-col sm:flex-row items-center justify-between gap-2 mb-4 max-w-6xl mx-4 md:mx-auto px-2 md:px-0 mt-8  fade-in-up">
-        <div class="flex items-center gap-3 flex-wrap">
-          <div class="flex items-center gap-2">
-            <label class="text-sm text-gray-600 font-medium">Filter by Tipe:</label>
-            <select id="menuFilterType"
-              class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-red-400 outline-none transition">
-              <option value="">Semua</option>
-              <option value="special">Special</option>
-              <option value="carousel">Carousel</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <label class="text-sm text-gray-600 font-medium">Sort by:</label>
-          <select id="menuSortBy"
-            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 outline-none transition">
-            <option value="latest">Terbaru</option>
-            <option value="oldest">Terlama</option>
-          </select>
-
-          <button id="menuResetFilter"
-            class="px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition">
-            Reset
-          </button>
-        </div>
-      </div>
-
-      <!-- Filter & Sort Gallery -->
-      <div id="filter-gallery"
-        class="flex flex-col sm:flex-row items-center justify-between gap-2 mb-4 max-w-6xl mx-4 md:mx-auto px-2 md:px-0 mt-8 fade-in-up">
-        <div class="flex items-center gap-3 flex-wrap">
-          <div class="flex items-center gap-2">
-            <label class="text-sm text-gray-600 font-medium">Filter by Kategori:</label>
-            <select id="galleryFilterCategory"
-              class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-green-400 outline-none transition">
-              <option value="">Semua</option>
-              <option value="food">Food</option>
-              <option value="customer">Customer</option>
-              <option value="event">Event</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <label class="text-sm text-gray-600 font-medium">Sort by:</label>
-          <select id="gallerySortBy"
-            class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-400 outline-none transition">
-            <option value="latest">Terbaru</option>
-            <option value="oldest">Terlama</option>
-          </select>
-
-          <button id="galleryResetFilter"
-            class="px-3 py-2 text-sm bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 transition">
-            Reset
-          </button>
-        </div>
-      </div>
-
-      <!-- Dashboard Menu -->
-      <div id="dashboard-menu"
-        class="bg-gray-100 shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-300 max-w-6xl mx-4 md:mx-auto p-2 md:p-4 fade-in-up">
-        <div class="overflow-x-auto">
-          <table class="min-w-full text-sm text-gray-700">
-            <thead class="bg-gray-300 border-b border-gray-200">
-              <tr>
-                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Judul</th>
-                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Deskripsi</th>
-                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Foto</th>
-                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider">Tipe</th>
-                <th class="px-4 py-2 text-center font-semibold uppercase tracking-wider">Aksi</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              @foreach($menus as $menu)
-                <tr class="transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:bg-gray-50 rounded-lg">
-                  <td class="px-4 py-2 font-medium">{{ $menu->title }}</td>
-                  <td class="px-4 py-2 text-gray-600">{{ Str::limit($menu->description, 90) }}</td>
-                  <td class="px-4 py-2">
-                    <img src="{{ asset($menu->image_path) }}" class="h-12 w-12 rounded-lg object-cover shadow">
-                  </td>
-                  <td class="px-4 py-2">
-                    <span
-                      class="px-2.5 py-0.5 rounded-full text-xs font-semibold {{ $menu->type === 'carousel' ? 'bg-purple-100 text-purple-700' : 'bg-orange-100 text-orange-500' }}">
-                      {{ ucfirst($menu->type) }}
-                    </span>
-                  </td>
-                  <td class="px-4 py-2 flex gap-1.5 justify-center">
-                    <button class="bg-blue-600 text-white px-3 py-1 rounded-md shadow hover:bg-blue-700 transition"
-                      onclick="openUpdateMenuFromBtn(this)"
-                      data-id="{{ $menu->id }}"
-                      data-title="{{ $menu->title }}"
-                      data-description="{{ $menu->description }}"
-                      data-type="{{ $menu->type }}">
-                      Edit
-                    </button>
-                    <button class="bg-red-600 text-white px-3 py-1 rounded-md shadow hover:bg-red-700 transition"
-                      data-id="{{ $menu->id }}" onclick="openDeleteMenuFromBtn(this)">Hapus</button>
-                  </td>
-                </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Dashboard Gallery -->
-      <div id="dashboard-gallery"
-        class="bg-gray-100 shadow-xl rounded-2xl overflow-hidden mt-8 border border-gray-300 max-w-6xl mx-4 md:mx-auto p-2 md:p-4 hidden fade-in-up">
-        <div class="overflow-x-auto">
-          <table class="w-full table-fixed text-sm text-gray-700">
-            <thead class="bg-gray-300 border-b border-gray-200">
-              <tr>
-                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider w-[40%]">Judul</th>
-                <th class="px-4 py-2 text-center font-semibold uppercase tracking-wider w-[20%]">Foto</th>
-                <th class="px-4 py-2 text-left font-semibold uppercase tracking-wider w-[20%]">Kategori</th>
-                <th class="px-4 py-2 text-center font-semibold uppercase tracking-wider w-[20%]">Aksi</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-              @foreach($photos as $photo)
-                <tr class="transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:bg-gray-50 rounded-lg">
-                  <td class="px-4 py-2 font-medium truncate">{{ $photo->title }}</td>
-                  <td class="px-4 py-2">
-                    <img src="{{ asset($photo->image_path) }}" class="h-12 w-12 rounded-lg object-cover shadow mx-auto">
-                  </td>
-                  <td class="px-4 py-2">
-                    <span
-                      class="px-2.5 py-0.5 rounded-full text-xs font-semibold
-                      {{ $photo->category === 'food' ? 'bg-red-100 text-red-700' :
-                      ($photo->category === 'customer' ? 'bg-blue-100 text-blue-700' :
-                      ($photo->category === 'event' ? 'bg-green-100 text-green-700' :
-                      'bg-yellow-100 text-yellow-700')) }}">
-                      {{ ucfirst($photo->category) }}
-                    </span>
-                  </td>
-                  <td class="px-4 py-2 flex gap-1.5 justify-center">
-                    <button class="bg-blue-600 text-white px-3 py-1 rounded-md shadow hover:bg-blue-700 transition"
-                      onclick="openUpdatePhotoFromBtn(this)"
-                      data-id="{{ $photo->id }}"
-                      data-title="{{ $photo->title }}"
-                      data-category="{{ $photo->category }}">
-                      Edit
-                    </button>
-                    <button class="bg-red-600 text-white px-3 py-1 rounded-md shadow hover:bg-red-700 transition"
-                      data-id="{{ $photo->id }}" onclick="openDeletePhotoFromBtn(this)">Hapus</button>
-                  </td>
-                </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Pagination -->
-      <div class="flex justify-center items-center space-x-2 mt-6 mb-10 fade-in-up">
-        <button id="btn-menu" class="pagination-btn active-page">1</button>
-        <button id="btn-gallery" class="pagination-btn">2</button>
-      </div>
-
-      <!-- ================== MODAL ================== -->
-      <!-- Modal Pilih Tambah -->
-      <div id="modalChoose"
-        class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50"
-        onclick="if(event.target === this) closeChooseModal()">
-        <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative transition-all duration-300">
-          <button type="button" onclick="closeChooseModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-            <i class="uil uil-times text-2xl"></i>
-          </button>
-          <h2 class="text-xl font-bold mb-4">Tambah Foto</h2>
-          <div class="flex flex-col gap-3">
-            <button onclick="openTambahGallery()"
-              class="bg-gradient-to-r from-purple-500 to-purple-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Gallery</button>
-            <button onclick="openTambahMenu()"
-              class="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Menu</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal Tambah Gallery -->
-      <div id="modalTambahPhoto"
-        class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
-        onclick="if(event.target === this) closeTambahModal()">
-        <div
-          class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
-          <button type="button" onclick="closeTambahModal()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-            <i class="uil uil-times text-2xl"></i>
-          </button>
-          <h2 class="text-xl font-bold mb-4">Tambah Foto Baru</h2>
-          <form action="{{ route('gallery.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <input type="text" name="title" placeholder="Judul Foto" class="border p-2 rounded mb-3 w-full" required>
-            <select name="category" class="border p-2 rounded mb-3 w-full" required>
-              <option value="food">Food</option>
-              <option value="customer">Customer</option>
-              <option value="event">Event</option>
-              <option value="ambience">Ambience</option>
-            </select>
-            <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
-            <div class="flex justify-end">
-              <button type="submit"
-                class="bg-gradient-to-r from-green-500 to-green-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Upload</button>
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4 text-center">
+            
+            <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all w-full max-w-sm scale-95 opacity-0 modal-content">
+                <div class="p-6 text-center">
+                    <h3 class="text-xl font-bold text-slate-800 mb-6">Mau tambah data apa?</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="openTambahMenu()" class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-orange-100 bg-orange-50 text-orange-600 hover:bg-orange-100 hover:border-orange-300 transition-all gap-2 group">
+                            <i class="uil uil-utensils text-3xl group-hover:scale-110 transition-transform"></i>
+                            <span class="font-semibold text-sm">Menu</span>
+                        </button>
+                        <button onclick="openTambahGallery()" class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-blue-100 bg-blue-50 text-blue-600 hover:bg-blue-100 hover:border-blue-300 transition-all gap-2 group">
+                            <i class="uil uil-image text-3xl group-hover:scale-110 transition-transform"></i>
+                            <span class="font-semibold text-sm">Galeri</span>
+                        </button>
+                    </div>
+                    <button onclick="closeChooseModal()" class="mt-6 text-slate-400 hover:text-slate-600 text-sm font-medium">Batal</button>
+                </div>
             </div>
-          </form>
+
         </div>
       </div>
+  </div>
 
-      <!-- Update Photo -->
-      <div id="modalUpdatePhoto"
-        class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 transition-opacity duration-300 ease-out"
-        onclick="if(event.target === this) closeUpdatePhoto()">
-
-        <div
-          class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative transform -translate-y-[60%] scale-95 opacity-0 transition-all duration-300 ease-out">
-          
-          <button type="button" onclick="closeUpdatePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-            <i class="uil uil-times text-2xl"></i>
-          </button>
-
-          <h2 class="text-xl font-bold mb-4">Update Foto</h2>
-          <form id="formUpdatePhoto" method="POST" enctype="multipart/form-data"
-            data-action="{{ route('gallery.update', ':id') }}">
-            @csrf
-            @method('PUT')
-
-            <input type="text" id="updatePhotoTitle" name="title" placeholder="Judul Foto"
-              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
-
-            <select id="updatePhotoCategory" name="category"
-              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
-              <option value="food">Food</option>
-              <option value="customer">Customer</option>
-              <option value="event">Event</option>
-              <option value="ambience">Ambience</option>
-            </select>
-
-            <input type="file" name="image"
-              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition">
-
-            <div class="flex justify-end">
-              <button type="submit"
-                class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">
-                Update
-              </button>
+  <div id="modalTambahMenu" class="fixed inset-0 z-[60] hidden" role="dialog">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeTambahMenu()"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div class="flex min-h-full items-center justify-center p-4">
+        <div class="relative w-full max-w-md transform rounded-2xl bg-white p-6 shadow-2xl transition-all scale-95 opacity-0 modal-content">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-lg font-bold text-slate-800">Tambah Menu Baru</h3>
+                <button onclick="closeTambahMenu()" class="text-slate-400 hover:text-slate-600"><i class="uil uil-times text-xl"></i></button>
             </div>
-          </form>
+            <form action="{{ route('menu.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                @csrf
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Nama Menu</label>
+                    <input type="text" name="title" class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2.5 bg-slate-50" placeholder="Contoh: Nasi Goreng Spesial" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Deskripsi</label>
+                    <textarea name="description" rows="3" class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2.5 bg-slate-50" required></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Tipe</label>
+                        <select name="type" class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2.5 bg-slate-50">
+                            <option value="carousel">Carousel</option>
+                            <option value="special">Special</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Foto</label>
+                        <input type="file" name="image" class="w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" required>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg mt-2">Simpan Menu</button>
+            </form>
         </div>
       </div>
-
-      <!-- Delete Photo -->
-      <div id="modalDeletePhoto"
-        class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 transition-opacity duration-300 ease-out"
-        onclick="if(event.target === this) closeDeletePhoto()">
-
-        <div
-          class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative transform -translate-y-[60%] scale-95 opacity-0 transition-all duration-300 ease-out">
-
-          <button type="button" onclick="closeDeletePhoto()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-            <i class="uil uil-times text-2xl"></i>
-          </button>
-
-          <h2 class="text-xl font-bold mb-4">Hapus Foto</h2>
-          <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus foto ini?</p>
-
-          <form id="formDeletePhoto" method="POST" data-action="{{ route('gallery.destroy', ':id') }}">
-            @csrf
-            @method('DELETE')
-            <div class="flex justify-center gap-3">
-              <button type="button" onclick="closeDeletePhoto()"
-                class="bg-gray-400 text-white px-4 py-2 rounded-lg shadow hover:bg-gray-500 transition">
-                Batal
-              </button>
-              <button type="submit"
-                class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">
-                Hapus
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <!-- Modal Tambah Menu -->
-      <div id="modalTambahMenu"
-        class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
-        onclick="if(event.target === this) closeTambahMenu()">
-        <div
-          class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
-          <button type="button" onclick="closeTambahMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-            <i class="uil uil-times text-2xl"></i>
-          </button>
-          <h2 class="text-xl font-bold mb-4">Tambah Menu Baru</h2>
-          <form action="{{ route('menu.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <input type="text" name="title" placeholder="Nama Menu" class="border p-2 rounded mb-3 w-full" required>
-            <textarea name="description" placeholder="Deskripsi Menu"
-              class="border p-2 rounded mb-3 w-full" required></textarea>
-            <select name="type" class="border p-2 rounded mb-3 w-full" required>
-              <option value="carousel">Carousel</option>
-              <option value="special">Menu Spesial</option>
-            </select>
-            <input type="file" name="image" class="border p-2 rounded mb-3 w-full" required>
-            <div class="flex justify-end">
-              <button type="submit"
-                class="bg-gradient-to-r from-green-500 to-green-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Upload</button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <!-- Modal Update Menu -->
-      <div id="modalUpdateMenu"
-        class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
-        onclick="if(event.target === this) closeUpdateMenu()">
-        <div
-          class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
-          <button type="button" onclick="closeUpdateMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-            <i class="uil uil-times text-2xl"></i>
-          </button>
-          <h2 class="text-xl font-bold mb-4">Update Menu</h2>
-          <form id="formUpdateMenu" method="POST" enctype="multipart/form-data"
-            data-action="{{ route('menu.update', ':id') }}">
-            @csrf
-            @method('PUT')
-            <input type="text" id="updateTitle" name="title" placeholder="Nama Menu"
-              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
-            <textarea id="updateDescription" name="description" placeholder="Deskripsi Menu"
-              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required></textarea>
-            <select id="updateType" name="type"
-              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition" required>
-              <option value="carousel">Carousel</option>
-              <option value="special">Menu Spesial</option>
-            </select>
-            <input type="file" name="image"
-              class="border p-2 rounded mb-3 w-full focus:ring-2 focus:ring-blue-400 outline-none transition">
-            <div class="flex justify-end">
-              <button type="submit"
-                class="bg-gradient-to-r from-blue-500 to-blue-700 text-white px-4 py-2 rounded-lg shadow hover:opacity-90 transition">Update</button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <!-- Modal Delete Menu -->
-      <div id="modalDeleteMenu"
-        class="fixed inset-0 bg-black/50 hidden items-start justify-center z-50 overflow-y-auto transition-opacity duration-300 ease-out"
-        onclick="if(event.target === this) closeDeleteMenu()">
-        <div
-          class="bg-white p-6 rounded-xl shadow-lg w-full max-w-sm text-center relative mt-20 transform scale-95 opacity-0 transition-all duration-300 ease-out">
-          <button type="button" onclick="closeDeleteMenu()" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
-            <i class="uil uil-times text-2xl"></i>
-          </button>
-          <h2 class="text-xl font-bold mb-4">Hapus Menu</h2>
-          <p class="mb-4 text-gray-700">Apakah Anda yakin ingin menghapus menu ini?</p>
-          <form id="formDeleteMenu" method="POST" data-action="{{ route('menu.destroy', ':id') }}">
-            @csrf
-            @method('DELETE')
-            <div class="flex justify-center gap-3">
-              <button type="button" onclick="closeDeleteMenu()"
-                class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition">Batal</button>
-              <button type="submit"
-                class="bg-gradient-to-r from-red-500 to-red-700 text-white px-4 py-2 rounded hover:opacity-90 transition">Hapus</button>
-            </div>
-          </form>
-        </div>
-      </div>
-
     </div>
   </div>
 
-</body>
+  <div id="modalUpdateMenu" class="fixed inset-0 z-[60] hidden" role="dialog">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeUpdateMenu()"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div class="flex min-h-full items-center justify-center p-4">
+        <div class="relative w-full max-w-md transform rounded-2xl bg-white p-6 shadow-2xl transition-all scale-95 opacity-0 modal-content">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-lg font-bold text-slate-800">Edit Menu</h3>
+                <button onclick="closeUpdateMenu()" class="text-slate-400 hover:text-slate-600"><i class="uil uil-times text-xl"></i></button>
+            </div>
+            <form id="formUpdateMenu" method="POST" enctype="multipart/form-data" class="space-y-4" data-action="{{ route('menu.update', ':id') }}">
+                @csrf @method('PUT')
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Nama Menu</label>
+                    <input type="text" id="updateTitle" name="title" class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2.5 bg-slate-50" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Deskripsi</label>
+                    <textarea id="updateDescription" name="description" rows="3" class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2.5 bg-slate-50" required></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Tipe</label>
+                        <select id="updateType" name="type" class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2.5 bg-slate-50">
+                            <option value="carousel">Carousel</option>
+                            <option value="special">Special</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Ganti Foto (Opsional)</label>
+                        <input type="file" name="image" class="w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200">
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg mt-2">Update Perubahan</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <style>
-    .fade-in-up {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
+  <div id="modalDeleteMenu" class="fixed inset-0 z-[60] hidden" role="dialog">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeDeleteMenu()"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div class="flex min-h-full items-center justify-center p-4">
+        <div class="relative w-full max-w-sm transform rounded-2xl bg-white p-6 text-center shadow-2xl transition-all scale-95 opacity-0 modal-content">
+            <div class="w-14 h-14 rounded-full bg-red-100 text-red-500 flex items-center justify-center mx-auto mb-4">
+                <i class="uil uil-trash-alt text-2xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800 mb-2">Hapus Menu Ini?</h3>
+            <p class="text-sm text-slate-500 mb-6">Tindakan ini tidak dapat dibatalkan. Menu akan hilang dari daftar.</p>
+            
+            <form id="formDeleteMenu" method="POST" data-action="{{ route('menu.destroy', ':id') }}" class="flex gap-3">
+                @csrf @method('DELETE')
+                <button type="button" onclick="closeDeleteMenu()" class="flex-1 px-4 py-2.5 bg-slate-100 text-slate-700 font-semibold rounded-xl hover:bg-slate-200 transition">Batal</button>
+                <button type="submit" class="flex-1 px-4 py-2.5 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition shadow-lg shadow-red-500/30">Ya, Hapus</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    .fade-in-up.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+  <div id="modalTambahPhoto" class="fixed inset-0 z-[60] hidden" role="dialog">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeTambahModal()"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div class="flex min-h-full items-center justify-center p-4">
+        <div class="relative w-full max-w-md transform rounded-2xl bg-white p-6 shadow-2xl transition-all scale-95 opacity-0 modal-content">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-lg font-bold text-slate-800">Upload Foto Baru</h3>
+                <button onclick="closeTambahModal()" class="text-slate-400 hover:text-slate-600"><i class="uil uil-times text-xl"></i></button>
+            </div>
+            <form action="{{ route('gallery.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                @csrf
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Judul Foto</label>
+                    <input type="text" name="title" class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2.5 bg-slate-50" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Kategori</label>
+                    <select name="category" class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2.5 bg-slate-50">
+                        <option value="food">Food</option>
+                        <option value="customer">Customer</option>
+                        <option value="event">Event</option>
+                        <option value="ambience">Ambience</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">File Foto</label>
+                    <input type="file" name="image" class="w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" required>
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg mt-2">Upload Foto</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalUpdatePhoto" class="fixed inset-0 z-[60] hidden" role="dialog">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeUpdatePhoto()"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div class="flex min-h-full items-center justify-center p-4">
+        <div class="relative w-full max-w-md transform rounded-2xl bg-white p-6 shadow-2xl transition-all scale-95 opacity-0 modal-content">
+            <div class="flex justify-between items-center mb-5">
+                <h3 class="text-lg font-bold text-slate-800">Edit Foto</h3>
+                <button onclick="closeUpdatePhoto()" class="text-slate-400 hover:text-slate-600"><i class="uil uil-times text-xl"></i></button>
+            </div>
+            <form id="formUpdatePhoto" method="POST" enctype="multipart/form-data" class="space-y-4" data-action="{{ route('gallery.update', ':id') }}">
+                @csrf @method('PUT')
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Judul Foto</label>
+                    <input type="text" id="updatePhotoTitle" name="title" class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2.5 bg-slate-50" required>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Kategori</label>
+                    <select id="updatePhotoCategory" name="category" class="w-full rounded-lg border-slate-300 focus:border-indigo-500 focus:ring-indigo-500 text-sm p-2.5 bg-slate-50">
+                        <option value="food">Food</option>
+                        <option value="customer">Customer</option>
+                        <option value="event">Event</option>
+                        <option value="ambience">Ambience</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Ganti Foto (Opsional)</label>
+                    <input type="file" name="image" class="w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg mt-2">Simpan Perubahan</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modalDeletePhoto" class="fixed inset-0 z-[60] hidden" role="dialog">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeDeletePhoto()"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+      <div class="flex min-h-full items-center justify-center p-4">
+        <div class="relative w-full max-w-sm transform rounded-2xl bg-white p-6 text-center shadow-2xl transition-all scale-95 opacity-0 modal-content">
+            <div class="w-14 h-14 rounded-full bg-red-100 text-red-500 flex items-center justify-center mx-auto mb-4">
+                <i class="uil uil-trash-alt text-2xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800 mb-2">Hapus Foto Ini?</h3>
+            <p class="text-sm text-slate-500 mb-6">Foto yang dihapus tidak bisa dikembalikan lagi.</p>
+            
+            <form id="formDeletePhoto" method="POST" data-action="{{ route('gallery.destroy', ':id') }}" class="flex gap-3">
+                @csrf @method('DELETE')
+                <button type="button" onclick="closeDeletePhoto()" class="flex-1 px-4 py-2.5 bg-slate-100 text-slate-700 font-semibold rounded-xl hover:bg-slate-200 transition">Batal</button>
+                <button type="submit" class="flex-1 px-4 py-2.5 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition shadow-lg shadow-red-500/30">Ya, Hapus</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const fadeElements = document.querySelectorAll(".fade-in-up");
-
-      fadeElements.forEach((el, i) => {
-        setTimeout(() => {
-          el.classList.add("show");
-        }, i * 200); // delay 200ms antar elemen
-      });
-    });
-  </script>
-
-  <!-- Script Toggle Sidebar -->
-  <script>
+    // 1. Sidebar Toggle
     function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('overlay');
-      sidebar.classList.toggle('-translate-x-full');
-      overlay.classList.toggle('hidden');
-    }
-  </script>
-
-  <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // tombol & blok
-    const btnMenu = document.getElementById("btn-menu");
-    const btnGallery = document.getElementById("btn-gallery");
-    const dashboardMenu = document.getElementById("dashboard-menu");
-    const dashboardGallery = document.getElementById("dashboard-gallery");
-
-    // filter blocks (pastikan ID ini ada di HTML)
-    const filterMenuBlock = document.getElementById("filter-menu");
-    const filterGalleryBlock = document.getElementById("filter-gallery");
-
-    // selects & buttons (menu)
-    const filterTypeMenu = document.getElementById("menuFilterType");
-    const sortMenu = document.getElementById("menuSortBy");
-    const resetMenu = document.getElementById("menuResetFilter");
-
-    // selects & buttons (gallery)
-    const filterCategoryGallery = document.getElementById("galleryFilterCategory");
-    const sortGallery = document.getElementById("gallerySortBy");
-    const resetGallery = document.getElementById("galleryResetFilter");
-
-    // safety checks — jika elemen penting gak ada, hentikan lebih awal dengan pesan
-    if (!btnMenu || !btnGallery || !dashboardMenu || !dashboardGallery) {
-      console.warn("Element pagination/dashboard missing — periksa ID elemen.");
-      return;
-    }
-    if (!filterMenuBlock || !filterGalleryBlock) {
-      console.warn("Filter blocks missing — pastikan ada #filter-menu dan #filter-gallery.");
-      // continue anyway; script akan cek setiap elemen sebelum menggunakan
-    }
-
-    // Simpan baris asli (as node arrays) — ini kunci supaya Reset mengembalikan urutan awal
-    const menuTbody = dashboardMenu.querySelector("tbody");
-    const galleryTbody = dashboardGallery.querySelector("tbody");
-
-    // jika tbody tidak ada, stop
-    if (!menuTbody || !galleryTbody) {
-      console.warn("tbody untuk menu/gallery tidak ditemukan.");
-      return;
-    }
-
-    // clone nodes into arrays (preserve original order)
-    const originalMenuRows = Array.from(menuTbody.querySelectorAll("tr")).map(tr => tr.cloneNode(true));
-    const originalGalleryRows = Array.from(galleryTbody.querySelectorAll("tr")).map(tr => tr.cloneNode(true));
-
-    // helper show/hide that only toggles 'hidden' class (kehilangan flex jangan dilakukan)
-    const show = el => el && el.classList.remove("hidden");
-    const hide = el => el && el.classList.add("hidden");
-
-    // ---------- TOGGLE VIEWS ----------
-    function showMenuView() {
-      show(dashboardMenu);
-      hide(dashboardGallery);
-      if (filterMenuBlock) show(filterMenuBlock);
-      if (filterGalleryBlock) hide(filterGalleryBlock);
-      btnMenu.classList.add("active-page");
-      btnGallery.classList.remove("active-page");
-      resetMenuFiltersAndView();
-    }
-
-    function showGalleryView() {
-      show(dashboardGallery);
-      hide(dashboardMenu);
-      if (filterGalleryBlock) show(filterGalleryBlock);
-      if (filterMenuBlock) hide(filterMenuBlock);
-      btnGallery.classList.add("active-page");
-      btnMenu.classList.remove("active-page");
-      resetGalleryFiltersAndView();
-    }
-
-    btnMenu.addEventListener("click", showMenuView);
-    btnGallery.addEventListener("click", showGalleryView);
-
-    // default: show menu
-    showMenuView();
-
-    // ---------- MENU: Filter / Sort / Reset (work from originalMenuRows) ----------
-    function applyMenuFilterAndSort() {
-      // if selects missing, nothing to do
-      if (!filterTypeMenu || !sortMenu) return;
-
-      const typeValue = (filterTypeMenu.value || "").toLowerCase();
-      const sortValue = (sortMenu.value || "latest").toLowerCase();
-
-      // filter from original rows to preserve original order
-      let rows = originalMenuRows.filter(row => {
-        // find type cell text — using the span text inside 4th column
-        const typeSpan = row.querySelector("td:nth-child(4) span");
-        const type = typeSpan ? typeSpan.textContent.trim().toLowerCase() : "";
-        return typeValue === "" || type === typeValue;
-      });
-
-      // sort: latest = original order, oldest = reversed
-      if (sortValue === "oldest") rows = rows.slice().reverse();
-
-      // render
-      menuTbody.innerHTML = "";
-      rows.forEach(r => menuTbody.appendChild(r.cloneNode(true)));
-    }
-
-    function resetMenuFiltersAndView() {
-      if (filterTypeMenu) filterTypeMenu.value = "";
-      if (sortMenu) sortMenu.value = "latest";
-      // restore original rows
-      menuTbody.innerHTML = "";
-      originalMenuRows.forEach(r => menuTbody.appendChild(r.cloneNode(true)));
-    }
-
-    if (filterTypeMenu) filterTypeMenu.addEventListener("change", applyMenuFilterAndSort);
-    if (sortMenu) sortMenu.addEventListener("change", applyMenuFilterAndSort);
-    if (resetMenu) resetMenu.addEventListener("click", resetMenuFiltersAndView);
-
-    // ---------- GALLERY: Filter / Sort / Reset (work from originalGalleryRows) ----------
-    function applyGalleryFilterAndSort() {
-      if (!filterCategoryGallery || !sortGallery) return;
-
-      const catValue = (filterCategoryGallery.value || "").toLowerCase();
-      const sortValue = (sortGallery.value || "latest").toLowerCase();
-
-      let rows = originalGalleryRows.filter(row => {
-        // find category span inside 3rd td
-        const catSpan = row.querySelector("td:nth-child(3) span");
-        const cat = catSpan ? catSpan.textContent.trim().toLowerCase() : "";
-        return catValue === "" || cat === catValue;
-      });
-
-      if (sortValue === "oldest") rows = rows.slice().reverse();
-
-      // render
-      galleryTbody.innerHTML = "";
-      rows.forEach(r => galleryTbody.appendChild(r.cloneNode(true)));
-    }
-
-    function resetGalleryFiltersAndView() {
-      if (filterCategoryGallery) filterCategoryGallery.value = "";
-      if (sortGallery) sortGallery.value = "latest";
-      galleryTbody.innerHTML = "";
-      originalGalleryRows.forEach(r => galleryTbody.appendChild(r.cloneNode(true)));
-    }
-
-    if (filterCategoryGallery) filterCategoryGallery.addEventListener("change", applyGalleryFilterAndSort);
-    if (sortGallery) sortGallery.addEventListener("change", applyGalleryFilterAndSort);
-    if (resetGallery) resetGallery.addEventListener("click", resetGalleryFiltersAndView);
-
-    // ---------- Safety: if user toggles views manually, keep tables consistent ----------
-    // If there are any other toggles that change visibility, you can call showMenuView() / showGalleryView()
-
-  });
-  </script>
-
-  <!-- Script Toggle -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const btnMenu = document.getElementById('btn-menu');
-      const btnGallery = document.getElementById('btn-gallery');
-      const dashboardMenu = document.getElementById('dashboard-menu');
-      const dashboardGallery = document.getElementById('dashboard-gallery');
-
-      // Pastikan tampilan awal: Menu aktif
-      dashboardMenu.classList.remove('hidden');
-      dashboardGallery.classList.add('hidden');
-      btnMenu.classList.add('active-page');
-      btnGallery.classList.remove('active-page');
-
-      // Tombol Menu (1)
-      btnMenu.addEventListener('click', () => {
-        dashboardMenu.classList.remove('hidden');
-        dashboardGallery.classList.add('hidden');
-        btnMenu.classList.add('active-page');
-        btnGallery.classList.remove('active-page');
-      });
-
-      // Tombol Gallery (2)
-      btnGallery.addEventListener('click', () => {
-        dashboardGallery.classList.remove('hidden');
-        dashboardMenu.classList.add('hidden');
-        btnGallery.classList.add('active-page');
-        btnMenu.classList.remove('active-page');
-      });
-    });
-  </script>
-
-  <!-- Styling Pagination -->
-  <style>
-    .pagination-btn {
-      width: 38px;
-      height: 38px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #f3f4f6;
-      color: #374151;
-      font-weight: 600;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .pagination-btn:hover {
-      background-color: #e5e7eb;
-      transform: translateY(-1px);
-    }
-
-    .active-page {
-      background: linear-gradient(to right, #2563eb, #3b82f6);
-      color: white !important;
-      transform: scale(1.05);
-      box-shadow: 0 2px 6px rgba(59, 130, 246, 0.4);
-    }
-  </style>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const searchInput = document.getElementById('searchInput');
-      const dashboardMenu = document.getElementById('dashboard-menu');
-      const dashboardGallery = document.getElementById('dashboard-gallery');
-      const btnMenu = document.getElementById('btn-menu');
-      const btnGallery = document.getElementById('btn-gallery');
-
-      let highlightedRows = [];
-      let activeIndex = -1; // posisi baris aktif
-
-      // CSS tambahan untuk gradasi
-      const style = document.createElement('style');
-      style.innerHTML = `
-        .highlighted-row {
-          background: linear-gradient(to right, #fff9c4, #fff59d); /* gradasi kuning lembut */
-          transition: background 0.3s ease;
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        
+        const isClosed = sidebar.classList.contains('-translate-x-full');
+        if (isClosed) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        } else {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
         }
-        .active-highlight {
-          background: linear-gradient(to right, #ffd180, #ffcc80); /* oranye lembut */
-          transform: scale(1.01);
-          box-shadow: 0 0 6px rgba(255, 171, 64, 0.5);
-        }
-      `;
-      document.head.appendChild(style);
+    }
 
-      function clearHighlights() {
-        highlightedRows.forEach(row => {
-          row.classList.remove('highlighted-row', 'active-highlight');
+    // 2. Tab Switcher Logic
+    const btnMenu = document.getElementById('btn-menu');
+    const btnGallery = document.getElementById('btn-gallery');
+    const tableMenu = document.getElementById('dashboard-menu');
+    const tableGallery = document.getElementById('dashboard-gallery');
+    const filterMenu = document.getElementById('filter-menu');
+    const filterGallery = document.getElementById('filter-gallery');
+
+    function setActiveTab(type) {
+        if(type === 'menu') {
+            // === AKTIFKAN TAB MENU ===
+            btnMenu.classList.add('bg-white', 'text-indigo-600', 'shadow-sm');
+            btnMenu.classList.remove('text-slate-500');
+            
+            btnGallery.classList.remove('bg-white', 'text-indigo-600', 'shadow-sm');
+            btnGallery.classList.add('text-slate-500');
+
+            // Show Menu Table
+            tableMenu.classList.remove('hidden');
+            tableGallery.classList.add('hidden');
+            
+            // Show Menu Filter (Tambah Flex, Hapus Hidden)
+            filterMenu.classList.remove('hidden');
+            filterMenu.classList.add('flex');
+            
+            // Hide Gallery Filter (Hapus Flex, Tambah Hidden)
+            filterGallery.classList.add('hidden');
+            filterGallery.classList.remove('flex');
+        } else {
+            // === AKTIFKAN TAB GALLERY ===
+            btnGallery.classList.add('bg-white', 'text-indigo-600', 'shadow-sm');
+            btnGallery.classList.remove('text-slate-500');
+
+            btnMenu.classList.remove('bg-white', 'text-indigo-600', 'shadow-sm');
+            btnMenu.classList.add('text-slate-500');
+
+            // Show Gallery Table
+            tableGallery.classList.remove('hidden');
+            tableMenu.classList.add('hidden');
+
+            // Show Gallery Filter (Tambah Flex, Hapus Hidden)
+            filterGallery.classList.remove('hidden');
+            filterGallery.classList.add('flex');
+            
+            // Hide Menu Filter (Hapus Flex, Tambah Hidden)
+            filterMenu.classList.add('hidden');
+            filterMenu.classList.remove('flex');
+        }
+    }
+
+    btnMenu.addEventListener('click', () => setActiveTab('menu'));
+    btnGallery.addEventListener('click', () => setActiveTab('gallery'));
+    // Default active
+    setActiveTab('menu');
+
+    // 3. Modal System (The Fix: Fixed Position)
+    function toggleModal(modalID, show) {
+        const modal = document.getElementById(modalID);
+        const content = modal.querySelector('.modal-content');
+        
+        if (show) {
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Stop background scroll
+            
+            // Animation In
+            setTimeout(() => {
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        } else {
+            // Animation Out
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; // Resume background scroll
+            }, 200);
+        }
+    }
+
+    // Modal Choose
+    function openChooseModal() { toggleModal('modalChoose', true); }
+    function closeChooseModal() { toggleModal('modalChoose', false); }
+
+    // Modal Menu
+    function openTambahMenu() { closeChooseModal(); toggleModal('modalTambahMenu', true); }
+    function closeTambahMenu() { toggleModal('modalTambahMenu', false); }
+    
+    function openUpdateMenuFromBtn(btn) {
+        const form = document.getElementById('formUpdateMenu');
+        form.action = form.dataset.action.replace(':id', btn.dataset.id);
+        
+        document.getElementById('updateTitle').value = btn.dataset.title;
+        document.getElementById('updateDescription').value = btn.dataset.description;
+        document.getElementById('updateType').value = btn.dataset.type;
+        
+        toggleModal('modalUpdateMenu', true);
+    }
+    function closeUpdateMenu() { toggleModal('modalUpdateMenu', false); }
+
+    function openDeleteMenuFromBtn(btn) {
+        const form = document.getElementById('formDeleteMenu');
+        form.action = form.dataset.action.replace(':id', btn.dataset.id);
+        toggleModal('modalDeleteMenu', true);
+    }
+    function closeDeleteMenu() { toggleModal('modalDeleteMenu', false); }
+
+    // Modal Gallery
+    function openTambahGallery() { closeChooseModal(); toggleModal('modalTambahPhoto', true); }
+    function closeTambahModal() { toggleModal('modalTambahPhoto', false); }
+
+    function openUpdatePhotoFromBtn(btn) {
+        const form = document.getElementById('formUpdatePhoto');
+        form.action = form.dataset.action.replace(':id', btn.dataset.id);
+        
+        document.getElementById('updatePhotoTitle').value = btn.dataset.title;
+        document.getElementById('updatePhotoCategory').value = btn.dataset.category;
+        
+        toggleModal('modalUpdatePhoto', true);
+    }
+    function closeUpdatePhoto() { toggleModal('modalUpdatePhoto', false); }
+
+    function openDeletePhotoFromBtn(btn) {
+        const form = document.getElementById('formDeletePhoto');
+        form.action = form.dataset.action.replace(':id', btn.dataset.id);
+        toggleModal('modalDeletePhoto', true);
+    }
+    function closeDeletePhoto() { toggleModal('modalDeletePhoto', false); }
+
+    // 4. Search & Highlight Logic
+    const searchInput = document.getElementById('searchInput');
+    let highlightedRows = [];
+    let highlightIndex = -1;
+
+    function clearHighlights() {
+        document.querySelectorAll('.highlighted-row').forEach(el => {
+            el.classList.remove('highlighted-row', 'active-highlight');
         });
         highlightedRows = [];
-        activeIndex = -1;
-      }
+        highlightIndex = -1;
+    }
 
-      function showTable(target) {
-        if (target === 'menu') {
-          dashboardMenu.classList.remove('hidden');
-          dashboardGallery.classList.add('hidden');
-          btnMenu.classList.add('active-page');
-          btnGallery.classList.remove('active-page');
-        } else {
-          dashboardGallery.classList.remove('hidden');
-          dashboardMenu.classList.add('hidden');
-          btnGallery.classList.add('active-page');
-          btnMenu.classList.remove('active-page');
-        }
-      }
-
-      function detectTable(keyword) {
-        keyword = keyword.toLowerCase();
-        const menuRows = Array.from(dashboardMenu.querySelectorAll('tbody tr'));
-        const galleryRows = Array.from(dashboardGallery.querySelectorAll('tbody tr'));
-
-        const foundMenu = menuRows.some(row => row.textContent.toLowerCase().includes(keyword));
-        const foundGallery = galleryRows.some(row => row.textContent.toLowerCase().includes(keyword));
-
-        if (foundGallery && !foundMenu) showTable('gallery');
-        else showTable('menu');
-      }
-
-      function highlightRows(keyword) {
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
         clearHighlights();
-        if (!keyword) return;
+        
+        if (!term) return;
 
-        keyword = keyword.toLowerCase();
-        const visibleTable = !dashboardMenu.classList.contains('hidden') ? dashboardMenu : dashboardGallery;
-        const rows = visibleTable.querySelectorAll('tbody tr');
-        highlightedRows = [];
+        // Determine visible table
+        const activeTable = tableMenu.classList.contains('hidden') ? tableGallery : tableMenu;
+        const rows = activeTable.querySelectorAll('tbody tr');
+        let found = false;
 
         rows.forEach(row => {
-          if (row.textContent.toLowerCase().includes(keyword)) {
-            row.classList.add('highlighted-row');
-            highlightedRows.push(row);
-          }
+            if(row.innerText.toLowerCase().includes(term)) {
+                row.classList.add('highlighted-row');
+                highlightedRows.push(row);
+                found = true;
+            }
         });
 
-        if (highlightedRows.length > 0) {
-          activeIndex = 0;
-          highlightedRows[0].classList.add('active-highlight');
-          highlightedRows[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Auto switch tab if not found in current but found in other
+        if(!found) {
+            const otherTable = tableMenu.classList.contains('hidden') ? tableMenu : tableGallery;
+            const otherRows = otherTable.querySelectorAll('tbody tr');
+            let foundOther = false;
+            otherRows.forEach(row => {
+                if(row.innerText.toLowerCase().includes(term)) foundOther = true;
+            });
+
+            if(foundOther) {
+                if(activeTable === tableMenu) setActiveTab('gallery');
+                else setActiveTab('menu');
+                // Retrigger input event to highlight in new tab
+                searchInput.dispatchEvent(new Event('input'));
+            }
         }
-      }
+    });
 
-      function moveHighlight(direction) {
-        if (highlightedRows.length === 0) return;
+    // Navigation Key (Enter/Up/Down)
+    searchInput.addEventListener('keydown', (e) => {
+        if(highlightedRows.length === 0) return;
 
-        highlightedRows[activeIndex].classList.remove('active-highlight');
-
-        if (direction === 'down') {
-          activeIndex = (activeIndex + 1) % highlightedRows.length;
-        } else if (direction === 'up') {
-          activeIndex = (activeIndex - 1 + highlightedRows.length) % highlightedRows.length;
-        }
-
-        highlightedRows[activeIndex].classList.add('active-highlight');
-        highlightedRows[activeIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
-
-      // Saat mengetik → tampilkan tabel tujuan
-      searchInput.addEventListener('input', function() {
-        const keyword = this.value.trim();
-        if (!keyword) {
-          clearHighlights();
-          return;
-        }
-        detectTable(keyword);
-      });
-
-      // Saat tekan Enter → highlight hasil
-      searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          const keyword = this.value.trim();
-          highlightRows(keyword);
-        }
-      });
-
-      // Navigasi pakai panah
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowDown') {
-          e.preventDefault();
-          moveHighlight('down');
+        if (e.key === 'Enter' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            if(highlightIndex >= 0) highlightedRows[highlightIndex].classList.remove('active-highlight');
+            
+            highlightIndex = (highlightIndex + 1) % highlightedRows.length;
+            
+            const target = highlightedRows[highlightIndex];
+            target.classList.add('active-highlight');
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else if (e.key === 'ArrowUp') {
-          e.preventDefault();
-          moveHighlight('up');
+            e.preventDefault();
+            if(highlightIndex >= 0) highlightedRows[highlightIndex].classList.remove('active-highlight');
+            
+            highlightIndex = (highlightIndex - 1 + highlightedRows.length) % highlightedRows.length;
+            
+            const target = highlightedRows[highlightIndex];
+            target.classList.add('active-highlight');
+            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-      });
     });
+
+    // 5. Filter & Sort Logic (Basic Implementation)
+    const globalReset = document.getElementById('globalReset');
+    const menuTbody = tableMenu.querySelector('tbody');
+    const galleryTbody = tableGallery.querySelector('tbody');
+    
+    // Store original rows
+    const originalMenuRows = Array.from(menuTbody.querySelectorAll('tr'));
+    const originalGalleryRows = Array.from(galleryTbody.querySelectorAll('tr'));
+
+    function filterTable() {
+        // Logic filter menu
+        const menuType = document.getElementById('menuFilterType').value.toLowerCase();
+        const menuSort = document.getElementById('menuSortBy').value;
+        
+        let mRows = [...originalMenuRows];
+        if(menuType) {
+            mRows = mRows.filter(row => {
+                const typeText = row.querySelector('td:nth-child(3)').innerText.toLowerCase(); // Column index 3
+                return typeText.includes(menuType);
+            });
+        }
+        if(menuSort === 'oldest') mRows.reverse();
+        menuTbody.innerHTML = '';
+        mRows.forEach(row => menuTbody.appendChild(row));
+
+        // Logic filter gallery
+        const galCat = document.getElementById('galleryFilterCategory').value.toLowerCase();
+        const galSort = document.getElementById('gallerySortBy').value;
+
+        let gRows = [...originalGalleryRows];
+        if(galCat) {
+            gRows = gRows.filter(row => {
+                const catText = row.querySelector('td:nth-child(2)').innerText.toLowerCase(); // Column index 2
+                return catText.includes(galCat);
+            });
+        }
+        if(galSort === 'oldest') gRows.reverse();
+        galleryTbody.innerHTML = '';
+        gRows.forEach(row => galleryTbody.appendChild(row));
+    }
+
+    // Attach listeners
+    ['menuFilterType', 'menuSortBy', 'galleryFilterCategory', 'gallerySortBy'].forEach(id => {
+        document.getElementById(id).addEventListener('change', filterTable);
+    });
+
+    globalReset.addEventListener('click', () => {
+        document.getElementById('menuFilterType').value = "";
+        document.getElementById('menuSortBy').value = "latest";
+        document.getElementById('galleryFilterCategory').value = "";
+        document.getElementById('gallerySortBy').value = "latest";
+        document.getElementById('searchInput').value = "";
+        clearHighlights();
+        filterTable();
+    });
+
+    // 6. Fade Animation on Load
+    document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll(".fade-section");
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("fade-enter-active");
+                    entry.target.classList.remove("fade-enter");
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        sections.forEach(s => {
+            s.classList.add("fade-enter");
+            observer.observe(s);
+        });
+
+        // Hide alert after 3s
+        const alert = document.getElementById('success-alert');
+        if(alert) setTimeout(() => alert.style.display = 'none', 3000);
+    });
+
   </script>
-
-  <script>
-  // ================================
-  // Auto hide success alert
-  // ================================
-  setTimeout(() => {
-    const alertBox = document.getElementById('success-alert');
-    if (alertBox) {
-      alertBox.style.opacity = '0';
-      alertBox.style.transform = 'translateY(-20px)';
-      setTimeout(() => alertBox.remove(), 500);
-    }
-  }, 2000);
-
-  // ================================
-  // Fade in effect
-  // ================================
-  document.addEventListener("DOMContentLoaded", () => {
-    const sections = document.querySelectorAll(".fade-section");
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.remove("opacity-0", "translate-y-10");
-          entry.target.classList.add("opacity-100", "translate-y-0");
-          obs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
-
-    sections.forEach(section => observer.observe(section));
-  });
-
-  // ================================
-  // Global Modal System
-  // ================================
-  function showModal(id) {
-    const modal = document.getElementById(id);
-    if (!modal) return;
-    const content = modal.querySelector('div.bg-white, div.bg-gray-50, div.bg-slate-50');
-
-    // Posisi modal mengikuti scroll
-    const scrollY = window.scrollY || document.documentElement.scrollTop;
-    if (content) content.style.marginTop = `${scrollY + 100}px`;
-
-    modal.classList.remove('hidden');
-    requestAnimationFrame(() => {
-      modal.classList.add('flex');
-      modal.classList.remove('opacity-0');
-      if (content) {
-        content.classList.remove('opacity-0', 'scale-95');
-        content.classList.add('opacity-100', 'scale-100');
-      }
-    });
-
-    document.body.style.overflow = 'hidden'; // Disable scroll
-  }
-
-  function hideModal(id) {
-    const modal = document.getElementById(id);
-    if (!modal) return;
-    const content = modal.querySelector('div.bg-white, div.bg-gray-50, div.bg-slate-50');
-
-    if (content) {
-      content.classList.add('opacity-0', 'scale-95');
-      content.classList.remove('opacity-100', 'scale-100');
-    }
-    modal.classList.add('opacity-0');
-    setTimeout(() => {
-      modal.classList.remove('flex');
-      modal.classList.add('hidden');
-      modal.classList.remove('opacity-0');
-      document.body.style.overflow = ''; // Enable scroll again
-    }, 250);
-  }
-
-  // ================================
-  // GALLERY CRUD
-  // ================================
-  function openTambahGallery() {
-    closeChooseModal();
-    const modal = document.getElementById('modalTambahPhoto');
-    modal.classList.remove('hidden');
-    setTimeout(() => {
-      modal.querySelector('div').classList.remove('opacity-0', 'scale-95');
-      modal.querySelector('div').classList.add('opacity-100', 'scale-100');
-    }, 10);
-  }
-  function closeTambahModal() {
-    const modal = document.getElementById('modalTambahPhoto');
-    const box = modal.querySelector('div');
-    box.classList.add('opacity-0', 'scale-95');
-    box.classList.remove('opacity-100', 'scale-100');
-    setTimeout(() => modal.classList.add('hidden'), 300);
-  }
-
-  function openUpdatePhotoFromBtn(btn) {
-    const id = btn.dataset.id;
-    const title = btn.dataset.title || '';
-    const category = btn.dataset.category || '';
-    const form = document.getElementById('formUpdatePhoto');
-    const actionTemplate = form.getAttribute('data-action');
-    if (actionTemplate) form.action = actionTemplate.replace(':id', id);
-    document.getElementById('updatePhotoTitle').value = title;
-    document.getElementById('updatePhotoCategory').value = category;
-
-    // Gunakan efek modal baru
-    showModal('modalUpdatePhoto');
-  }
-
-  function closeUpdatePhoto() {
-    hideModal('modalUpdatePhoto');
-  }
-
-  function openDeletePhotoFromBtn(btn) {
-    const id = btn.dataset.id;
-    const form = document.getElementById('formDeletePhoto');
-    const actionTemplate = form.getAttribute('data-action');
-    if (actionTemplate) form.action = actionTemplate.replace(':id', id);
-
-    // Gunakan efek modal baru
-    showModal('modalDeletePhoto');
-  }
-
-  function closeDeletePhoto() {
-    hideModal('modalDeletePhoto');
-  }
-
-  // ================================
-  // MENU CRUD
-  // ================================
-  function openTambahMenu() {
-    closeChooseModal();
-    const modal = document.getElementById('modalTambahMenu');
-    modal.classList.remove('hidden');
-    setTimeout(() => {
-      modal.querySelector('div').classList.remove('opacity-0', 'scale-95');
-      modal.querySelector('div').classList.add('opacity-100', 'scale-100');
-    }, 10);
-  }
-  function closeTambahMenu() {
-    const modal = document.getElementById('modalTambahMenu');
-    const box = modal.querySelector('div');
-    box.classList.add('opacity-0', 'scale-95');
-    box.classList.remove('opacity-100', 'scale-100');
-    setTimeout(() => modal.classList.add('hidden'), 300);
-  }
-
-  function openUpdateMenuFromBtn(btn) {
-    const id = btn.dataset.id;
-    const title = btn.dataset.title || '';
-    const description = btn.dataset.description || '';
-    const type = btn.dataset.type || '';
-    const form = document.getElementById('formUpdateMenu');
-    const actionTemplate = form.getAttribute('data-action');
-    if (actionTemplate) form.action = actionTemplate.replace(':id', id);
-    document.getElementById('updateTitle').value = title;
-    document.getElementById('updateDescription').value = description;
-    document.getElementById('updateType').value = type;
-
-    showModal('modalUpdateMenu');
-  }
-
-  function closeUpdateMenu() {
-    hideModal('modalUpdateMenu');
-  }
-
-  function openDeleteMenuFromBtn(btn) {
-    const id = btn.dataset.id;
-    const form = document.getElementById('formDeleteMenu');
-    const actionTemplate = form.getAttribute('data-action');
-    if (actionTemplate) form.action = actionTemplate.replace(':id', id);
-    showModal('modalDeleteMenu');
-  }
-
-  function closeDeleteMenu() {
-    hideModal('modalDeleteMenu');
-  }
-
-  // ================================
-  // Modal pilih tambah / tambah menu / gallery
-  // ================================
-  function openChooseModal() { showModal('modalChoose'); }
-  function closeChooseModal() { hideModal('modalChoose'); }
-
-  function openTambahGallery() {
-    closeChooseModal();
-    showModal('modalTambahPhoto');
-  }
-  function closeTambahModal() { hideModal('modalTambahPhoto'); }
-
-  function openTambahMenu() {
-    closeChooseModal();
-    showModal('modalTambahMenu');
-  }
-  function closeTambahMenu() { hideModal('modalTambahMenu'); }
-</script>
-
+</body>
 </html>

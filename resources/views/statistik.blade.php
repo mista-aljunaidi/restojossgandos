@@ -3,232 +3,281 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Statistik - Dashboard</title>
+  <title>Statistik - Resto Joss Gandos</title>
   <link rel="icon" type="image/png" href="{{ asset('img/logojossgandos.png') }}">
+  
   @vite(['resources/css/app.css','resources/js/app.js'])
   <script src="https://cdn.tailwindcss.com"></script>
+  
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    
+    /* Smooth Scroll */
+    html { scroll-behavior: smooth; }
+
+    /* Custom Scrollbar */
+    .custom-scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    /* Animation */
+    .fade-enter { opacity: 0; transform: translateY(10px); }
+    .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 0.4s ease-out, transform 0.4s ease-out; }
+  </style>
 </head>
 
-  <body class="bg-gray-50 text-gray-900 overflow-x-hidden overflow-y-auto flex">
+<body class="bg-slate-50 text-slate-800 antialiased overflow-hidden">
 
-    <!-- Sidebar -->
-    <aside id="sidebar"
-      class="bg-gradient-to-b from-gray-900/95 to-gray-800/90 backdrop-blur-lg text-white shadow-[0_0_25px_rgba(255,255,255,0.05)]
-            flex flex-col justify-between z-50 transition-all duration-300
-            fixed left-0 top-0 h-screen w-60 -translate-x-full md:translate-x-0 md:relative md:h-auto border-r border-gray-700/50">
+  <div class="flex h-screen overflow-hidden">
+
+    <aside id="sidebar" 
+      class="fixed inset-y-0 left-0 z-40 w-64 bg-slate-900 text-white transform -translate-x-full transition-transform duration-300 ease-in-out md:relative md:translate-x-0 flex flex-col justify-between shadow-2xl">
+      
       <div>
-        <!-- Logo -->
-        <div class="flex items-start gap-3 px-6 py-5 mt-16 md:mt-4 pb-2 border-b border-gray-700/50">
-          <img src="{{ asset('img/logojossgandos.png') }}" alt="Logo"
-            class="w-10 h-10 object-contain flex-shrink-0 drop-shadow-[0_0_6px_rgba(255,255,255,0.2)]">
-          <span class="text-lg font-semibold tracking-wide text-white leading-tight">
-            Resto <br> Joss Gandos
-          </span>
+        <div class="flex items-center gap-3 px-6 py-8 border-b border-slate-700/50">
+          <div class="relative group">
+            <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-orange-600 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
+            <img src="{{ asset('img/logojossgandos.png') }}" alt="Logo" class="relative w-10 h-10 object-contain">
+          </div>
+          <div>
+            <h1 class="font-bold text-lg tracking-wide leading-none">Resto Joss Gandos</h1>
+            <span class="text-xs text-slate-400 font-medium tracking-wider uppercase">Dashboard Admin</span>
+          </div>
         </div>
 
-        <!-- Navigasi -->
-        <nav class="mt-6 flex flex-col space-y-2 px-3">
-          <a href="{{ route('dashboard') }}"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-gray-700/60 to-gray-700/30 hover:from-gray-600/80 hover:to-gray-600/60
-                  text-white font-medium transition duration-300 backdrop-blur-sm border border-gray-600/30 hover:border-gray-400/50 shadow-md">
-            <img src="{{ asset('img/dashboard.png') }}" alt="Dashboard" class="w-6 h-6 invert">
-            <span>Dashboard</span>
+        <nav class="mt-8 px-4 space-y-2">
+          <a href="{{ route('dashboard') }}" 
+             class="flex items-center gap-3 px-4 py-3.5 text-sm font-medium rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-all group">
+             <i class="uil uil-apps text-xl group-hover:text-indigo-400 transition-colors"></i>
+             <span>Overview</span>
           </a>
 
-          <a href="{{ route('statistik') }}"
-            class="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-indigo-700/70 to-indigo-600/40 hover:from-indigo-600/80 hover:to-indigo-500/70
-                  text-white font-medium transition duration-300 backdrop-blur-sm border border-indigo-400/40 shadow-lg">
-            <i class="uil uil-chart-line text-indigo-200 text-lg"></i>
-            <span>Statistik</span>
+          <a href="{{ route('statistik') }}" 
+             class="flex items-center gap-3 px-4 py-3.5 text-sm font-medium rounded-xl bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 transition-all hover:bg-indigo-700">
+             <i class="uil uil-chart-line text-xl"></i>
+             <span>Statistik</span>
           </a>
         </nav>
       </div>
 
-      <!-- Tombol Logout -->
-      <form action="{{ route('logout') }}" method="POST" class="px-4 py-5 border-t border-gray-700/50">
-        @csrf
-        <button type="submit"
-          class="flex items-center justify-center gap-3 w-full bg-gradient-to-r from-gray-700/60 to-gray-700/30
-                hover:from-red-600 hover:to-red-700 text-white py-3 rounded-xl shadow-lg transition duration-300 border border-gray-600/40">
-          <img src="{{ asset('img/exit.png') }}" alt="Logout" class="w-6 h-6 invert">
-          <span class="font-medium">Logout</span>
-        </button>
-      </form>
+      <div class="p-4 border-t border-slate-700/50">
+        <form action="{{ route('logout') }}" method="POST">
+          @csrf
+          <button type="submit" 
+            class="flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-medium text-red-400 bg-slate-800/50 hover:bg-red-500/10 hover:text-red-500 rounded-xl transition-all border border-transparent hover:border-red-500/20">
+            <i class="uil uil-sign-out-alt text-lg"></i>
+            <span>Logout</span>
+          </button>
+        </form>
+      </div>
     </aside>
 
-    <!-- Overlay (mobile) -->
-    <div id="overlay"
-      class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-40 md:hidden transition-opacity duration-300"
-      onclick="toggleSidebar()"></div>
+    <div id="overlay" class="fixed inset-0 bg-slate-900/50 z-30 hidden md:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
 
-    <!-- Konten Utama -->
-    <main class="flex-1 md:ml-[40px] ml-0 pl-6 pr-4 py-6 transition-all duration-300 bg-gray-50 min-h-screen">
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-slate-50 relative">
+      
+      <header class="flex-shrink-0 bg-white border-b border-slate-200 shadow-sm z-20 px-6 py-4 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-4 flex-1">
+          <button onclick="toggleSidebar()" class="md:hidden p-2 text-slate-500 hover:bg-slate-100 rounded-lg">
+            <i class="uil uil-bars text-2xl"></i>
+          </button>
 
-      <!-- Header -->
-      <div class="max-w-6xl">
-        <header
-          class="flex items-center justify-between gap-3 bg-white/70 backdrop-blur-md rounded-2xl shadow-md px-4 sm:px-6 py-4 mb-8 border border-gray-200/60 sticky top-0 z-30 fade-in-up">
+          <h1 class="text-xl font-bold text-slate-800 tracking-tight">Analisa & Statistik</h1>
+        </div>
+        
+        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-100 rounded-lg border border-slate-200 text-xs font-medium text-slate-600">
+            <i class="uil uil-calendar-alt"></i>
+            <span>{{ date('d M Y') }}</span>
+        </div>
+      </header>
 
-          <!-- Kiri: Tombol Sidebar (Mobile) + Judul -->
-          <div class="flex items-center gap-3">
-            <button onclick="toggleSidebar()"
-              class="md:hidden flex items-center justify-center p-2 rounded-lg hover:bg-gray-200 transition">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-
-            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">
-              Statistik
-            </h1>
-          </div>
-
-        </header>
-      </div>
-
-      <!-- Statistik Ringkas -->
-      <div class="max-w-6xl fade-in-up">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
-            <div class="bg-white shadow-md rounded-2xl p-5 flex items-center justify-between hover:shadow-lg transition">
+      <div class="flex-1 overflow-y-auto p-6 scroll-smooth fade-section" id="mainScrollContent">
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            
+            
+            <div class="bg-white p-6 rounded-2xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-slate-100 flex items-center justify-between hover:border-indigo-100 transition-colors">
                 <div>
-                    <h2 class="text-gray-600 text-sm font-medium">Total Pengunjung</h2>
-                    <p class="text-2xl font-semibold text-gray-900 mt-1">{{ $totalVisitors ?? '0' }}</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Total Pengunjung</p>
+                    <h2 class="text-3xl font-bold text-slate-800">{{ $totalVisitors ?? '0' }}</h2>
+                    <span class="text-xs text-green-600 font-medium flex items-center gap-1 mt-2">
+                        <i class="uil uil-arrow-growth"></i> Data Realtime
+                    </span>
                 </div>
-                <div class="bg-green-100 p-3 rounded-xl">
-                    <i class="uil uil-users-alt text-green-600 text-xl"></i>
+                <div class="w-14 h-14 rounded-2xl bg-green-50 text-green-600 flex items-center justify-center text-2xl shadow-sm">
+                    <i class="uil uil-users-alt"></i>
                 </div>
             </div>
 
-            <div class="bg-white shadow-md rounded-2xl p-5 flex items-center justify-between hover:shadow-lg transition">
+            
+            <div class="bg-white p-6 rounded-2xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-slate-100 flex items-center justify-between hover:border-indigo-100 transition-colors">
                 <div>
-                    <h2 class="text-gray-600 text-sm font-medium">Durasi Rata-rata</h2>
-                    <p class="text-2xl font-semibold text-gray-900 mt-1">{{ $avgDuration ?? '0m 0s' }}</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Durasi Rata-rata</p>
+                    <h2 class="text-3xl font-bold text-slate-800">{{ $avgDuration ?? '0m 0s' }}</h2>
+                    <span class="text-xs text-blue-600 font-medium flex items-center gap-1 mt-2">
+                        <i class="uil uil-clock"></i> Per Sesi
+                    </span>
                 </div>
-                <div class="bg-blue-100 p-3 rounded-xl">
-                    <i class="uil uil-clock text-blue-600 text-xl"></i>
+                <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl shadow-sm">
+                    <i class="uil uil-hourglass"></i>
                 </div>
             </div>
 
-            <div class="bg-white shadow-md rounded-2xl p-5 flex items-center justify-between hover:shadow-lg transition">
+            
+            <div class="bg-white p-6 rounded-2xl shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] border border-slate-100 flex items-center justify-between hover:border-indigo-100 transition-colors">
                 <div>
-                    <h2 class="text-gray-600 text-sm font-medium">Tingkat Kunjungan Ulang</h2>
-                    <p class="text-2xl font-bold text-gray-900 mt-1">{{ $repeatRate ?? '0' }}%</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Kunjungan Ulang</p>
+                    <h2 class="text-3xl font-bold text-slate-800">{{ $repeatRate ?? '0' }}%</h2>
+                    <span class="text-xs text-purple-600 font-medium flex items-center gap-1 mt-2">
+                        <i class="uil uil-analysis"></i> Retensi User
+                    </span>
                 </div>
-                <div class="bg-purple-100 p-3 rounded-xl">
-                    <i class="uil uil-sync text-purple-600 text-xl"></i>
+                <div class="w-14 h-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl shadow-sm">
+                    <i class="uil uil-sync"></i>
                 </div>
             </div>
         </div>
 
-        <!-- Grafik Pengunjung -->
-        <div class="bg-white shadow-md rounded-2xl p-6">
-            <h2 class="text-lg font-semibold mb-4 flex items-center gap-2 text-gray-900">
-                <i class="uil uil-chart-growth text-indigo-600"></i>
-                Grafik Pengunjung Bulanan
-            </h2>
-            <div class="relative h-96 w-full">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800">Grafik Pengunjung Bulanan</h2>
+                    <p class="text-sm text-slate-500">Tren kunjungan website dalam tahun ini</p>
+                </div>
+                <div class="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                    <i class="uil uil-chart-growth"></i>
+                </div>
+            </div>
+            
+            <div class="relative w-full h-[400px]">
                 <canvas id="visitorsChart"></canvas>
             </div>
         </div>
 
-      </div>
+        <div class="h-10"></div> </div>
     </main>
-  </body>
+  </div>
 
-    <style>
-      .fade-in-up {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-      }
-
-      .fade-in-up.show {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    </style>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const fadeElements = document.querySelectorAll(".fade-in-up");
-
-        fadeElements.forEach((el, i) => {
-          setTimeout(() => {
-            el.classList.add("show");
-          }, i * 200); // delay 200ms antar elemen
-        });
-      });
-    </script>
-
-    <!-- Script Toggle Sidebar -->
-    <script>
-      function toggleSidebar() {
+  <script>
+    // 1. Sidebar Toggle Logic
+    function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
-        sidebar.classList.toggle('-translate-x-full');
-        overlay.classList.toggle('hidden');
-      }
-    </script>
+        
+        const isClosed = sidebar.classList.contains('-translate-x-full');
+        if (isClosed) {
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+        } else {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        }
+    }
 
-    <!-- Script Chart.js -->
-
-    @if(isset($monthlyLabels) && isset($monthlyData))
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            
-            const monthlyLabels = @json($monthlyLabels);
-            const monthlyData = @json($monthlyData);
-            
-            const canvasElement = document.getElementById('visitorsChart');
-
-            if (canvasElement) {
-                const ctx1 = canvasElement.getContext('2d');
-                
-                new Chart(ctx1, {
-                    type: 'line',
-                    data: {
-                        labels: monthlyLabels, 
-                        datasets: [{
-                            label: 'Jumlah Pengunjung',
-                            data: monthlyData, 
-                            borderColor: '#6366F1',
-                            backgroundColor: 'rgba(99,102,241,0.2)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            fill: true,
-                            pointRadius: 4,
-                            pointBackgroundColor: '#4F46E5'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        // 'maintainAspectRatio: false' WAJIB ada agar 
-                        // chart mengisi div pembungkus (h-96)
-                        maintainAspectRatio: false, 
-                        plugins: { legend: { display: false } },
-                        scales: {
-                            x: { 
-                                grid: { display: false } 
-                            },
-                            y: { 
-                                beginAtZero: true,
-                                ticks: {
-                                    stepSize: 50 
-                                }
-                            }
-                        }
-                    }
-                });
-            }
+    // 2. Animation on Load
+    document.addEventListener("DOMContentLoaded", () => {
+        const sections = document.querySelectorAll(".fade-section");
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("fade-enter-active");
+                    entry.target.classList.remove("fade-enter");
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        sections.forEach(s => {
+            s.classList.add("fade-enter");
+            observer.observe(s);
         });
-    </script>
-    @else
-    <script>
-        console.error("Data statistik (monthlyLabels/monthlyData) tidak terdefinisi. Controller mungkin mengalami error.");
-    </script>
-    @endif
+    });
+  </script>
+
+  @if(isset($monthlyLabels) && isset($monthlyData))
+  <script>
+      document.addEventListener("DOMContentLoaded", () => {
+          
+          const monthlyLabels = @json($monthlyLabels);
+          const monthlyData = @json($monthlyData);
+          
+          const canvasElement = document.getElementById('visitorsChart');
+
+          if (canvasElement) {
+              const ctx1 = canvasElement.getContext('2d');
+              
+              // Gradient Fill for Modern Look
+              let gradient = ctx1.createLinearGradient(0, 0, 0, 400);
+              gradient.addColorStop(0, 'rgba(99, 102, 241, 0.5)'); // Indigo
+              gradient.addColorStop(1, 'rgba(99, 102, 241, 0.0)');
+
+              new Chart(ctx1, {
+                  type: 'line',
+                  data: {
+                      labels: monthlyLabels, 
+                      datasets: [{
+                          label: 'Jumlah Pengunjung',
+                          data: monthlyData, 
+                          borderColor: '#4F46E5', // Indigo-600
+                          backgroundColor: gradient,
+                          borderWidth: 3,
+                          tension: 0.4, // Sedikit lebih smooth curve
+                          fill: true,
+                          pointRadius: 4,
+                          pointBackgroundColor: '#ffffff',
+                          pointBorderColor: '#4F46E5',
+                          pointBorderWidth: 2,
+                          pointHoverRadius: 6
+                      }]
+                  },
+                  options: {
+                      responsive: true,
+                      maintainAspectRatio: false, 
+                      plugins: { 
+                          legend: { display: false },
+                          tooltip: {
+                              backgroundColor: '#1E293B',
+                              padding: 12,
+                              titleFont: { size: 13 },
+                              bodyFont: { size: 13 },
+                              displayColors: false,
+                              cornerRadius: 8
+                          }
+                      },
+                      scales: {
+                          x: { 
+                              grid: { display: false, drawBorder: false },
+                              ticks: { color: '#64748B' } // Slate-500
+                          },
+                          y: { 
+                              beginAtZero: true,
+                              border: { display: false },
+                              grid: { 
+                                  color: '#F1F5F9', // Slate-100
+                                  borderDash: [5, 5] 
+                              },
+                              ticks: {
+                                  stepSize: 50,
+                                  color: '#64748B'
+                              }
+                          }
+                      }
+                  }
+              });
+          }
+      });
+  </script>
+  @else
+  <script>
+      console.error("Data statistik (monthlyLabels/monthlyData) tidak terdefinisi. Controller mungkin mengalami error.");
+  </script>
+  @endif
     
+</body>
 </html>
