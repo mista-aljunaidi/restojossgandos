@@ -2,68 +2,83 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Visit; // Model yang baru Anda buat
+use App\Models\Visit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB; // <-- PENTING: Tambahkan ini
+use Illuminate\Support\Facades\DB;
 
 class StatistikController extends Controller
 {
     public function index()
     {
-        // 1. Cek Sesi (Logika yang dipindahkan dari Route)
+        // 1. Cek Sesi
         if (!session()->has('account_id')) {
             return redirect()->route('login.form')
-                             ->with('error', 'Session anda telah habis, silakan login ulang.');
+                ->with('error', 'Session anda telah habis, silakan login ulang.');
         }
 
         // --- 2. Perhitungan Statistik Riil ---
         
-        // Total Pengunjung: Hitung sesi unik (Bukan 1 tahun terakhir, tapi semua)
+        // A. Total Pengunjung (Unik per Session ID)
         $totalVisitors = Visit::distinct('session_id')->count();
 
-        // Tingkat Kunjungan Ulang: Hitung sesi yang memiliki > 1 hari kunjungan
+        // B. Kunjungan Ulang (Retensi)
+        // Menghitung user yang kembali di hari yang berbeda
         $returningVisitors = DB::table('visits')
-                            ->select('session_id')
-                            ->groupBy('session_id')
-                            // Hitung jumlah hari unik per sesi
-                            ->having(DB::raw('COUNT(DISTINCT DATE(created_at))'), '>', 1) 
-                            ->get() // Ambil koleksi hasil
-                            ->count(); // Hitung jumlah baris dari koleksi
+            ->select('session_id')
+            ->groupBy('session_id')
+            ->having(DB::raw('COUNT(DISTINCT DATE(created_at))'), '>', 1) 
+            ->get()
+            ->count();
         
-        // Kalkulasi persentase
         $repeatRate = ($totalVisitors > 0) ? round(($returningVisitors / $totalVisitors) * 100) : 0;
 
-        // Durasi Rata-rata: (Placeholder)
-        // Data 'visits' kita saat ini tidak bisa menghitung ini.
-        $avgDuration = 'N/A'; // Kita set N/A agar jelas ini belum bisa dihitung
+        // C. Durasi Rata-rata (FIXED: Support SQLite & MySQL)
+        // Menggunakan PHP Collection (Carbon) untuk menghitung selisih waktu.
+        // Ini menggantikan TIMESTAMPDIFF yang error di SQLite.
+        $visitsWithDuration = Visit::whereNotNull('last_activity')->get();
+        
+        $avgSeconds = $visitsWithDuration->avg(function ($visit) {
+            $start = Carbon::parse($visit->created_at);
+            $end = Carbon::parse($visit->last_activity);
+            return $end->diffInSeconds($start);
+        });
 
-        // Data Grafik Bulanan
+        // Konversi detik ke format "Xm Ys"
+        $avgDuration = '0m 0s';
+        if ($avgSeconds) {
+            $minutes = floor($avgSeconds / 60);
+            $seconds = round($avgSeconds % 60);
+            $avgDuration = "{$minutes}m {$seconds}s";
+        }
+
+        // D. Data Grafik Bulanan (Pengunjung Unik per Bulan)
         $monthlyLabels = [];
         $monthlyData = [];
 
-        for ($i = 9; $i >= 0; $i--) {
-            $month = Carbon::now()->subMonths($i);
-            $monthlyLabels[] = $month->shortMonthName;
+        for ($i = 6; $i >= 0; $i--) { // Mengambil 7 bulan terakhir agar grafik lebih rapi
+            $date = Carbon::now()->subMonths($i);
+            $monthName = $date->translatedFormat('M'); // Jan, Feb, dst (sesuai locale)
             
-            // Hitung pengunjung unik bulan ini
-            $visitorsThisMonth = Visit::whereMonth('created_at', $month->month)
-                                        ->whereYear('created_at', $month->year)
-                                        ->distinct('session_id')
-                                        ->count();
+            $monthlyLabels[] = $monthName;
+            
+            $visitorsThisMonth = Visit::whereMonth('created_at', $date->month)
+                ->whereYear('created_at', $date->year)
+                ->distinct('session_id')
+                ->count();
+                
             $monthlyData[] = $visitorsThisMonth;
         }
 
-        // 3. Mengirimkan data ke view 'statistik.blade.php'
+        // 3. Kirim data ke View
         $data = [
             'totalVisitors' => number_format($totalVisitors, 0, ',', '.'),
-            'avgDuration' => $avgDuration, // Akan menampilkan 'N/A'
-            'repeatRate' => $repeatRate, // Akan menampilkan angka riil (misal 15%)
+            'avgDuration'   => $avgDuration, 
+            'repeatRate'    => $repeatRate,
             'monthlyLabels' => $monthlyLabels,
-            'monthlyData' => $monthlyData,
+            'monthlyData'   => $monthlyData,
         ];
         
-        // Menggunakan response() untuk menambahkan header cache (sesuai route lama Anda)
         return response()
             ->view('statistik', $data)
             ->header('Cache-Control', 'no-cache, no-store, must-revalidate')

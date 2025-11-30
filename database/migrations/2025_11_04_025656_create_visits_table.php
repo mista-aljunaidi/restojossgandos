@@ -6,19 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
+    public function up()
+    
     {
-        Schema::create('visits', function (Blueprint $table) {
-            $table->id();
-            $table->string('url')->nullable();
-            $table->string('session_id')->nullable(); // Untuk melacak pengunjung unik
-            $table->string('ip_address')->nullable();
-            $table->timestamps();
+        Schema::table('visits', function (Blueprint $table) {
+            $table->timestamp('last_activity')->nullable()->after('url');
         });
     }
 
-    public function down(): void
+    public function down()
+
     {
-        Schema::dropIfExists('visits');
+        Schema::table('visits', function (Blueprint $table) {
+            $table->dropColumn('last_activity');
+        });
     }
 };

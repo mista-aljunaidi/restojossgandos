@@ -27,39 +27,53 @@
 
         <section class="relative z-10 pb-20 fade-section opacity-0 translate-y-10 transition-all duration-1000 delay-100">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="relative w-full overflow-hidden rounded-[3rem] shadow-2xl">
+                
+                <div class="relative w-full overflow-hidden rounded-[2.5rem] shadow-2xl bg-neutral-900 ring-1 ring-white/10">
+                    
                     <div id="carousel" class="flex transition-transform duration-700 ease-in-out">
                         @forelse ($carouselMenus as $menu)
-                            <div class="relative min-w-full">
-                                <div class="relative h-[450px] md:h-[600px]">
-                                    <img src="{{ asset($menu->image_path) }}" alt="{{ $menu->title }}" class="w-full h-full object-cover">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                            <div class="relative min-w-full flex flex-col md:flex-row h-auto md:h-[500px]">
+                                
+                                <div class="w-full md:w-1/2 h-[300px] md:h-full relative overflow-hidden group z-10 shadow-2xl">
+                                    <div class="absolute inset-0 bg-black/10 z-10"></div>
+                                    <img src="{{ asset($menu->image_path) }}" 
+                                        alt="{{ $menu->title }}" 
+                                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                                 </div>
-                                <div class="absolute bottom-0 left-0 w-full p-8 md:p-16">
-                                    <div class="border-l-4 border-red-600 pl-6 transform translate-y-0 transition-all duration-500">
-                                        <h3 class="text-white font-serif font-bold text-4xl md:text-6xl mb-3 drop-shadow-lg leading-tight">
+
+                                <div class="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center bg-neutral-900 relative overflow-hidden border-t-2 md:border-t-0 md:border-l-2 border-neutral-700">
+                                    
+                                    <div class="absolute top-0 right-0 w-64 h-64 bg-red-600/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+
+                                    <div class="relative z-10 border-l-4 border-red-600 pl-6 transform translate-y-0 transition-all duration-500">
+                                        <h3 class="text-white font-serif font-bold text-3xl md:text-5xl mb-4 drop-shadow-lg leading-tight">
                                             {{ $menu->title }}
                                         </h3>
-                                        <p class="text-gray-200 text-base md:text-xl font-light max-w-2xl leading-relaxed">
+                                        <p class="text-gray-200 text-base md:text-lg font-light leading-relaxed">
                                             {{ $menu->description ?? 'Nikmati kelezatan tiada tara dengan bumbu rahasia keluarga.' }}
                                         </p>
                                     </div>
+
                                 </div>
                             </div>
                         @empty
-                            <div class="relative min-w-full h-[450px] bg-gray-200 flex items-center justify-center">
+                            <div class="relative min-w-full h-[450px] bg-neutral-800 flex items-center justify-center">
                                 <p class="text-gray-500 italic">Menu belum tersedia.</p>
                             </div>
                         @endforelse
                     </div>
 
-                    <button onclick="prevSlide()" class="absolute top-1/2 left-6 -translate-y-1/2 bg-black/20 backdrop-blur-md hover:bg-red-600 hover:text-white text-white p-4 rounded-full shadow-lg transition-all border border-white/20 group-hover:scale-110">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
-                    </button>
-                    <button onclick="nextSlide()" class="absolute top-1/2 right-6 -translate-y-1/2 bg-black/20 backdrop-blur-md hover:bg-red-600 hover:text-white text-white p-4 rounded-full shadow-lg transition-all border border-white/20 group-hover:scale-110">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
-                    </button>
+                    <div class="absolute bottom-8 right-8 flex gap-4 z-20">
+                        <button onclick="prevSlide()" class="bg-white/10 hover:bg-red-600 text-white p-3 rounded-full backdrop-blur-md transition-all border border-white/20 shadow-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+                        </button>
+                        <button onclick="nextSlide()" class="bg-white/10 hover:bg-red-600 text-white p-3 rounded-full backdrop-blur-md transition-all border border-white/20 shadow-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+                        </button>
+                    </div>
+                    
                 </div>
+
             </div>
         </section>
 
@@ -166,7 +180,6 @@
         const carousel = document.getElementById('carousel');
         const totalSlides = carousel.children.length;
         let index = 0;
-        let slideInterval;
 
         function updateSlide() {
             const translateX = -(index * 100);
@@ -176,27 +189,18 @@
         function nextSlide() {
             index = (index + 1) % totalSlides;
             updateSlide();
-            resetTimer(); 
+            // Tidak ada resetTimer() karena tidak ada autoplay
         }
 
         function prevSlide() {
             index = (index - 1 + totalSlides) % totalSlides;
             updateSlide();
-            resetTimer(); 
-        }
-
-        function startTimer() {
-            slideInterval = setInterval(nextSlide, 5000); 
-        }
-
-        function resetTimer() {
-            clearInterval(slideInterval);
-            startTimer();
+            // Tidak ada resetTimer() karena tidak ada autoplay
         }
 
         // --- FADE ANIMATION ---
         document.addEventListener("DOMContentLoaded", () => {
-            if(totalSlides > 0) startTimer();
+            // Hapus pemanggilan startTimer() di sini
 
             const sections = document.querySelectorAll(".fade-section");
             const observer = new IntersectionObserver((entries, obs) => {

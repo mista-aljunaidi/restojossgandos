@@ -2,36 +2,39 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Visit; // Import Model Visit Anda
+use App\Models\Visit;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session; // Import Session
+use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
 
 class TrackVisitors
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
         $sessionId = Session::getId();
         
-        // 1. Cek apakah sesi ini sudah dicatat sebagai kunjungan hari ini
-        $isVisitRecorded = Visit::where('session_id', $sessionId)
-                                ->whereDate('created_at', today())
-                                ->exists();
+        // 1. Cari data kunjungan hari ini berdasarkan Session ID
+        $visit = Visit::where('session_id', $sessionId)
+                      ->whereDate('created_at', today())
+                      ->first();
 
-        // 2. Jika belum dicatat, buat entri baru
-        if (!$isVisitRecorded) {
+        // 2. Logika Update atau Create
+        if ($visit) {
+            // Jika sudah ada, update 'last_activity' ke waktu sekarang
+            // Ini menandakan user masih aktif di website
+            $visit->update([
+                'last_activity' => now(),
+                'url' => $request->fullUrl() // Opsional: update URL terakhir yang dibuka
+            ]);
+        } else {
+            // Jika belum ada (kunjungan pertama hari ini), buat baru
             Visit::create([
                 'session_id' => $sessionId,
-                // Menggunakan request->ip() untuk alamat IP pengunjung
                 'ip_address' => $request->ip(),
-                // Menggunakan request->fullUrl() untuk mencatat URL lengkap
                 'url' => $request->fullUrl(),
+                'created_at' => now(),
+                'last_activity' => now(), // Set awal sama dengan created_at
             ]);
         }
 
