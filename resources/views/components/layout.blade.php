@@ -50,7 +50,7 @@
           <img src="img/shopeefood.png" alt="ShopeeFood" class="w-14 h-14 object-contain">
         </a>
 
-        <a href="https://food.grab.com/id/id/restaurant/bebek-joss-gandos-jl-raya-jemursari-delivery/IDGFSTI00002n8d?" 
+        <a href="https://r.grab.com/g/6-20251119_121557_7BFCA7D892634AB597F132E1189364C5_MEXMPS-IDGFSTI00002n8d" 
           target="_blank" 
           class="bg-white p-2 rounded-lg shadow-md hover:scale-110 hover:shadow-lg transition">
           <img src="img/grabfood.png" alt="GrabFood" class="w-14 h-14 object-contain">
@@ -159,25 +159,32 @@
 
         <div class="animate-slideUp delay-100">
           <h4 class="font-bold mb-5 text-gray-900 border-b-2 border-red-500 inline-block pb-1">Jam Buka Outlet</h4>
-          <div class="bg-gradient-to-br from-white/90 to-white/60 backdrop-blur-lg p-5 rounded-2xl shadow-xl border 
-                    border-white/80 relative">
+            <div class="bg-gradient-to-br from-white/90 to-white/60 backdrop-blur-lg p-5 rounded-2xl shadow-xl border border-white/80 relative">
 
-              <div class="flex items-center gap-3 mb-3">
-                  <i class="uil uil-clock text-2xl text-gray-700"></i>
-                  <div>
-                      <p class="text-gray-500 text-[10px] uppercase tracking-widest font-bold">Senin - Minggu</p>
-                      <p class="text-lg font-extrabold text-gray-900">10.00 - 22.00</p>
-                  </div>
-              </div>
-              
-              <div id="storeStatus" class="mt-2 flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full w-fit transition-colors duration-300">
-                  <span id="statusDot" class="relative flex h-2.5 w-2.5">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2.5 w-2.5"></span>
-                  </span>
-                  <span id="statusText">Checking...</span>
-              </div>
-          </div>
+                <div class="flex items-start gap-3 mb-3">
+                    <i class="uil uil-clock text-2xl text-gray-700 mt-1"></i>
+                    
+                    <div class="w-full">
+                        <p class="text-gray-500 text-[10px] uppercase tracking-widest font-bold">Senin - Minggu</p>
+                        <p class="text-lg font-extrabold text-gray-900 leading-tight">10.00 - 22.00</p>
+                        
+                        <div class="mt-2 pt-2 border-t border-gray-200/60 flex items-center gap-1.5">
+                            <i class="uil uil-info-circle text-red-500 text-sm"></i>
+                            <p class="text-xs font-bold text-red-500">
+                                Close Order: 21.15
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="storeStatus" class="mt-2 flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full w-fit transition-colors duration-300">
+                    <span id="statusDot" class="relative flex h-2.5 w-2.5">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2.5 w-2.5"></span>
+                    </span>
+                    <span id="statusText">Checking...</span>
+                </div>
+            </div>
         </div>
 
       </div>

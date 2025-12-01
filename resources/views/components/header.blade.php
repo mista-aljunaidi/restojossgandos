@@ -18,7 +18,7 @@
 
     <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">
       
-      <span class="inline-block py-1 px-4 rounded-full bg-red-600/90 backdrop-blur-md text-white text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-6 border border-red-500/50 animate-pulse">
+      <span class="inline-block py-1 px-4 rounded-full bg-red-600/90 backdrop-blur-md text-white text-xs md:text-sm font-bold tracking-[0.2em] uppercase mb-6 border border-red-500/50">
         Est. 2017
       </span>
 
