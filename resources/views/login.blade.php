@@ -26,8 +26,6 @@
     
     <div class="bg-red-700 p-6 text-center relative overflow-hidden">
       <div class="flex justify-center mb-4">
-         {{-- PERBAIKAN DI SINI: --}}
-         {{-- Ditambahkan border-white/30 (putih transparan) & rounded-full agar smooth --}}
          <img src="img/logojossgandos.png" 
               alt="Logo Joss Gandos" 
               class="h-24 w-24 object-cover rounded-full border-4 border-white/30 shadow-xl">
