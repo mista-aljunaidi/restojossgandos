@@ -34,34 +34,91 @@
       @endif
 
       <div id="floatingOrder"
-        class="fixed right-4 top-1/2 z-50 flex flex-col items-center space-y-2 transform -translate-y-1/2 sm:top-1/2 sm:-translate-y-1/2 opacity-0 translate-x-10 transition-all duration-700">
-        
-        <p class="text-red-700 font-bold text-sm animate-pulse">ORDER NOW</p>
+          class="fixed right-4 top-1/2 z-50 flex flex-col items-center space-y-2 transform -translate-y-1/2 sm:top-1/2 sm:-translate-y-1/2 opacity-0 translate-x-10 transition-all duration-700">
+          
+          <p class="text-red-700 font-bold text-sm animate-pulse">ORDER NOW</p>
 
-        <a href="https://gofood.co.id/surabaya/restaurant/bebek-joss-gandos-jemursari-8571aff2-33b6-4f54-9fd9-a132a900eb17" 
-          target="_blank" 
-          class="bg-white p-2 rounded-lg shadow-md hover:scale-110 hover:shadow-lg transition">
-          <img src="img/gofood.jpg" alt="GoFood" class="w-14 h-14 object-contain">
-        </a>
+          <a href="https://gofood.co.id/surabaya/restaurant/bebek-joss-gandos-jemursari-8571aff2-33b6-4f54-9fd9-a132a900eb17" 
+              target="_blank" 
+              class="bg-white p-2 rounded-lg shadow-md hover:scale-110 hover:shadow-lg transition">
+              <img src="img/gofood.jpg" alt="GoFood" class="w-14 h-14 object-contain">
+          </a>
 
-        <a href="https://shopee.co.id/universal-link/now-food/shop/21737525?deep_and_deferred=1&shareChannel=copy_link" 
-          target="_blank" 
-          class="bg-white p-2 rounded-lg shadow-md hover:scale-110 hover:shadow-lg transition block md:hidden">
-          <img src="img/shopeefood.png" alt="ShopeeFood" class="w-14 h-14 object-contain">
-        </a>
+          <a href="https://shopee.co.id/universal-link/now-food/shop/21737525?deep_and_deferred=1&shareChannel=copy_link" 
+              target="_blank" 
+              class="bg-white p-2 rounded-lg shadow-md hover:scale-110 hover:shadow-lg transition block md:hidden">
+              <img src="img/shopeefood.png" alt="ShopeeFood" class="w-14 h-14 object-contain">
+          </a>
 
-        <a href="https://r.grab.com/g/6-20251119_121557_7BFCA7D892634AB597F132E1189364C5_MEXMPS-IDGFSTI00002n8d" 
-          target="_blank" 
-          class="bg-white p-2 rounded-lg shadow-md hover:scale-110 hover:shadow-lg transition">
-          <img src="img/grabfood.png" alt="GrabFood" class="w-14 h-14 object-contain">
-        </a>
+          <a href="https://r.grab.com/g/6-20251119_121557_7BFCA7D892634AB597F132E1189364C5_MEXMPS-IDGFSTI00002n8d" 
+              target="_blank" 
+              class="bg-white p-2 rounded-lg shadow-md hover:scale-110 hover:shadow-lg transition">
+              <img src="img/grabfood.png" alt="GrabFood" class="w-14 h-14 object-contain">
+          </a>
 
-        <a href="https://api.whatsapp.com/send/?phone=62895326824595&text&type=phone_number&app_absent=0" 
-          target="_blank" 
-          class="bg-white p-2 rounded-lg shadow-md hover:scale-110 hover:shadow-lg transition">
-          <img src="img/whatsapp.png" alt="WhatsApp" class="w-14 h-14 object-contain">
-        </a>
+          <div class="relative">
+              <button onclick="toggleFloatingWa()" 
+                      class="bg-white p-2 rounded-lg shadow-md hover:scale-110 hover:shadow-lg transition focus:outline-none block">
+                  <img src="img/whatsapp.png" alt="WhatsApp" class="w-14 h-14 object-contain">
+              </button>
+
+              <div id="floating-wa-menu" class="hidden absolute right-full top-0 mr-3 w-48 bg-white rounded-md shadow-xl border border-gray-200 overflow-hidden z-[60]">
+                  <div class="py-1">
+                      <p class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase bg-gray-50 text-center border-b border-gray-100">
+                          Pilih Kontak
+                      </p>
+                      
+                      <a href="javascript:void(0)" 
+                          data-nomor="6289699071599"
+                          data-pesan="Halo Admin! Saya berencana ingin reservasi tempat. Mohon info selengkapnya."
+                          onclick="kirimWa(this)"
+                          class="px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 transition flex items-center gap-2 cursor-pointer">
+                          <span>Admin 1</span>
+                          <span class="text-xs text-gray-400">(089699071599)</span>
+                      </a>
+
+                      <a href="javascript:void(0)" 
+                          data-nomor="62895326824595"
+                          data-pesan="Halo Admin! Saya berencana ingin reservasi tempat. Mohon info selengkapnya."
+                          onclick="kirimWa(this)"
+                          class="px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 transition border-t border-gray-100 flex items-center gap-2 cursor-pointer">
+                          <span>Admin 2</span>
+                          <span class="text-xs text-gray-400">(0895326824595)</span>
+                      </a>
+                  </div>
+              </div>
+          </div>
       </div>
+
+      <script>
+          // Fungsi Toggle Menu
+          function toggleFloatingWa() {
+              const menu = document.getElementById('floating-wa-menu');
+              menu.classList.toggle('hidden');
+          }
+
+          // Fungsi Kirim WA (Otomatis mengubah spasi menjadi kode URL)
+          function kirimWa(element) {
+              const nomor = element.getAttribute('data-nomor');
+              const pesan = element.getAttribute('data-pesan');
+              
+              // Encode pesan agar aman untuk URL (spasi jadi %20, dll)
+              const pesanEncoded = encodeURIComponent(pesan);
+              
+              const url = `https://api.whatsapp.com/send?phone=${nomor}&text=${pesanEncoded}`;
+              window.open(url, '_blank');
+          }
+
+          // Menutup menu jika klik di luar
+          window.addEventListener('click', function(e) {
+              const btn = document.querySelector('button[onclick="toggleFloatingWa()"]');
+              const menu = document.getElementById('floating-wa-menu');
+              
+              if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
+                  menu.classList.add('hidden');
+              }
+          });
+      </script>
 
       <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -148,11 +205,11 @@
             </li>
             <li class="flex items-center gap-3">
                 <i class="uil uil-phone text-lg text-red-600"></i>
-                <span>+62 319-984-2999</span>
+                <span>+62 896-9907-1599</span>
             </li>
             <li class="flex items-center gap-3">
                 <i class="uil uil-envelope text-lg text-red-600"></i>
-                <span>info@restojossgandos.com</span>
+                <span>bebekjossgandossby@gmail.com</span>
             </li>
           </ul>
         </div>

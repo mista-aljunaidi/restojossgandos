@@ -184,20 +184,95 @@
                             Dari ulang tahun hingga gathering kantor, kami siapkan tempat dan hidangan terbaik untuk Anda.
                         </p>
                         
-                        <a href="https://wa.me/628199842999" target="_blank" 
-                           class="group/btn relative inline-flex items-center gap-3 bg-white text-red-700 px-10 py-4 rounded-full font-bold text-lg shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] overflow-hidden">
-                            <span class="absolute inset-0 bg-red-50 transform scale-x-0 group-hover/btn:scale-x-100 transition-transform origin-left duration-300"></span>
-                            <span class="relative flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
-                                Reservasi Sekarang
-                            </span>
-                        </a>
+                        <div class="relative inline-block">
+                            
+                            <div id="promo-wa-menu" class="hidden absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-50 text-left">
+                                <div class="py-1">
+                                    <p class="px-4 py-3 text-xs font-bold text-gray-500 uppercase bg-gray-50 text-center border-b border-gray-100">
+                                        Pilih Admin
+                                    </p>
+                                    
+                                    <a href="javascript:void(0)" 
+                                    data-nomor="6289699071599"
+                                    data-pesan="Halo Admin! Saya ingin reservasi untuk acara spesial. Mohon info pricelist dan ketersediaan tempat."
+                                    onclick="kirimWa(this)"
+                                    class="px-5 py-3 text-sm text-gray-800 hover:bg-red-50 hover:text-red-700 transition flex items-center justify-between group-link">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                                            <i class="fas fa-user text-xs"></i> 1
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="font-bold">Admin 1</span>
+                                            <span class="text-[10px] text-gray-400">089699071599</span>
+                                        </div>
+                                    </div>
+                                    <svg class="w-4 h-4 text-gray-300 group-hover-link:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                    </a>
+
+                                    <a href="javascript:void(0)" 
+                                    data-nomor="62895326824595"
+                                    data-pesan="Halo Admin! Saya ingin reservasi untuk acara spesial. Mohon info pricelist dan ketersediaan tempat."
+                                    onclick="kirimWa(this)"
+                                    class="px-5 py-3 text-sm text-gray-800 hover:bg-red-50 hover:text-red-700 transition flex items-center justify-between border-t border-gray-100 group-link">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
+                                            <i class="fas fa-user text-xs"></i>
+                                            2
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="font-bold">Admin 2</span>
+                                            <span class="text-[10px] text-gray-400">0895326824595</span>
+                                        </div>
+                                    </div>
+                                    <svg class="w-4 h-4 text-gray-300 group-hover-link:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <button onclick="togglePromoWa()" 
+                                    class="group/btn relative inline-flex items-center gap-3 bg-white text-red-700 px-10 py-4 rounded-full font-bold text-lg shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] overflow-hidden focus:outline-none">
+                                
+                                <span class="absolute inset-0 bg-red-50 transform scale-x-0 group-hover/btn:scale-x-100 transition-transform origin-left duration-300"></span>
+                                
+                                <span class="relative flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+                                    Reservasi Sekarang
+                                </span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>
 
         </div>
     </main>
+
+    <script>
+        function togglePromoWa() {
+            const menu = document.getElementById('promo-wa-menu');
+            menu.classList.toggle('hidden');
+        }
+        
+        if (typeof kirimWa !== 'function') {
+            function kirimWa(element) {
+                const nomor = element.getAttribute('data-nomor');
+                const pesan = element.getAttribute('data-pesan');
+                const pesanEncoded = encodeURIComponent(pesan);
+                const url = `https://api.whatsapp.com/send?phone=${nomor}&text=${pesanEncoded}`;
+                window.open(url, '_blank');
+            }
+        }
+
+        // Menutup menu jika klik di luar
+        window.addEventListener('click', function(e) {
+            const btn = document.querySelector('button[onclick="togglePromoWa()"]');
+            const menu = document.getElementById('promo-wa-menu');
+            
+            if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
+                menu.classList.add('hidden');
+            }
+        });
+    </script>
 
     <script>
         // ============================
