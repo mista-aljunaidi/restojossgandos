@@ -243,7 +243,7 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-center">
-                                <div class="flex items-center justify-center gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                                <div class="flex items-center justify-center gap-2">
                                     <button onclick="openUpdateMenuFromBtn(this)" 
                                         data-id="{{ $menu->id }}" data-title="{{ $menu->title }}" data-description="{{ $menu->description }}" data-type="{{ $menu->type }}"
                                         class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition" title="Edit">
@@ -291,7 +291,7 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-center">
-                                <div class="flex items-center justify-center gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                                <div class="flex items-center justify-center gap-2">
                                     <button onclick="openUpdatePhotoFromBtn(this)" 
                                         data-id="{{ $photo->id }}" data-title="{{ $photo->title }}" data-category="{{ $photo->category }}"
                                         class="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition">

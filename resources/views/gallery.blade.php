@@ -26,11 +26,22 @@
         <section class="relative z-10 pb-20 fade-section opacity-0 translate-y-10 transition-all duration-1000 delay-100">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
-                <div class="flex justify-center gap-4 mb-8 flex-wrap">
-                    <button class="px-4 py-2 rounded-full bg-red-500 text-white hover:bg-gray-300 filter-btn" data-filter="all">All</button>
-                    <button class="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 filter-btn" data-filter="food">Food</button>
-                    <button class="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 filter-btn" data-filter="customer">Customer</button>
-                    <button class="px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 filter-btn" data-filter="event">Event</button>
+                <div class="flex justify-center gap-3 mb-8 flex-wrap">
+                    <button class="px-5 py-2.5 rounded-full text-sm font-medium bg-red-500 text-white shadow-md transition-all duration-300 hover:bg-red-600 hover:shadow-lg active:scale-95 filter-btn" data-filter="all">
+                        All
+                    </button>
+
+                    <button class="px-5 py-2.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 transition-all duration-300 hover:bg-gray-200 hover:shadow-md active:bg-gray-300 active:scale-95 filter-btn" data-filter="food">
+                        Food
+                    </button>
+
+                    <button class="px-5 py-2.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 transition-all duration-300 hover:bg-gray-200 hover:shadow-md active:bg-gray-300 active:scale-95 filter-btn" data-filter="customer">
+                        Customer
+                    </button>
+
+                    <button class="px-5 py-2.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 transition-all duration-300 hover:bg-gray-200 hover:shadow-md active:bg-gray-300 active:scale-95 filter-btn" data-filter="event">
+                        Event
+                    </button>
                 </div>
 
                 <div id="gallery-grid" class="group/gallery grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
