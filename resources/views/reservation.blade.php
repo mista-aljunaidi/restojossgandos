@@ -73,7 +73,7 @@
                 <div class="relative w-full max-w-5xl mx-auto h-[400px] md:h-[500px] overflow-hidden rounded-[2.5rem] shadow-2xl group bg-gray-200">
                     
                     <img id="locationSliderImage" 
-                        src="img/reservation/tampakdepanjemursari.jpg" 
+                        src="img/reservation/Jemursari2.jpg" 
                         alt="Outlet Location" 
                         class="w-full h-full object-cover transition-opacity duration-500 ease-in-out opacity-100">
 
@@ -304,7 +304,7 @@
         // 2. LOCATION SLIDER LOGIC (SMOOTH & DOTS)
         // ============================
         const locImages = [
-            "img/reservation/tampakdepanjemursari.jpg",
+            "img/reservation/Jemursari2.jpg",
             "img/reservation/Ketintang.jpeg"
         ];
 

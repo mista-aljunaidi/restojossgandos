@@ -13,22 +13,14 @@
 
   <style>
     body { font-family: 'Inter', sans-serif; }
-    
-    /* Smooth Scroll Behavior */
     html { scroll-behavior: smooth; }
-
-    /* Custom Scrollbar for Table */
     .custom-scrollbar::-webkit-scrollbar { height: 8px; width: 8px; }
     .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-
-    /* Animasi Fade */
     .fade-enter { opacity: 0; transform: translateY(10px); }
     .fade-enter-active { opacity: 1; transform: translateY(0); transition: opacity 0.4s ease-out, transform 0.4s ease-out; }
-    
-    /* Highlight Search */
-    .highlighted-row { background-color: #fef9c3 !important; transition: background 0.3s ease; } /* Yellow-100 */
+    .highlighted-row { background-color: #fef9c3 !important; transition: background 0.3s ease; } 
     .active-highlight { background-color: #fde047 !important; transform: scale-[1.01]; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); position: relative; z-index: 10; }
   </style>
 </head>
@@ -167,7 +159,6 @@
         </section>
 
         <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-6 fade-section">
-            
             <div class="bg-slate-200/60 p-1.5 rounded-xl inline-flex">
                 <button id="btn-menu" class="px-6 py-2 rounded-lg text-sm font-semibold transition-all duration-300">
                     Daftar Menu
@@ -178,7 +169,6 @@
             </div>
 
             <div id="filter-wrapper" class="flex flex-wrap items-center gap-2">
-    
                 <div id="filter-menu" class="flex items-center gap-2">
                     <select id="menuFilterType" class="bg-white border border-slate-200 text-slate-700 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block px-3 py-2 cursor-pointer shadow-sm outline-none transition-all hover:bg-slate-50">
                         <option value="">Semua Tipe</option>
@@ -208,7 +198,6 @@
                     <i class="uil uil-redo"></i> 
                     <span>Reset</span>
                 </button>
-
             </div>
         </div>
 
@@ -323,14 +312,12 @@
 
   <div id="modalChoose" class="fixed inset-0 z-[60] hidden" role="dialog" aria-modal="true">
       <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closeChooseModal()"></div>
-      
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div class="flex min-h-full items-center justify-center p-4 text-center">
-            
-            <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all w-full max-w-sm scale-95 opacity-0 modal-content">
+            <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all w-full max-w-lg scale-95 opacity-0 modal-content">
                 <div class="p-6 text-center">
-                    <h3 class="text-xl font-bold text-slate-800 mb-6">Mau tambah data apa?</h3>
-                    <div class="grid grid-cols-2 gap-4">
+                    <h3 class="text-xl font-bold text-slate-800 mb-6">Mau kelola data apa?</h3>
+                    <div class="grid grid-cols-3 gap-4">
                         <button onclick="openTambahMenu()" class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-orange-100 bg-orange-50 text-orange-600 hover:bg-orange-100 hover:border-orange-300 transition-all gap-2 group">
                             <i class="uil uil-utensils text-3xl group-hover:scale-110 transition-transform"></i>
                             <span class="font-semibold text-sm">Menu</span>
@@ -339,13 +326,78 @@
                             <i class="uil uil-image text-3xl group-hover:scale-110 transition-transform"></i>
                             <span class="font-semibold text-sm">Galeri</span>
                         </button>
+                        <button onclick="openHeaderModal()" class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-purple-100 bg-purple-50 text-purple-600 hover:bg-purple-100 hover:border-purple-300 transition-all gap-2 group">
+                            <i class="uil uil-video text-3xl group-hover:scale-110 transition-transform"></i>
+                            <span class="font-semibold text-sm">Video Header</span>
+                        </button>
                     </div>
                     <button onclick="closeChooseModal()" class="mt-6 text-slate-400 hover:text-slate-600 text-sm font-medium">Batal</button>
                 </div>
             </div>
-
         </div>
       </div>
+  </div>
+
+  <div id="modalHeader" class="fixed inset-0 z-[60] hidden" role="dialog">
+    <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeHeaderModal()"></div>
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-center justify-center p-4">
+            <div class="relative w-full max-w-lg transform rounded-2xl bg-white p-6 shadow-2xl transition-all scale-95 opacity-0 modal-content">
+                
+                <div class="flex justify-between items-center mb-5">
+                    <h3 class="text-lg font-bold text-slate-800">Pengaturan Video Header</h3>
+                    <button onclick="closeHeaderModal()" class="text-slate-400 hover:text-slate-600">
+                        <i class="uil uil-times text-xl"></i>
+                    </button>
+                </div>
+
+                @php
+                    $h_type = $header->video_type ?? 'youtube';
+                    $h_yt   = $header->youtube_id ?? 'b2y8iRP0eXg';
+                @endphp
+
+                <form action="{{ route('header.update') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+                    @csrf @method('PUT')
+                    
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-3">Sumber Video</label>
+                        <div class="flex items-center gap-4">
+                            <label class="flex items-center gap-2 cursor-pointer p-3 border border-slate-200 rounded-lg hover:bg-slate-50 w-full">
+                                <input type="radio" name="source_type" value="youtube" class="w-4 h-4 text-purple-600 focus:ring-purple-500" 
+                                       {{ $h_type == 'youtube' ? 'checked' : '' }} onclick="toggleVideoInput('youtube')">
+                                <span class="text-sm font-medium text-slate-700">Link YouTube</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer p-3 border border-slate-200 rounded-lg hover:bg-slate-50 w-full">
+                                <input type="radio" name="source_type" value="file" class="w-4 h-4 text-purple-600 focus:ring-purple-500" 
+                                       {{ $h_type == 'file' ? 'checked' : '' }} onclick="toggleVideoInput('file')">
+                                <span class="text-sm font-medium text-slate-700">Upload File (MP4)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="input-youtube" class="{{ $h_type == 'youtube' ? 'block' : 'hidden' }}">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">URL YouTube</label>
+                        <input type="text" name="youtube_url" 
+                               value="{{ $h_type == 'youtube' ? 'https://www.youtube.com/watch?v='.$h_yt : '' }}"
+                               class="w-full rounded-lg border-slate-300 focus:border-purple-500 focus:ring-purple-500 text-sm p-2.5 bg-slate-50" 
+                               placeholder="Contoh: https://www.youtube.com/watch?v=b2y8iRP0eXg">
+                        <p class="text-[10px] text-slate-400 mt-1">Copy paste link lengkap dari browser.</p>
+                    </div>
+
+                    <div id="input-file" class="{{ $h_type == 'file' ? 'block' : 'hidden' }}">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">Upload Video</label>
+                        <input type="file" name="video_file" accept="video/mp4"
+                               class="w-full text-xs text-slate-500 file:mr-2 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100">
+                        <p class="text-[10px] text-slate-400 mt-1">Format: MP4. Maksimal ukuran: 20MB.</p>
+                    </div>
+
+                    <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 rounded-xl transition-all shadow-md hover:shadow-lg mt-4">
+                        Simpan Perubahan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
   </div>
 
   <div id="modalTambahMenu" class="fixed inset-0 z-[60] hidden" role="dialog">
@@ -543,7 +595,6 @@
     function toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
-        
         const isClosed = sidebar.classList.contains('-translate-x-full');
         if (isClosed) {
             sidebar.classList.remove('-translate-x-full');
@@ -564,41 +615,25 @@
 
     function setActiveTab(type) {
         if(type === 'menu') {
-            // === AKTIFKAN TAB MENU ===
             btnMenu.classList.add('bg-white', 'text-indigo-600', 'shadow-sm');
             btnMenu.classList.remove('text-slate-500');
-            
             btnGallery.classList.remove('bg-white', 'text-indigo-600', 'shadow-sm');
             btnGallery.classList.add('text-slate-500');
-
-            // Show Menu Table
             tableMenu.classList.remove('hidden');
             tableGallery.classList.add('hidden');
-            
-            // Show Menu Filter (Tambah Flex, Hapus Hidden)
             filterMenu.classList.remove('hidden');
             filterMenu.classList.add('flex');
-            
-            // Hide Gallery Filter (Hapus Flex, Tambah Hidden)
             filterGallery.classList.add('hidden');
             filterGallery.classList.remove('flex');
         } else {
-            // === AKTIFKAN TAB GALLERY ===
             btnGallery.classList.add('bg-white', 'text-indigo-600', 'shadow-sm');
             btnGallery.classList.remove('text-slate-500');
-
             btnMenu.classList.remove('bg-white', 'text-indigo-600', 'shadow-sm');
             btnMenu.classList.add('text-slate-500');
-
-            // Show Gallery Table
             tableGallery.classList.remove('hidden');
             tableMenu.classList.add('hidden');
-
-            // Show Gallery Filter (Tambah Flex, Hapus Hidden)
             filterGallery.classList.remove('hidden');
             filterGallery.classList.add('flex');
-            
-            // Hide Menu Filter (Hapus Flex, Tambah Hidden)
             filterMenu.classList.add('hidden');
             filterMenu.classList.remove('flex');
         }
@@ -606,31 +641,25 @@
 
     btnMenu.addEventListener('click', () => setActiveTab('menu'));
     btnGallery.addEventListener('click', () => setActiveTab('gallery'));
-    // Default active
     setActiveTab('menu');
 
-    // 3. Modal System (The Fix: Fixed Position)
+    // 3. Modal System (Universal)
     function toggleModal(modalID, show) {
         const modal = document.getElementById(modalID);
         const content = modal.querySelector('.modal-content');
-        
         if (show) {
             modal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Stop background scroll
-            
-            // Animation In
+            document.body.style.overflow = 'hidden'; 
             setTimeout(() => {
                 content.classList.remove('scale-95', 'opacity-0');
                 content.classList.add('scale-100', 'opacity-100');
             }, 10);
         } else {
-            // Animation Out
             content.classList.remove('scale-100', 'opacity-100');
             content.classList.add('scale-95', 'opacity-0');
-            
             setTimeout(() => {
                 modal.classList.add('hidden');
-                document.body.style.overflow = ''; // Resume background scroll
+                document.body.style.overflow = '';
             }, 200);
         }
     }
@@ -639,22 +668,35 @@
     function openChooseModal() { toggleModal('modalChoose', true); }
     function closeChooseModal() { toggleModal('modalChoose', false); }
 
+    // Modal Header Video (BARU)
+    function openHeaderModal() { closeChooseModal(); toggleModal('modalHeader', true); }
+    function closeHeaderModal() { toggleModal('modalHeader', false); }
+    
+    // Logic Switch Input (Youtube vs File)
+    function toggleVideoInput(type) {
+        const inputYt = document.getElementById('input-youtube');
+        const inputFile = document.getElementById('input-file');
+        if(type === 'youtube') {
+            inputYt.classList.remove('hidden');
+            inputFile.classList.add('hidden');
+        } else {
+            inputYt.classList.add('hidden');
+            inputFile.classList.remove('hidden');
+        }
+    }
+
     // Modal Menu
     function openTambahMenu() { closeChooseModal(); toggleModal('modalTambahMenu', true); }
     function closeTambahMenu() { toggleModal('modalTambahMenu', false); }
-    
     function openUpdateMenuFromBtn(btn) {
         const form = document.getElementById('formUpdateMenu');
         form.action = form.dataset.action.replace(':id', btn.dataset.id);
-        
         document.getElementById('updateTitle').value = btn.dataset.title;
         document.getElementById('updateDescription').value = btn.dataset.description;
         document.getElementById('updateType').value = btn.dataset.type;
-        
         toggleModal('modalUpdateMenu', true);
     }
     function closeUpdateMenu() { toggleModal('modalUpdateMenu', false); }
-
     function openDeleteMenuFromBtn(btn) {
         const form = document.getElementById('formDeleteMenu');
         form.action = form.dataset.action.replace(':id', btn.dataset.id);
@@ -665,18 +707,14 @@
     // Modal Gallery
     function openTambahGallery() { closeChooseModal(); toggleModal('modalTambahPhoto', true); }
     function closeTambahModal() { toggleModal('modalTambahPhoto', false); }
-
     function openUpdatePhotoFromBtn(btn) {
         const form = document.getElementById('formUpdatePhoto');
         form.action = form.dataset.action.replace(':id', btn.dataset.id);
-        
         document.getElementById('updatePhotoTitle').value = btn.dataset.title;
         document.getElementById('updatePhotoCategory').value = btn.dataset.category;
-        
         toggleModal('modalUpdatePhoto', true);
     }
     function closeUpdatePhoto() { toggleModal('modalUpdatePhoto', false); }
-
     function openDeletePhotoFromBtn(btn) {
         const form = document.getElementById('formDeletePhoto');
         form.action = form.dataset.action.replace(':id', btn.dataset.id);
@@ -684,11 +722,10 @@
     }
     function closeDeletePhoto() { toggleModal('modalDeletePhoto', false); }
 
-    // 4. Search & Highlight Logic
+    // 4. Search & Highlight Logic (sama seperti sebelumnya)
     const searchInput = document.getElementById('searchInput');
     let highlightedRows = [];
     let highlightIndex = -1;
-
     function clearHighlights() {
         document.querySelectorAll('.highlighted-row').forEach(el => {
             el.classList.remove('highlighted-row', 'active-highlight');
@@ -696,18 +733,13 @@
         highlightedRows = [];
         highlightIndex = -1;
     }
-
     searchInput.addEventListener('input', (e) => {
         const term = e.target.value.toLowerCase();
         clearHighlights();
-        
         if (!term) return;
-
-        // Determine visible table
         const activeTable = tableMenu.classList.contains('hidden') ? tableGallery : tableMenu;
         const rows = activeTable.querySelectorAll('tbody tr');
         let found = false;
-
         rows.forEach(row => {
             if(row.innerText.toLowerCase().includes(term)) {
                 row.classList.add('highlighted-row');
@@ -715,8 +747,6 @@
                 found = true;
             }
         });
-
-        // Auto switch tab if not found in current but found in other
         if(!found) {
             const otherTable = tableMenu.classList.contains('hidden') ? tableMenu : tableGallery;
             const otherRows = otherTable.querySelectorAll('tbody tr');
@@ -724,87 +754,42 @@
             otherRows.forEach(row => {
                 if(row.innerText.toLowerCase().includes(term)) foundOther = true;
             });
-
             if(foundOther) {
                 if(activeTable === tableMenu) setActiveTab('gallery');
                 else setActiveTab('menu');
-                // Retrigger input event to highlight in new tab
                 searchInput.dispatchEvent(new Event('input'));
             }
         }
     });
 
-    // Navigation Key (Enter/Up/Down)
-    searchInput.addEventListener('keydown', (e) => {
-        if(highlightedRows.length === 0) return;
-
-        if (e.key === 'Enter' || e.key === 'ArrowDown') {
-            e.preventDefault();
-            if(highlightIndex >= 0) highlightedRows[highlightIndex].classList.remove('active-highlight');
-            
-            highlightIndex = (highlightIndex + 1) % highlightedRows.length;
-            
-            const target = highlightedRows[highlightIndex];
-            target.classList.add('active-highlight');
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            if(highlightIndex >= 0) highlightedRows[highlightIndex].classList.remove('active-highlight');
-            
-            highlightIndex = (highlightIndex - 1 + highlightedRows.length) % highlightedRows.length;
-            
-            const target = highlightedRows[highlightIndex];
-            target.classList.add('active-highlight');
-            target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    });
-
-    // 5. Filter & Sort Logic (Basic Implementation)
+    // 5. Filter Table (sama seperti sebelumnya)
     const globalReset = document.getElementById('globalReset');
     const menuTbody = tableMenu.querySelector('tbody');
     const galleryTbody = tableGallery.querySelector('tbody');
-    
-    // Store original rows
     const originalMenuRows = Array.from(menuTbody.querySelectorAll('tr'));
     const originalGalleryRows = Array.from(galleryTbody.querySelectorAll('tr'));
-
     function filterTable() {
-        // Logic filter menu
         const menuType = document.getElementById('menuFilterType').value.toLowerCase();
         const menuSort = document.getElementById('menuSortBy').value;
-        
         let mRows = [...originalMenuRows];
         if(menuType) {
-            mRows = mRows.filter(row => {
-                const typeText = row.querySelector('td:nth-child(3)').innerText.toLowerCase(); // Column index 3
-                return typeText.includes(menuType);
-            });
+            mRows = mRows.filter(row => row.querySelector('td:nth-child(3)').innerText.toLowerCase().includes(menuType));
         }
         if(menuSort === 'oldest') mRows.reverse();
-        menuTbody.innerHTML = '';
-        mRows.forEach(row => menuTbody.appendChild(row));
+        menuTbody.innerHTML = ''; mRows.forEach(row => menuTbody.appendChild(row));
 
-        // Logic filter gallery
         const galCat = document.getElementById('galleryFilterCategory').value.toLowerCase();
         const galSort = document.getElementById('gallerySortBy').value;
-
         let gRows = [...originalGalleryRows];
         if(galCat) {
-            gRows = gRows.filter(row => {
-                const catText = row.querySelector('td:nth-child(2)').innerText.toLowerCase(); // Column index 2
-                return catText.includes(galCat);
-            });
+            gRows = gRows.filter(row => row.querySelector('td:nth-child(2)').innerText.toLowerCase().includes(galCat));
         }
         if(galSort === 'oldest') gRows.reverse();
-        galleryTbody.innerHTML = '';
-        gRows.forEach(row => galleryTbody.appendChild(row));
+        galleryTbody.innerHTML = ''; gRows.forEach(row => galleryTbody.appendChild(row));
     }
-
-    // Attach listeners
     ['menuFilterType', 'menuSortBy', 'galleryFilterCategory', 'gallerySortBy'].forEach(id => {
         document.getElementById(id).addEventListener('change', filterTable);
     });
-
     globalReset.addEventListener('click', () => {
         document.getElementById('menuFilterType').value = "";
         document.getElementById('menuSortBy').value = "latest";
@@ -815,7 +800,7 @@
         filterTable();
     });
 
-    // 6. Fade Animation on Load
+    // 6. Animation
     document.addEventListener("DOMContentLoaded", () => {
         const sections = document.querySelectorAll(".fade-section");
         const observer = new IntersectionObserver((entries, obs) => {
@@ -827,17 +812,10 @@
                 }
             });
         }, { threshold: 0.1 });
-        
-        sections.forEach(s => {
-            s.classList.add("fade-enter");
-            observer.observe(s);
-        });
-
-        // Hide alert after 3s
+        sections.forEach(s => { s.classList.add("fade-enter"); observer.observe(s); });
         const alert = document.getElementById('success-alert');
         if(alert) setTimeout(() => alert.style.display = 'none', 3000);
     });
-
   </script>
 </body>
 </html>

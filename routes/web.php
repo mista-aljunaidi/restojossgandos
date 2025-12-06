@@ -25,12 +25,16 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
 
-    // 2. GALLERY CRUD
+    // [BARU] 2. HEADER VIDEO SETTING
+    // Route ini menangani update video (Youtube/File) dari form dashboard
+    Route::put('/header/update', [DashboardController::class, 'updateHeader'])->name('header.update');
+
+    // 3. GALLERY CRUD
     Route::post('/gallery', [GalleryController::class, 'store'])->name('gallery.store');
     Route::put('/gallery/{id}', [GalleryController::class, 'update'])->name('gallery.update');
     Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
 
-    // 3. MENU CRUD
+    // 4. MENU CRUD
     Route::post('/menu', [MenuController::class, 'store'])->name('menu.store');
     Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
     Route::delete('/menu/{id}', [MenuController::class, 'destroy'])->name('menu.destroy');
