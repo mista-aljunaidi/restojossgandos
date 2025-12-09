@@ -12,7 +12,7 @@ class GalleryController extends Controller
     public function publicIndex()
     {
         // contoh logika, silakan sesuaikan dengan kebutuhan kamu
-        $galleries = Gallery::latest()->paginate(12);
+        $photos = Gallery::latest()->paginate(12);
 
         return view('gallery', compact('galleries'));
         // atau misalnya:
