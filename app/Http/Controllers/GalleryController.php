@@ -9,6 +9,15 @@ use Illuminate\Support\Str;
 
 class GalleryController extends Controller
 {
+    public function publicIndex()
+    {
+        // contoh logika, silakan sesuaikan dengan kebutuhan kamu
+        $galleries = Gallery::latest()->paginate(12);
+
+        return view('gallery.index', compact('galleries'));
+        // atau misalnya:
+        // return view('front.gallery.index', compact('galleries'));
+    }
     public function store(Request $request)
     {
         $request->validate([
