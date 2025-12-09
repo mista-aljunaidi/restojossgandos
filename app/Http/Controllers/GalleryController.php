@@ -9,21 +9,6 @@ use Illuminate\Support\Str;
 
 class GalleryController extends Controller
 {
-    /** FRONTEND: tampilkan galeri publik */
-    public function publicIndex()
-    {
-        $photos = Gallery::where('category', '!=', 'ambience')
-                        ->orderBy('created_at', 'asc')
-                        ->get();
-
-        $ambiencePhotos = Gallery::where('category', 'ambience')
-                        ->orderBy('created_at', 'asc')
-                        ->get();
-
-        return view('gallery', compact('photos', 'ambiencePhotos'));
-    }
-
-    /** ADMIN: simpan foto baru */
     public function store(Request $request)
     {
         $request->validate([
@@ -32,26 +17,35 @@ class GalleryController extends Controller
             'image'    => 'required|image|mimes:jpg,jpeg,png,webp|max:4096',
         ]);
 
-        $folder = public_path('public/img/gallery');
+        // FOLDER FISIK
+        // public_path() = /home/.../public_html/public
+        // jadi ini akan jadi: /home/.../public_html/public/img/gallery
+        $folder = public_path('img/gallery');
+
         if (!File::exists($folder)) {
             File::makeDirectory($folder, 0755, true);
         }
 
         $file = $request->file('image');
+
         $safeName = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                     . '-' . time() . '.' . $file->getClientOriginalExtension();
+
+        // Simpan file ke /public_html/public/img/gallery
         $file->move($folder, $safeName);
+
+        // PATH UNTUK DATABASE
+        // kamu bilang sekarang isinya "img/gallery/..."
+        $imagePath = 'img/gallery/' . $safeName;
 
         Gallery::create([
             'title'      => $request->title,
             'category'   => $request->category,
-            'image_path' => 'img/gallery/' . $safeName,
+            'image_path' => $imagePath,
         ]);
 
-        return back()->with('success', 'Foto berhasil diupload!');
+        return back()->with('success', 'Foto berhasil diupload.');
     }
-
-    /** ADMIN: update foto */
     public function update(Request $request, $id)
     {
         $photo = Gallery::findOrFail($id);
@@ -65,6 +59,7 @@ class GalleryController extends Controller
         $data = $request->only('title', 'category');
 
         if ($request->hasFile('image')) {
+            // Hapus file lama, image_path = "img/gallery/..."
             if ($photo->image_path && File::exists(public_path($photo->image_path))) {
                 File::delete(public_path($photo->image_path));
             }
@@ -77,16 +72,16 @@ class GalleryController extends Controller
             $file = $request->file('image');
             $safeName = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                         . '-' . time() . '.' . $file->getClientOriginalExtension();
+
             $file->move($folder, $safeName);
 
             $data['image_path'] = 'img/gallery/' . $safeName;
         }
 
         $photo->update($data);
+
         return back()->with('success', 'Foto berhasil diperbarui.');
     }
-
-    /** ADMIN: hapus foto */
     public function destroy($id)
     {
         $photo = Gallery::findOrFail($id);
@@ -96,6 +91,7 @@ class GalleryController extends Controller
         }
 
         $photo->delete();
+
         return back()->with('success', 'Foto berhasil dihapus.');
     }
 }

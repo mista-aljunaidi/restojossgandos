@@ -9,7 +9,6 @@ use Illuminate\Support\Str;
 
 class MenuController extends Controller
 {
-    /** FRONTEND: tampilkan menu publik */
     public function publicIndex()
     {
         $carouselMenus = Menu::where('type', 'carousel')
@@ -23,7 +22,6 @@ class MenuController extends Controller
         return view('menu', compact('carouselMenus', 'specialMenus'));
     }
 
-    /** ADMIN: simpan menu baru */
     public function store(Request $request)
     {
         $request->validate([
@@ -34,15 +32,16 @@ class MenuController extends Controller
         ]);
 
         $data = $request->only('title', 'description', 'type');
+
         if ($request->hasFile('image')) {
             $data['image_path'] = $this->uploadImage($request->file('image'));
         }
 
         Menu::create($data);
+
         return back()->with('success', 'Menu berhasil ditambahkan.');
     }
 
-    /** ADMIN: update menu */
     public function update(Request $request, $id)
     {
         $menu = Menu::findOrFail($id);
@@ -57,41 +56,47 @@ class MenuController extends Controller
         $data = $request->only('title', 'description', 'type');
 
         if ($request->hasFile('image')) {
-            if ($menu->image_path && File::exists(public_path($menu->image_path))) {
-                File::delete(public_path($menu->image_path));
+
+            if ($menu->image_path && File::exists(base_path($menu->image_path))) {
+                File::delete(base_path($menu->image_path));
             }
+
             $data['image_path'] = $this->uploadImage($request->file('image'));
         }
 
         $menu->update($data);
+
         return back()->with('success', 'Menu berhasil diperbarui.');
     }
 
-    /** ADMIN: hapus menu */
     public function destroy($id)
     {
         $menu = Menu::findOrFail($id);
 
-        if ($menu->image_path && File::exists(public_path($menu->image_path))) {
-            File::delete(public_path($menu->image_path));
+        if ($menu->image_path && File::exists(base_path($menu->image_path))) {
+            File::delete(base_path($menu->image_path));
         }
 
         $menu->delete();
+
         return back()->with('success', 'Menu berhasil dihapus.');
     }
 
-    /** Fungsi bantu upload gambar */
     private function uploadImage($file)
     {
-        $folder = public_path('public/img/menu');
+        // Folder fisik: public_html/public/img/menu
+        $folder = base_path('img/menu');
+
         if (!File::exists($folder)) {
             File::makeDirectory($folder, 0755, true);
         }
 
         $safeName = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                     . '-' . time() . '.' . $file->getClientOriginalExtension();
+
         $file->move($folder, $safeName);
 
+        // Simpan ke DB dengan pola "public/img/menu/..."
         return 'img/menu/' . $safeName;
     }
 }
