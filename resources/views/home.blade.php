@@ -45,7 +45,7 @@
                         
                         <div class="relative bg-white p-2 rounded-[2.5rem] shadow-2xl transform transition-transform duration-500 group-hover:scale-[1.02]">
                             <div class="rounded-[2rem] overflow-hidden aspect-[4/3] relative">
-                                <img src="public/img/home/selamatdatang.jpg" 
+                                <img src="public/img/home/selamatdatang.JPG" 
                                     alt="Selamat Datang" 
                                     class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-[10s]">
                                 
