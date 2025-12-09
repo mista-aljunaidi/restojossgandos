@@ -32,7 +32,7 @@ class GalleryController extends Controller
             'image'    => 'required|image|mimes:jpg,jpeg,png,webp|max:4096',
         ]);
 
-        $folder = public_path('img/gallery');
+        $folder = public_path('public/img/gallery');
         if (!File::exists($folder)) {
             File::makeDirectory($folder, 0755, true);
         }

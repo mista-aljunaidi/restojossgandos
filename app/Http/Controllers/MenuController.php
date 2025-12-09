@@ -83,7 +83,7 @@ class MenuController extends Controller
     /** Fungsi bantu upload gambar */
     private function uploadImage($file)
     {
-        $folder = public_path('img/menu');
+        $folder = public_path('public/img/menu');
         if (!File::exists($folder)) {
             File::makeDirectory($folder, 0755, true);
         }
