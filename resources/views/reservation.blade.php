@@ -43,14 +43,14 @@
 
                     <div class="relative w-full max-w-5xl mx-auto h-[300px] md:h-[500px] overflow-hidden rounded-[2rem] shadow-lg group/slider bg-gray-100">
                         <div id="roomTrack" class="flex w-full h-full transition-transform duration-700 ease-in-out">
-                            <img src="img/reservation/kawahijen.png" alt="Kawah Ijen" class="w-full h-full object-cover flex-shrink-0">
-                            <img src="img/reservation/blambangan.png" alt="Blambangan" class="w-full h-full object-cover flex-shrink-0">
-                            <img src="img/reservation/pulaumerah.png" alt="Pulau Merah" class="w-full h-full object-cover flex-shrink-0">
-                            <img src="img/reservation/minakjinggo.png" alt="Minak Jinggo" class="w-full h-full object-cover flex-shrink-0">
-                            <img src="img/reservation/sritanjung.png" alt="Sri Tanjung" class="w-full h-full object-cover flex-shrink-0">
-                            <img src="img/reservation/ketapang.png" alt="Ketapang" class="w-full h-full object-cover flex-shrink-0">
-                            <img src="img/reservation/outdoordepan.png" alt="Outdoor Depan" class="w-full h-full object-cover flex-shrink-0">
-                            <img src="img/reservation/outdoorbelakang.png" alt="Outdoor Belakang" class="w-full h-full object-cover flex-shrink-0">
+                            <img src="public/img/reservation/kawahijen.png" alt="Kawah Ijen" class="w-full h-full object-cover flex-shrink-0">
+                            <img src="public/img/reservation/blambangan.png" alt="Blambangan" class="w-full h-full object-cover flex-shrink-0">
+                            <img src="public/img/reservation/pulaumerah.png" alt="Pulau Merah" class="w-full h-full object-cover flex-shrink-0">
+                            <img src="public/img/reservation/minakjinggo.png" alt="Minak Jinggo" class="w-full h-full object-cover flex-shrink-0">
+                            <img src="public/img/reservation/sritanjung.png" alt="Sri Tanjung" class="w-full h-full object-cover flex-shrink-0">
+                            <img src="public/img/reservation/ketapang.png" alt="Ketapang" class="w-full h-full object-cover flex-shrink-0">
+                            <img src="public/img/reservation/outdoordepan.png" alt="Outdoor Depan" class="w-full h-full object-cover flex-shrink-0">
+                            <img src="public/img/reservation/outdoorbelakang.png" alt="Outdoor Belakang" class="w-full h-full object-cover flex-shrink-0">
                         </div>
 
                         <button onclick="prevRoomImage()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 backdrop-blur-md text-white p-3 rounded-full hover:bg-black/50 transition-all z-10">
@@ -73,7 +73,7 @@
                 <div class="relative w-full max-w-5xl mx-auto h-[400px] md:h-[500px] overflow-hidden rounded-[2.5rem] shadow-2xl group bg-gray-200">
                     
                     <img id="locationSliderImage" 
-                        src="img/reservation/Jemursari2.jpg" 
+                        src="public/img/reservation/Jemursari2.jpg" 
                         alt="Outlet Location" 
                         class="w-full h-full object-cover transition-opacity duration-500 ease-in-out opacity-100">
 
@@ -166,7 +166,7 @@
             <section class="fade-section opacity-0 translate-y-10 transition-all duration-1000 delay-100">
                 <div class="relative w-full rounded-[3rem] overflow-hidden shadow-2xl group cursor-pointer h-[400px] md:h-[450px]">
                     <div class="absolute inset-0 z-0">
-                        <img src="img/reservation/fullteam.jpg" alt="Background Joss Gandos" class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105">
+                        <img src="public/img/reservation/fullteam.jpg" alt="Background Joss Gandos" class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-br from-red-900/80 via-red-800/60 to-black/50"></div>
                     </div>
 
@@ -304,8 +304,8 @@
         // 2. LOCATION SLIDER LOGIC (SMOOTH & DOTS)
         // ============================
         const locImages = [
-            "img/reservation/Jemursari2.jpg",
-            "img/reservation/Ketintang.jpeg"
+            "public/img/reservation/Jemursari2.jpg",
+            "public/img/reservation/Ketintang.jpeg"
         ];
 
         let locIndex = 0;

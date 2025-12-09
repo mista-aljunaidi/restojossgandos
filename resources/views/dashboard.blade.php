@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Resto Joss Gandos</title>
-  <link rel="icon" type="image/png" href="{{ asset('img/logojossgandos.png') }}">
+  <link rel="icon" type="image/png" href="{{ asset('public/img/logojossgandos.png') }}">
   
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
@@ -36,7 +36,7 @@
         <div class="flex items-center gap-3 px-6 py-8 border-b border-slate-700/50">
           <div class="relative group">
             <div class="absolute -inset-1 bg-gradient-to-r from-red-600 to-orange-600 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
-            <img src="{{ asset('img/logojossgandos.png') }}" alt="Logo" class="relative w-10 h-10 object-contain">
+            <img src="{{ asset('public/img/logojossgandos.png') }}" alt="Logo" class="relative w-10 h-10 object-contain">
           </div>
           <div>
             <h1 class="font-bold text-lg tracking-wide leading-none">Resto Joss Gandos</h1>

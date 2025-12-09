@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Login - Resto Joss Gandos</title>
-    <link rel="icon" type="image/jpeg" href="img/logojossgandos.png">
+    <link rel="icon" type="image/jpeg" href="public/img/logojossgandos.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
@@ -26,7 +26,7 @@
     
     <div class="bg-red-700 p-6 text-center relative overflow-hidden">
       <div class="flex justify-center mb-4">
-         <img src="img/logojossgandos.png" 
+         <img src="public/img/logojossgandos.png" 
               alt="Logo Joss Gandos" 
               class="h-24 w-24 object-cover rounded-full border-4 border-white/30 shadow-xl">
       </div>

@@ -206,7 +206,7 @@
                             <div class="order-1 md:order-1 relative group">
                                 <div class="absolute inset-0 bg-gradient-to-tr from-red-600 to-yellow-400 rounded-[2rem] rotate-3 opacity-70 group-hover:rotate-6 transition-transform duration-500"></div>
                                 <div class="relative rounded-[2rem] overflow-hidden shadow-lg border-4 border-white bg-white aspect-[4/5] md:aspect-square">
-                                    <img src="img/about/founder.jpg" alt="Founder Resto Joss Gandos" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                                    <img src="public/img/about/founder.jpg" alt="Founder Resto Joss Gandos" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
                                 </div>
                             </div>
 
@@ -248,7 +248,7 @@
                         </style>
 
                         <div class="team-card group relative h-[450px] rounded-2xl overflow-hidden shadow-lg cursor-pointer">
-                            <img src="img/about/Pak_Tukar.jpg" alt="Tukar - Head Manager" class="w-full h-full object-cover img-vertical-focus transition-transform duration-700 group-hover:scale-110">
+                            <img src="public/img/about/Pak_Tukar.jpg" alt="Tukar - Head Manager" class="w-full h-full object-cover img-vertical-focus transition-transform duration-700 group-hover:scale-110">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90"></div>
                             <div class="team-info absolute bottom-[-20px] left-0 w-full p-6 transition-all duration-300 group-hover:bottom-0">
                                 <h3 class="text-2xl font-bold text-white mb-1">Tukar Heriyanto S.H.</h3>
@@ -261,7 +261,7 @@
                         </div>
                         
                         <div class="team-card group relative h-[450px] rounded-2xl overflow-hidden shadow-lg cursor-pointer">
-                            <img src="img/about/BuTatik.jpg" alt="Tatik - SPV" class="w-full h-full object-cover img-vertical-focus transition-transform duration-700 group-hover:scale-110">
+                            <img src="public/img/about/BuTatik.jpg" alt="Tatik - SPV" class="w-full h-full object-cover img-vertical-focus transition-transform duration-700 group-hover:scale-110">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90"></div>
                             <div class="team-info absolute bottom-[-20px] left-0 w-full p-6 transition-all duration-300 group-hover:bottom-0">
                                 <h3 class="text-2xl font-bold text-white mb-1">Aning Suhartatik S.E.</h3>
@@ -274,7 +274,7 @@
                         </div>
                         
                         <div class="team-card group relative h-[450px] rounded-2xl overflow-hidden shadow-lg cursor-pointer">
-                            <img src="img/about/PakSigit.jpg" alt="Sigit - Head Chef" class="w-full h-full object-cover img-vertical-focus transition-transform duration-700 group-hover:scale-110">
+                            <img src="public/img/about/PakSigit.jpg" alt="Sigit - Head Chef" class="w-full h-full object-cover img-vertical-focus transition-transform duration-700 group-hover:scale-110">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90"></div>
                             <div class="team-info absolute bottom-[-20px] left-0 w-full p-6 transition-all duration-300 group-hover:bottom-0">
                                 <h3 class="text-2xl font-bold text-white mb-1">Sigit Priandoko</h3>

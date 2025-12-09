@@ -27,19 +27,19 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 <div class="flex justify-center gap-3 mb-8 flex-wrap">
-                    <button class="px-5 py-2.5 rounded-full text-sm font-medium bg-red-500 text-white shadow-md transition-all duration-300 hover:bg-red-600 hover:shadow-lg active:scale-95 filter-btn" data-filter="all">
+                    <button class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium bg-red-500 text-white shadow-md transition-all duration-300 hover:bg-red-600 hover:shadow-lg active:scale-95" data-filter="all">
                         All
                     </button>
 
-                    <button class="px-5 py-2.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 transition-all duration-300 hover:bg-gray-200 hover:shadow-md active:bg-gray-300 active:scale-95 filter-btn" data-filter="food">
+                    <button class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 transition-all duration-300 hover:bg-gray-200 hover:shadow-md active:bg-gray-300 active:scale-95" data-filter="food">
                         Food
                     </button>
 
-                    <button class="px-5 py-2.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 transition-all duration-300 hover:bg-gray-200 hover:shadow-md active:bg-gray-300 active:scale-95 filter-btn" data-filter="customer">
+                    <button class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 transition-all duration-300 hover:bg-gray-200 hover:shadow-md active:bg-gray-300 active:scale-95" data-filter="customer">
                         Customer
                     </button>
 
-                    <button class="px-5 py-2.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 transition-all duration-300 hover:bg-gray-200 hover:shadow-md active:bg-gray-300 active:scale-95 filter-btn" data-filter="event">
+                    <button class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 transition-all duration-300 hover:bg-gray-200 hover:shadow-md active:bg-gray-300 active:scale-95" data-filter="event">
                         Event
                     </button>
                 </div>
@@ -87,7 +87,7 @@
 
                 <div class="relative rounded-[2.5rem] overflow-hidden shadow-2xl hover:border-red-500/30 transition-colors duration-500">
                     
-                    <img src="img/gallery/livemusic.png" alt="Live Music Joss Gandos" 
+                    <img src="public/img/gallery/livemusic.png" alt="Live Music Joss Gandos" 
                          class="w-full h-auto object-cover transform group-hover:scale-105 transition duration-1000 ease-in-out">
                     
                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
@@ -99,30 +99,47 @@
     </main>
 
     <script>
-        const buttons = document.querySelectorAll('.filter-btn');
-        const items = document.querySelectorAll('#gallery-grid > div');
+        document.addEventListener("DOMContentLoaded", () => {
+            // --- BAGIAN 1: LOGIKA FILTER & WARNA TOMBOL ---
+            const buttons = document.querySelectorAll('.filter-btn');
+            const items = document.querySelectorAll('#gallery-grid > div');
 
-        buttons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const filter = btn.getAttribute('data-filter');
-                buttons.forEach(b => {
-                    b.classList.remove('bg-red-500','text-white');
-                    b.classList.add('bg-gray-200','text-black');
-                });
-                btn.classList.remove('bg-gray-200','text-black');
-                btn.classList.add('bg-red-500','text-white');
+            // Definisi warna tombol
+            // Warna saat tombol AKTIF (Merah)
+            const activeClasses = ['bg-red-500', 'text-white', 'shadow-md', 'hover:bg-red-600'];
+            
+            // Warna saat tombol TIDAK AKTIF (Abu-abu)
+            const inactiveClasses = ['bg-gray-100', 'text-gray-700', 'hover:bg-gray-200'];
 
-                items.forEach(item => {
-                    if (filter === 'all' || item.classList.contains(`category-${filter}`)) {
-                        item.classList.remove('hidden');
-                    } else {
-                        item.classList.add('hidden');
-                    }
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const filter = btn.getAttribute('data-filter');
+
+                    // 1. Reset SEMUA tombol menjadi abu-abu (Tidak Aktif)
+                    buttons.forEach(b => {
+                        b.classList.remove(...activeClasses); // Hapus merah
+                        b.classList.add(...inactiveClasses);  // Tambah abu-abu
+                    });
+
+                    // 2. Ubah tombol yang DIKLIK menjadi merah (Aktif)
+                    btn.classList.remove(...inactiveClasses); // Hapus abu-abu
+                    btn.classList.add(...activeClasses);      // Tambah merah
+
+                    // 3. Logika Filter Item (Tetap sama seperti sebelumnya)
+                    items.forEach(item => {
+                        if (filter === 'all' || item.classList.contains(`category-${filter}`)) {
+                            item.classList.remove('hidden');
+                            // Tambahkan sedikit animasi fade-in saat item muncul (opsional)
+                            item.classList.add('animate-fade-in'); 
+                        } else {
+                            item.classList.add('hidden');
+                            item.classList.remove('animate-fade-in');
+                        }
+                    });
                 });
             });
-        });
 
-        document.addEventListener("DOMContentLoaded", () => {
+            // --- BAGIAN 2: ANIMASI FADE-IN SAAT SCROLL (IntersectionObserver) ---
             const sections = document.querySelectorAll(".fade-section");
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
@@ -133,6 +150,7 @@
                     }
                 });
             }, { threshold: 0.15 });
+
             sections.forEach(section => observer.observe(section));
         });
     </script>

@@ -127,15 +127,15 @@
                     
                     <div class="w-full space-y-16">
                         <div class="relative rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-                            <img src="img/menu/package1.png" alt="Paket Ceria" class="w-full h-auto object-cover">
+                            <img src="public/img/menu/package1.png" alt="Paket Ceria" class="w-full h-auto object-cover">
                         </div>
                         
                         <div class="relative rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-                            <img src="img/menu/package2.png" alt="Paket Joss Rombongan" class="w-full h-auto object-cover">
+                            <img src="public/img/menu/package2.png" alt="Paket Joss Rombongan" class="w-full h-auto object-cover">
                         </div>
 
                         <div class="relative rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-                            <img src="img/menu/package3.png" alt="Paket Joss Spesial" class="w-full h-auto object-cover">
+                            <img src="public/img/menu/package3.png" alt="Paket Joss Spesial" class="w-full h-auto object-cover">
                         </div>
                     </div>
 
@@ -146,7 +146,7 @@
                     </div>
 
                     <div class="w-full relative rounded-[2rem] overflow-hidden shadow-xl hover:shadow-orange-200/50 hover:shadow-2xl transition-all duration-300 transform hover:scale-[1.02]">
-                        <img src="img/menu/boxpackage.png" alt="Paket Box" class="w-full h-auto object-cover">
+                        <img src="public/img/menu/boxpackage.png" alt="Paket Box" class="w-full h-auto object-cover">
                     </div>
 
                     <div class="flex flex-col items-center justify-center pt-12 pb-2 w-full">
@@ -155,15 +155,15 @@
                     </div>
                     <div class="w-full space-y-16">
                         <div class="relative rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
-                            <img src="img/menu/weddingpack1.png" alt="Wedding Package 1" class="w-full h-auto object-cover">
+                            <img src="public/img/menu/weddingpack1.png" alt="Wedding Package 1" class="w-full h-auto object-cover">
                         </div>
 
                         <div class="relative rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
-                            <img src="img/menu/weddingpack2.png" alt="Wedding Package 2" class="w-full h-auto object-cover">
+                            <img src="public/img/menu/weddingpack2.png" alt="Wedding Package 2" class="w-full h-auto object-cover">
                         </div>
 
                         <div class="relative rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300">
-                            <img src="img/menu/weddingpack3.png" alt="Wedding Package 3" class="w-full h-auto object-cover">
+                            <img src="public/img/menu/weddingpack3.png" alt="Wedding Package 3" class="w-full h-auto object-cover">
                         </div>
                         <div></div>
                     </div>

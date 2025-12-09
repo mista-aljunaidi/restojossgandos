@@ -28,7 +28,7 @@
     </style>
   </head>
 
-  <body class="relative z-20 bg-cover bg-fixed bg-center" style="background-image: url('{{ asset('img/backgroundbatik.png') }}');">
+  <body class="relative z-20 bg-cover bg-fixed bg-center" style="background-image: url('{{ asset('public/img/backgroundbatik.png') }}');">
 
       @if(request()->is('/'))
         <x-header></x-header>
@@ -42,25 +42,25 @@
           <a href="https://gofood.co.id/surabaya/restaurant/bebek-joss-gandos-jemursari-8571aff2-33b6-4f54-9fd9-a132a900eb17" 
               target="_blank" 
               class="bg-white p-2 rounded-lg shadow-md hover:scale-110 hover:shadow-lg transition">
-              <img src="{{ asset('img/gofood.jpg') }}" alt="GoFood" class="w-14 h-14 object-contain">
+              <img src="{{ asset('public/img/gofood.jpg') }}" alt="GoFood" class="w-14 h-14 object-contain">
           </a>
 
           <a href="https://shopee.co.id/universal-link/now-food/shop/21737525?deep_and_deferred=1&shareChannel=copy_link" 
               target="_blank" 
               class="bg-white p-2 rounded-lg shadow-md hover:scale-110 hover:shadow-lg transition block md:hidden">
-              <img src="{{ asset('img/shopeefood.png') }}" alt="ShopeeFood" class="w-14 h-14 object-contain">
+              <img src="{{ asset('public/img/shopeefood.png') }}" alt="ShopeeFood" class="w-14 h-14 object-contain">
           </a>
 
           <a href="https://r.grab.com/g/6-20251119_121557_7BFCA7D892634AB597F132E1189364C5_MEXMPS-IDGFSTI00002n8d" 
               target="_blank" 
               class="bg-white p-2 rounded-lg shadow-md hover:scale-110 hover:shadow-lg transition">
-              <img src="{{ asset('img/grabfood.png') }}" alt="GrabFood" class="w-14 h-14 object-contain">
+              <img src="{{ asset('public/img/grabfood.png') }}" alt="GrabFood" class="w-14 h-14 object-contain">
           </a>
 
           <div class="relative">
               <button onclick="toggleFloatingWa()" 
                       class="bg-white p-2 rounded-lg shadow-md hover:scale-110 hover:shadow-lg transition focus:outline-none block">
-                  <img src="{{ asset('img/whatsapp.png') }}" alt="WhatsApp" class="w-14 h-14 object-contain">
+                  <img src="{{ asset('public/img/whatsapp.png') }}" alt="WhatsApp" class="w-14 h-14 object-contain">
               </button>
 
               <div id="floating-wa-menu" class="hidden absolute right-full top-0 mr-3 w-48 bg-white rounded-md shadow-xl border border-gray-200 overflow-hidden z-[60]">
