@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <title>Resto Joss Gandos</title>
     
-    <link rel="icon" type="image/jpeg" href="{{ asset('img/logojossgandos.png') }}">
+    <link rel="icon" type="image/jpeg" href="{{ asset('public/img/logojossgandos.png') }}">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
