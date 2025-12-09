@@ -14,7 +14,7 @@ class GalleryController extends Controller
         // contoh logika, silakan sesuaikan dengan kebutuhan kamu
         $galleries = Gallery::latest()->paginate(12);
 
-        return view('gallery.front', compact('galleries'));
+        return view('gallery', compact('galleries'));
         // atau misalnya:
         // return view('front.gallery.index', compact('galleries'));
     }
