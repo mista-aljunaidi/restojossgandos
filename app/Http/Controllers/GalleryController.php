@@ -36,7 +36,7 @@ class GalleryController extends Controller
 
         // PATH UNTUK DATABASE
         // kamu bilang sekarang isinya "img/gallery/..."
-        $imagePath = 'img/gallery/' . $safeName;
+        $imagePath = 'public/img/gallery/' . $safeName;
 
         Gallery::create([
             'title'      => $request->title,
