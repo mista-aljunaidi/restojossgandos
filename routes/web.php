@@ -13,7 +13,6 @@ use Illuminate\Http\Request;
 use App\Models\Visit;
 use Illuminate\Support\Facades\Session;
 
-
 // --- FRONTEND (Publik) ---
 Route::get('/gallery', [GalleryController::class, 'publicIndex'])->name('gallery.front');
 Route::get('/menu', [MenuController::class, 'publicIndex'])->name('menu.front');
@@ -25,7 +24,7 @@ Route::prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/statistik', [StatistikController::class, 'index'])->name('statistik');
 
-    // [BARU] 2. HEADER VIDEO SETTING
+    // 2. HEADER VIDEO SETTING
     // Route ini menangani update video (Youtube/File) dari form dashboard
     Route::put('/header/update', [DashboardController::class, 'updateHeader'])->name('header.update');
 
