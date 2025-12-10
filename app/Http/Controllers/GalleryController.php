@@ -11,13 +11,10 @@ class GalleryController extends Controller
 {
     public function publicIndex()
     {
-        // contoh logika, silakan sesuaikan dengan kebutuhan kamu
         $photos = Gallery::latest()->paginate(12);
-
         return view('gallery', compact('photos'));
-        // atau misalnya:
-        // return view('front.gallery.index', compact('galleries'));
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -26,9 +23,6 @@ class GalleryController extends Controller
             'image'    => 'required|image|mimes:jpg,jpeg,png,webp|max:4096',
         ]);
 
-        // FOLDER FISIK
-        // public_path() = /home/.../public_html/public
-        // jadi ini akan jadi: /home/.../public_html/public/img/gallery
         $folder = public_path('img/gallery');
 
         if (!File::exists($folder)) {
@@ -36,16 +30,21 @@ class GalleryController extends Controller
         }
 
         $file = $request->file('image');
-
         $safeName = Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME))
                     . '-' . time() . '.' . $file->getClientOriginalExtension();
 
-        // Simpan file ke /public_html/public/img/gallery
+        // Simpan fisik file tetap ke folder public/img/gallery
         $file->move($folder, $safeName);
 
-        // PATH UNTUK DATABASE
-        // kamu bilang sekarang isinya "img/gallery/..."
-        $imagePath = 'public/img/gallery/' . $safeName;
+        // Path dasar
+        $basePath = 'img/gallery/' . $safeName;
+
+        // LOGIC KHUSUS: Jika kategori 'food', tambahkan 'public/' di depannya
+        if ($request->category === 'food') {
+            $imagePath = 'public/' . $basePath;
+        } else {
+            $imagePath = $basePath;
+        }
 
         Gallery::create([
             'title'      => $request->title,
@@ -55,6 +54,7 @@ class GalleryController extends Controller
 
         return back()->with('success', 'Foto berhasil diupload.');
     }
+
     public function update(Request $request, $id)
     {
         $photo = Gallery::findOrFail($id);
@@ -68,9 +68,10 @@ class GalleryController extends Controller
         $data = $request->only('title', 'category');
 
         if ($request->hasFile('image')) {
-            // Hapus file lama, image_path = "img/gallery/..."
-            if ($photo->image_path && File::exists(public_path($photo->image_path))) {
-                File::delete(public_path($photo->image_path));
+            // Hapus file lama (Bersihkan path dari kata 'public/' agar File::delete menemukannya)
+            $oldPathRaw = str_replace('public/', '', $photo->image_path);
+            if ($photo->image_path && File::exists(public_path($oldPathRaw))) {
+                File::delete(public_path($oldPathRaw));
             }
 
             $folder = public_path('img/gallery');
@@ -84,19 +85,41 @@ class GalleryController extends Controller
 
             $file->move($folder, $safeName);
 
-            $data['image_path'] = 'img/gallery/' . $safeName;
+            // LOGIC KHUSUS SAAT GANTI FOTO
+            $basePath = 'img/gallery/' . $safeName;
+            
+            if ($request->category === 'food') {
+                $data['image_path'] = 'public/' . $basePath;
+            } else {
+                $data['image_path'] = $basePath;
+            }
+        } else {
+            // LOGIC KHUSUS JIKA CUMA GANTI KATEGORI (Tanpa ganti foto)
+            // Jika diganti JADI food, tambahkan 'public/' jika belum ada
+            if ($request->category === 'food' && !Str::startsWith($photo->image_path, 'public/')) {
+                $data['image_path'] = 'public/' . $photo->image_path;
+            } 
+            // Jika diganti DARI food ke yang lain, hapus 'public/'
+            elseif ($request->category !== 'food' && Str::startsWith($photo->image_path, 'public/')) {
+                $data['image_path'] = Str::replaceFirst('public/', '', $photo->image_path);
+            }
         }
 
         $photo->update($data);
 
         return back()->with('success', 'Foto berhasil diperbarui.');
     }
+
     public function destroy($id)
     {
         $photo = Gallery::findOrFail($id);
 
-        if ($photo->image_path && File::exists(public_path($photo->image_path))) {
-            File::delete(public_path($photo->image_path));
+        // Bersihkan path dari kata 'public/' sebelum menghapus file fisik
+        // karena public_path() sudah mengarah ke folder public
+        $cleanPath = str_replace('public/', '', $photo->image_path);
+
+        if ($cleanPath && File::exists(public_path($cleanPath))) {
+            File::delete(public_path($cleanPath));
         }
 
         $photo->delete();
